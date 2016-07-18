@@ -1,0 +1,69 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Digimezzo.WPFControls"
+    xmlns:converters="clr-namespace:Digimezzo.WPFControls.Converters">
+
+    <converters:BooleanToCollapsedConverter x:Key="BooleanToCollapsedConverter" />
+
+    <Style TargetType="{x:Type local:MultiPanePanel}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:MultiPanePanel}">
+                    <StackPanel Orientation="Horizontal">
+                        <Border x:Name="PART_LeftPane"
+                                HorizontalAlignment="Stretch"
+                                Background="#00000000">
+                            <ContentPresenter 
+                                x:Name="PART_LeftPaneContent"
+                                ContentSource="LeftPaneContent"
+                                HorizontalAlignment="Left"/>
+                        </Border>
+                        <Border x:Name="PART_SeparatorLeft"
+                                VerticalAlignment="Stretch"
+                                Width="{Binding ResizeGripWidth,RelativeSource={RelativeSource AncestorType={x:Type local:MultiPanePanel}}}"
+                                MinWidth="1"
+                                Background="#00000000">
+                            <Border
+                                Width="1"
+                                SnapsToDevicePixels="True"
+                                VerticalAlignment="Stretch" 
+                                HorizontalAlignment="Center"
+                                Background="{Binding BorderBrush,RelativeSource={RelativeSource AncestorType={x:Type local:MultiPanePanel}}}">
+                            </Border>
+                        </Border>
+                        <Border x:Name="PART_MiddlePane" 
+                                HorizontalAlignment="Stretch"
+                                Background="#00000000">
+                            <ContentPresenter 
+                                x:Name="PART_MiddlePaneContent"
+                                ContentSource="MiddlePaneContent"
+                                HorizontalAlignment="Left"/>
+                        </Border>
+                        <Border x:Name="PART_SeparatorRight"
+                                VerticalAlignment="Stretch"
+                                Width="{Binding ResizeGripWidth,RelativeSource={RelativeSource AncestorType={x:Type local:MultiPanePanel}}}"
+                                Background="#00000000"
+                                Visibility="{Binding IsRightPaneVisible,RelativeSource={RelativeSource AncestorType={x:Type local:MultiPanePanel}},Converter={StaticResource BooleanToCollapsedConverter}}">
+                            <Border
+                                Width="1"
+                                SnapsToDevicePixels="True"
+                                VerticalAlignment="Stretch" 
+                                HorizontalAlignment="Center"
+                                Background="{Binding BorderBrush,RelativeSource={RelativeSource AncestorType={x:Type local:MultiPanePanel}}}">
+                            </Border>
+                        </Border>
+                        <Border x:Name="PART_RightPane"
+                                HorizontalAlignment="Stretch"
+                                Background="#00000000"
+                                Visibility="{Binding IsRightPaneVisible,RelativeSource={RelativeSource AncestorType={x:Type local:MultiPanePanel}},Converter={StaticResource BooleanToCollapsedConverter}}">
+                            <ContentPresenter 
+                                x:Name="PART_RightPaneContent"
+                                ContentSource="RightPaneContent"
+                                HorizontalAlignment="Left"/>
+                        </Border>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

@@ -1,0 +1,23 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/FlatButton.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/FlatToggleButton.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/LabelToLower.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/LabelToUpper.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/ModernSlider.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/ProgressRing.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/RoundButton.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/RoundToggleButton.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/SlidingContentControl.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/ToggleSwitch.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/MultiPanePanel.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/UwpSlider.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Windows8Window.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Windows10Slider.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Windows10ToggleSwitch.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Windows10Window.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>
