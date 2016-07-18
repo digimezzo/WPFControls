@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digimezzo.WPFControls", "Digimezzo.WPFControls\Digimezzo.WPFControls.csproj", "{14CAB61B-42EA-4DAE-B79B-65A246D2A585}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digimezzo.WPFControls.Tests", "Digimezzo.WPFControls.Tests\Digimezzo.WPFControls.Tests.csproj", "{0A622E8A-9ED7-4B15-9F0D-5F6CFB05D251}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{14CAB61B-42EA-4DAE-B79B-65A246D2A585}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14CAB61B-42EA-4DAE-B79B-65A246D2A585}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14CAB61B-42EA-4DAE-B79B-65A246D2A585}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A622E8A-9ED7-4B15-9F0D-5F6CFB05D251}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A622E8A-9ED7-4B15-9F0D-5F6CFB05D251}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A622E8A-9ED7-4B15-9F0D-5F6CFB05D251}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A622E8A-9ED7-4B15-9F0D-5F6CFB05D251}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,14 @@
+﻿<dwc:Windows8Window x:Class="Digimezzo.WPFControls.Tests.Tests.Windows8WindowTest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Digimezzo.WPFControls.Tests.Tests"
+        xmlns:dwc="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls"
+        mc:Ignorable="d"
+        Title="Windows8WindowTest" Height="300" Width="300"
+        Background="White">
+    <Grid>
+        
+    </Grid>
+</dwc:Windows8Window>

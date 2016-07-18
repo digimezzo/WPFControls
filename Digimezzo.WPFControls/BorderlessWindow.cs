@@ -3,7 +3,7 @@ using System.Windows.Shell;
 
 namespace Digimezzo.WPFControls
 {
-    public class BorderlessWindow : WindowBase
+    public abstract class BorderlessWindow : WindowBase
     {
         #region Variables
         private WindowChrome windowChrome;
