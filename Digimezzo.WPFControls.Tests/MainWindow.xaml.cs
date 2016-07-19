@@ -26,15 +26,15 @@ namespace Digimezzo.WPFControls.Tests
             InitializeComponent();
         }
 
-        private void Windows8WindowTestButton_Click(object sender, RoutedEventArgs e)
+        private void BorderlessWindows8WindowTestButton_Click(object sender, RoutedEventArgs e)
         {
-            var win = new Windows8WindowTest();
+            var win = new BorderlessWindows8WindowTest();
             win.Show();
         }
 
-        private void Windows10WindowTestButton_Click(object sender, RoutedEventArgs e)
+        private void BorderlessWindows10WindowTestButton_Click(object sender, RoutedEventArgs e)
         {
-            var win = new Windows10WindowTest();
+            var win = new BorderlessWindows10WindowTest();
             win.Show();
         }
     }

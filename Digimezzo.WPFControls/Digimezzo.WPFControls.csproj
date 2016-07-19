@@ -55,7 +55,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BorderlessWindow.cs" />
     <Compile Include="Converters\BooleanToCollapsedConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\ResizeModeMinMaxButtonVisibilityConverter.cs" />
@@ -92,11 +91,11 @@
     <Compile Include="SlidingContentControl.cs" />
     <Compile Include="ToggleSwitch.cs" />
     <Compile Include="UwpSlider.cs" />
-    <Compile Include="WindowBase.cs" />
+    <Compile Include="Base\BorderlessWindowBase.cs" />
     <Compile Include="Windows10Slider.cs" />
     <Compile Include="Windows10ToggleSwitch.cs" />
-    <Compile Include="Windows10Window.cs" />
-    <Compile Include="Windows8Window.cs" />
+    <Compile Include="BorderlessWindows10Window.cs" />
+    <Compile Include="BorderlessWindows8Window.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -180,6 +179,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

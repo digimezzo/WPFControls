@@ -55,11 +55,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Tests\Windows10WindowTest.xaml.cs">
-      <DependentUpon>Windows10WindowTest.xaml</DependentUpon>
+    <Compile Include="Tests\BorderlessWindows10WindowTest.xaml.cs">
+      <DependentUpon>BorderlessWindows10WindowTest.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Tests\Windows8WindowTest.xaml.cs">
-      <DependentUpon>Windows8WindowTest.xaml</DependentUpon>
+    <Compile Include="Tests\BorderlessWindows8WindowTest.xaml.cs">
+      <DependentUpon>BorderlessWindows8WindowTest.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -73,11 +73,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Tests\Windows10WindowTest.xaml">
+    <Page Include="Tests\BorderlessWindows10WindowTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Tests\Windows8WindowTest.xaml">
+    <Page Include="Tests\BorderlessWindows8WindowTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

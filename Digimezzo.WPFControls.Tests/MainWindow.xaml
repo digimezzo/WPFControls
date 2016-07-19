@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <StackPanel>
-        <Button x:Name="Windows8WindowTestButton" Margin="10,5,10,5" Click="Windows8WindowTestButton_Click" Content="Windows8Window Test"/>
-        <Button x:Name="Windows10WindowTestButton" Margin="10,5,10,5" Click="Windows10WindowTestButton_Click" Content="Windows10Window Test"/>
+        <Button x:Name="BorderlessWindows8WindowTestButton" Margin="10,5,10,5" Click="BorderlessWindows8WindowTestButton_Click" Content="BorderlessWindows8Window Test"/>
+        <Button x:Name="BorderlessWindows10WindowTestButton" Margin="10,5,10,5" Click="BorderlessWindows10WindowTestButton_Click" Content="BorderlessWindows10Window Test"/>
     </StackPanel>
 </Window>
