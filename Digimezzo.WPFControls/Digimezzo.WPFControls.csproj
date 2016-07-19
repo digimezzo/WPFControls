@@ -88,7 +88,7 @@
     <Compile Include="RoundToggleButton.cs" />
     <Compile Include="SlidingContentControl.cs" />
     <Compile Include="ToggleSwitch.cs" />
-    <Compile Include="UwpSlider.cs" />
+    <Compile Include="UWPSlider.cs" />
     <Compile Include="Base\BorderlessWindowBase.cs" />
     <Compile Include="Windows10Slider.cs" />
     <Compile Include="Windows10ToggleSwitch.cs" />
@@ -148,7 +148,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Themes\UwpSlider.xaml">
+    <Page Include="Themes\UWPSlider.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

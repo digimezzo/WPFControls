@@ -64,6 +64,9 @@
     <Compile Include="Tests\LabelTest.xaml.cs">
       <DependentUpon>LabelTest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tests\UWPSliderTest.xaml.cs">
+      <DependentUpon>UWPSliderTest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tests\Windows8SliderTest.xaml.cs">
       <DependentUpon>Windows8SliderTest.xaml</DependentUpon>
     </Compile>
@@ -91,6 +94,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Tests\LabelTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tests\UWPSliderTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

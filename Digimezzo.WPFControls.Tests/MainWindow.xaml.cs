@@ -55,5 +55,11 @@ namespace Digimezzo.WPFControls.Tests
             var win = new Windows10SliderTest();
             win.Show();
         }
+
+        private void UWPSliderTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new UWPSliderTest();
+            win.Show();
+        }
     }
 }

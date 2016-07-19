@@ -2,10 +2,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:Digimezzo.WPFControls">
 
-    <Style TargetType="{x:Type local:HorizontalUwpSlider}">
+    <Style TargetType="{x:Type local:HorizontalUWPSlider}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:HorizontalUwpSlider}">
+                <ControlTemplate TargetType="{x:Type local:HorizontalUWPSlider}">
                     <!-- Background="#00000000" is required to IsMouseOver is detected -->
                     <Canvas x:Name="PART_Canvas" Background="#00000000" Height="16" Width="{TemplateBinding ActualWidth}">
                         <Rectangle x:Name="PART_Track" Canvas.Left="0" Canvas.Top="6" Panel.ZIndex="0" Height="4" Width="{TemplateBinding ActualWidth}" Fill="{Binding Path=TrackBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
@@ -17,8 +17,8 @@
                                         <Setter.Value>
                                             <ControlTemplate TargetType="{x:Type Button}">
                                                 <Grid>
-                                                    <Border x:Name="Border" Margin="0" Background="{Binding Path=ButtonBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalUwpSlider}}}" BorderThickness="0" CornerRadius="8"/>
-                                                    <Border x:Name="InnerBorder" Margin="1.2" Background="{Binding Path=ButtonInnerBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalUwpSlider}}}" BorderThickness="0" CornerRadius="8"/>
+                                                    <Border x:Name="Border" Margin="0" Background="{Binding Path=ButtonBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalUWPSlider}}}" BorderThickness="0" CornerRadius="8"/>
+                                                    <Border x:Name="InnerBorder" Margin="1.2" Background="{Binding Path=ButtonInnerBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalUWPSlider}}}" BorderThickness="0" CornerRadius="8"/>
                                                 </Grid>
                                                 <ControlTemplate.Triggers>
                                                     <Trigger Property="IsMouseOver" Value="true">
@@ -59,10 +59,10 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type local:HorizontalUwpBottomSlider}">
+    <Style TargetType="{x:Type local:HorizontalUWPBottomSlider}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:HorizontalUwpBottomSlider}">
+                <ControlTemplate TargetType="{x:Type local:HorizontalUWPBottomSlider}">
                     <!-- Background="#00000000" is required to IsMouseOver is detected -->
                     <Canvas x:Name="PART_Canvas" Background="#00000000" Height="16" Width="{TemplateBinding ActualWidth}">
                         <Rectangle x:Name="PART_Track" Canvas.Left="0" Canvas.Top="12" Panel.ZIndex="0" Height="4" Width="{TemplateBinding ActualWidth}" Fill="{Binding Path=TrackBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
@@ -77,8 +77,8 @@
                                                     <Grid.RenderTransform>
                                                         <RotateTransform CenterX="0" CenterY="0" Angle="45" />
                                                     </Grid.RenderTransform>
-                                                    <Border x:Name="Border" Margin="0" Background="{Binding Path=ButtonBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalUwpBottomSlider}}}" BorderThickness="0" CornerRadius="7,7,0,7"/>
-                                                    <Border x:Name="InnerBorder" Margin="1.2" Background="{Binding Path=ButtonInnerBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalUwpBottomSlider}}}" BorderThickness="0" CornerRadius="7,7,0,7"/>
+                                                    <Border x:Name="Border" Margin="0" Background="{Binding Path=ButtonBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalUWPBottomSlider}}}" BorderThickness="0" CornerRadius="7,7,0,7"/>
+                                                    <Border x:Name="InnerBorder" Margin="1.2" Background="{Binding Path=ButtonInnerBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalUWPBottomSlider}}}" BorderThickness="0" CornerRadius="7,7,0,7"/>
                                                 </Grid>
                                                 <ControlTemplate.Triggers>
                                                     <Trigger Property="IsMouseOver" Value="true">
@@ -119,10 +119,10 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type local:VerticalUwpSlider}">
+    <Style TargetType="{x:Type local:VerticalUWPSlider}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:VerticalUwpSlider}">
+                <ControlTemplate TargetType="{x:Type local:VerticalUWPSlider}">
                     <!-- Background="#00000000" is required to IsMouseOver is detected -->
                     <Canvas x:Name="PART_Canvas" Background="#00000000" Height="{TemplateBinding ActualHeight}" Width="16">
                         <Rectangle x:Name="PART_Track" Canvas.Left="6" Canvas.Bottom="0" Panel.ZIndex="0" Height="{TemplateBinding ActualHeight}" Width="4" Fill="{Binding Path=TrackBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
@@ -134,8 +134,8 @@
                                         <Setter.Value>
                                             <ControlTemplate TargetType="{x:Type Button}">
                                                 <Grid>
-                                                    <Border x:Name="Border" Margin="0" Background="{Binding Path=ButtonBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:VerticalUwpSlider}}}" BorderThickness="0" CornerRadius="8"/>
-                                                    <Border x:Name="InnerBorder" Margin="1.2" Background="{Binding Path=ButtonInnerBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:VerticalUwpSlider}}}" BorderThickness="0" CornerRadius="8"/>
+                                                    <Border x:Name="Border" Margin="0" Background="{Binding Path=ButtonBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:VerticalUWPSlider}}}" BorderThickness="0" CornerRadius="8"/>
+                                                    <Border x:Name="InnerBorder" Margin="1.2" Background="{Binding Path=ButtonInnerBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:VerticalUWPSlider}}}" BorderThickness="0" CornerRadius="8"/>
                                                 </Grid>
                                                 <ControlTemplate.Triggers>
                                                     <Trigger Property="IsMouseOver" Value="true">
