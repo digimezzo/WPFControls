@@ -43,5 +43,17 @@ namespace Digimezzo.WPFControls.Tests
             var win = new LabelTest();
             win.Show();
         }
+
+        private void Windows8SliderTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new Windows8SliderTest();
+            win.Show();
+        }
+
+        private void Windows10SliderTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new Windows10SliderTest();
+            win.Show();
+        }
     }
 }

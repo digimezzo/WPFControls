@@ -10,5 +10,7 @@
         <Button x:Name="BorderlessWindows8WindowTestButton" Margin="10,5,10,5" Click="BorderlessWindows8WindowTestButton_Click" Content="BorderlessWindows8Window Test"/>
         <Button x:Name="BorderlessWindows10WindowTestButton" Margin="10,5,10,5" Click="BorderlessWindows10WindowTestButton_Click" Content="BorderlessWindows10Window Test"/>
         <Button x:Name="LabelTestButton" Margin="10,5,10,5" Click="LabelTestButton_Click" Content="Label Test"/>
+        <Button x:Name="Windows8SliderTestButton" Margin="10,5,10,5" Click="Windows8SliderTestButton_Click" Content="Windows8Slider Test"/>
+        <Button x:Name="Windows10SliderTestButton" Margin="10,5,10,5" Click="Windows10SliderTestButton_Click" Content="Windows10Slider Test"/>
     </StackPanel>
 </Window>

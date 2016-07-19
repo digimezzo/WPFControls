@@ -2,9 +2,9 @@
 
 namespace Digimezzo.WPFControls.Tests.Tests
 {
-    public partial class LabelTest : Window
+    public partial class Windows8SliderTest : Window
     {
-        public LabelTest()
+        public Windows8SliderTest()
         {
             InitializeComponent();
         }

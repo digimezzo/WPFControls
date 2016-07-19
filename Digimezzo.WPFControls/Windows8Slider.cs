@@ -8,7 +8,7 @@ using System.Windows.Shapes;
 
 namespace Digimezzo.WPFControls
 {
-    public abstract class ModernSlider : Control
+    public abstract class Windows8Slider : Control
     {
         #region Variables
         protected Canvas sliderCanvas;
@@ -65,13 +65,13 @@ namespace Digimezzo.WPFControls
         #endregion
 
         #region Dependency Properties
-        public static readonly DependencyProperty ChangeValueWhileDraggingProperty = DependencyProperty.Register("ChangeValueWhileDragging", typeof(bool), typeof(ModernSlider), new PropertyMetadata(false));
-        public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register("Maximum", typeof(double), typeof(ModernSlider), new PropertyMetadata(100.0, IsMaximumChangedCallback));
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double), typeof(ModernSlider), new PropertyMetadata(0.0, IsValueChangedCallback));
-        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(double), typeof(ModernSlider), new PropertyMetadata(0.0));
-        public static readonly DependencyProperty TrackBackgroundProperty = DependencyProperty.Register("TrackBackground", typeof(Brush), typeof(ModernSlider), new PropertyMetadata(null));
-        public static readonly DependencyProperty BarBackgroundProperty = DependencyProperty.Register("BarBackground", typeof(Brush), typeof(ModernSlider), new PropertyMetadata(null));
-        public static readonly DependencyProperty ButtonBackgroundProperty = DependencyProperty.Register("ButtonBackground", typeof(Brush), typeof(ModernSlider), new PropertyMetadata(null));
+        public static readonly DependencyProperty ChangeValueWhileDraggingProperty = DependencyProperty.Register("ChangeValueWhileDragging", typeof(bool), typeof(Windows8Slider), new PropertyMetadata(false));
+        public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register("Maximum", typeof(double), typeof(Windows8Slider), new PropertyMetadata(100.0, IsMaximumChangedCallback));
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double), typeof(Windows8Slider), new PropertyMetadata(0.0, IsValueChangedCallback));
+        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(double), typeof(Windows8Slider), new PropertyMetadata(0.0));
+        public static readonly DependencyProperty TrackBackgroundProperty = DependencyProperty.Register("TrackBackground", typeof(Brush), typeof(Windows8Slider), new PropertyMetadata(null));
+        public static readonly DependencyProperty BarBackgroundProperty = DependencyProperty.Register("BarBackground", typeof(Brush), typeof(Windows8Slider), new PropertyMetadata(null));
+        public static readonly DependencyProperty ButtonBackgroundProperty = DependencyProperty.Register("ButtonBackground", typeof(Brush), typeof(Windows8Slider), new PropertyMetadata(null));
         #endregion
 
         #region Events
@@ -158,26 +158,26 @@ namespace Digimezzo.WPFControls
         #region Callbacks
         private static void IsMaximumChangedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            ModernSlider slider = sender as ModernSlider;
+            Windows8Slider slider = sender as Windows8Slider;
             slider.CalculatePosition();
         }
 
         private static void IsValueChangedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            ModernSlider slider = sender as ModernSlider;
+            Windows8Slider slider = sender as Windows8Slider;
             slider.CalculatePosition();
             slider.OnValueChanged();
         }
         #endregion
     }
 
-    public class HorizontalModernSlider : ModernSlider
+    public class HorizontalWindows8Slider : Windows8Slider
     {
 
         #region Construction
-        static HorizontalModernSlider()
+        static HorizontalWindows8Slider()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(HorizontalModernSlider), new FrameworkPropertyMetadata(typeof(HorizontalModernSlider)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(HorizontalWindows8Slider), new FrameworkPropertyMetadata(typeof(HorizontalWindows8Slider)));
         }
         #endregion
 
@@ -239,12 +239,12 @@ namespace Digimezzo.WPFControls
         #endregion
     }
 
-    public class VerticalModernSlider : ModernSlider
+    public class VerticalWindows8Slider : Windows8Slider
     {
         #region Construction
-        static VerticalModernSlider()
+        static VerticalWindows8Slider()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(VerticalModernSlider), new FrameworkPropertyMetadata(typeof(VerticalModernSlider)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(VerticalWindows8Slider), new FrameworkPropertyMetadata(typeof(VerticalWindows8Slider)));
         }
         #endregion
 

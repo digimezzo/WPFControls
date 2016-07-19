@@ -5,7 +5,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/LabelToLower.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/LabelToUpper.xaml" />
-        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/ModernSlider.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Windows8Slider.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/ProgressRing.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/RoundButton.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/RoundToggleButton.xaml" />

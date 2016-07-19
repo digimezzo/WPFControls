@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Digimezzo.WPFControls.Tests.Tests"
         xmlns:controls="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls"
         mc:Ignorable="d"
-        Title="Windows10WindowTest" Height="300" Width="300"
+        Title="BorderlessWindows10WindowTest" Height="300" Width="300"
         Background="White">
     <Grid>
         <TextBlock Text="BorderlessWindows10Window" HorizontalAlignment="Center" VerticalAlignment="Center"/>

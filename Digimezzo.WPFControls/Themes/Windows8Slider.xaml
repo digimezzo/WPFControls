@@ -2,10 +2,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:Digimezzo.WPFControls">
     
-    <Style TargetType="{x:Type local:HorizontalModernSlider}">
+    <Style TargetType="{x:Type local:HorizontalWindows8Slider}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:HorizontalModernSlider}">
+                <ControlTemplate TargetType="{x:Type local:HorizontalWindows8Slider}">
                     <!-- Background="#00000000" is required to IsMouseOver is detected -->
                     <Canvas x:Name="PART_Canvas" Background="#00000000" Height="14" Width="{TemplateBinding ActualWidth}">
                         <Rectangle x:Name="PART_Track" Canvas.Left="0" Canvas.Top="4" Panel.ZIndex="0" Height="6" Width="{TemplateBinding ActualWidth}" Fill="{Binding Path=TrackBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
@@ -17,7 +17,7 @@
                                         <Setter.Value>
                                             <ControlTemplate TargetType="{x:Type Button}">
                                                 <Grid>
-                                                    <Border x:Name="Border" Margin="0" Background="{Binding Path=ButtonBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalModernSlider}}}" BorderThickness="0"/>
+                                                    <Border x:Name="Border" Margin="0" Background="{Binding Path=ButtonBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalWindows8Slider}}}" BorderThickness="0"/>
                                                 </Grid>
                                                 <ControlTemplate.Triggers>
                                                     <Trigger Property="IsMouseOver" Value="true">
@@ -58,10 +58,10 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type local:VerticalModernSlider}">
+    <Style TargetType="{x:Type local:VerticalWindows8Slider}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:VerticalModernSlider}">
+                <ControlTemplate TargetType="{x:Type local:VerticalWindows8Slider}">
                     <!-- Background="#00000000" is required to IsMouseOver is detected -->
                     <Canvas x:Name="PART_Canvas" Background="#00000000" Height="{TemplateBinding ActualHeight}" Width="14">
                         <Rectangle x:Name="PART_Track" Canvas.Left="4" Canvas.Bottom="0" Panel.ZIndex="0" Height="{TemplateBinding ActualHeight}" Width="6" Fill="{Binding Path=TrackBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
@@ -73,7 +73,7 @@
                                         <Setter.Value>
                                             <ControlTemplate TargetType="{x:Type Button}">
                                                 <Grid>
-                                                    <Border x:Name="Border" Margin="0" Background="{Binding Path=ButtonBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:VerticalModernSlider}}}" BorderThickness="0"/>
+                                                    <Border x:Name="Border" Margin="0" Background="{Binding Path=ButtonBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:VerticalWindows8Slider}}}" BorderThickness="0"/>
                                                 </Grid>
                                                 <ControlTemplate.Triggers>
                                                     <Trigger Property="IsMouseOver" Value="true">

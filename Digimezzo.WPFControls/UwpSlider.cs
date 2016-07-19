@@ -3,7 +3,7 @@ using System.Windows.Media;
 
 namespace Digimezzo.WPFControls
 {
-    public class HorizontalUwpSlider : HorizontalModernSlider
+    public class HorizontalUwpSlider : HorizontalWindows8Slider
     {
         #region Properties
         public Brush ButtonInnerBackground
@@ -25,7 +25,7 @@ namespace Digimezzo.WPFControls
         #endregion
     }
 
-    public class HorizontalUwpBottomSlider : HorizontalModernSlider
+    public class HorizontalUwpBottomSlider : HorizontalWindows8Slider
     {
         #region Properties
         public Brush ButtonInnerBackground
@@ -47,7 +47,7 @@ namespace Digimezzo.WPFControls
         #endregion
     }
 
-    public class VerticalUwpSlider : VerticalModernSlider
+    public class VerticalUwpSlider : VerticalWindows8Slider
     {
         #region Properties
         public Brush ButtonInnerBackground

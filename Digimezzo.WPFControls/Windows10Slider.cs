@@ -2,7 +2,7 @@
 
 namespace Digimezzo.WPFControls
 {
-    public class HorizontalWindows10Slider : HorizontalModernSlider
+    public class HorizontalWindows10Slider : HorizontalWindows8Slider
     {
         #region Construction
         static HorizontalWindows10Slider()
@@ -12,7 +12,7 @@ namespace Digimezzo.WPFControls
         #endregion
     }
 
-    public class VerticalWindows10Slider : VerticalModernSlider
+    public class VerticalWindows10Slider : VerticalWindows8Slider
     {
         #region Construction
         static VerticalWindows10Slider()

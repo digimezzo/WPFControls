@@ -1,0 +1,24 @@
+﻿<Window x:Class="Digimezzo.WPFControls.Tests.Tests.Windows10SliderTest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Digimezzo.WPFControls.Tests.Tests"
+        xmlns:controls="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls"
+        mc:Ignorable="d"
+        Title="Windows10SliderTest" Height="600" Width="800">
+    <StackPanel Margin="20">
+        <Label Content="HorizontalWindows10Slider (ChangeValueWhileDragging = True)"/>
+        <controls:HorizontalWindows10Slider x:Name="HorizontalWindows10SliderTrue" ButtonBackground="Black" TrackBackground="Gray" BarBackground="Blue" Margin="10,0,10,0" ChangeValueWhileDragging="True"/>
+        <TextBox IsHitTestVisible="False" Text="{Binding Path=Value,ElementName=HorizontalWindows10SliderTrue}" HorizontalAlignment="Center" Width="50" Margin="0,10,0,0"/>
+        <Label Content="HorizontalWindows10Slider (ChangeValueWhileDragging = False)" Margin="0,20,0,0"/>
+        <controls:HorizontalWindows10Slider x:Name="HorizontalWindows10SliderFalse" ButtonBackground="Black" TrackBackground="Gray" BarBackground="Blue" Margin="10,0,10,0"/>
+        <TextBox IsHitTestVisible="False" Text="{Binding Path=Value,ElementName=HorizontalWindows10SliderFalse}" HorizontalAlignment="Center" Width="50" Margin="0,10,0,0"/>
+        <Label Content="VerticalWindows10Slider (ChangeValueWhileDragging = True)" Margin="0,20,0,0"/>
+        <controls:VerticalWindows10Slider x:Name="VerticalWindows10SliderTrue" ButtonBackground="Black" TrackBackground="Gray" BarBackground="Blue" Height="100" ChangeValueWhileDragging="True"/>
+        <TextBox IsHitTestVisible="False" Text="{Binding Path=Value,ElementName=VerticalWindows10SliderTrue}" HorizontalAlignment="Center" Width="50" Margin="0,10,0,0"/>
+        <Label Content="VerticalWindows10Slider (ChangeValueWhileDragging = False)" Margin="0,20,0,0"/>
+        <controls:VerticalWindows10Slider x:Name="VerticalWindows10SliderFalse" ButtonBackground="Black" TrackBackground="Gray" BarBackground="Blue" Height="100"/>
+        <TextBox IsHitTestVisible="False" Text="{Binding Path=Value,ElementName=VerticalWindows10SliderFalse}" HorizontalAlignment="Center" Width="50" Margin="0,10,0,0"/>
+    </StackPanel>
+</Window>

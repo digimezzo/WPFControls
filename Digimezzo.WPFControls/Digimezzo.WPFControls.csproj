@@ -65,7 +65,7 @@
     <Compile Include="Helpers\VisualTree.cs" />
     <Compile Include="LabelToLower.cs" />
     <Compile Include="LabelToUpper.cs" />
-    <Compile Include="ModernSlider.cs" />
+    <Compile Include="Windows8Slider.cs" />
     <Compile Include="MultiPanePanel.cs" />
     <Compile Include="MultiSelectListBox.cs" />
     <Compile Include="Native\Constants.cs" />
@@ -120,7 +120,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Themes\ModernSlider.xaml">
+    <Page Include="Themes\Windows8Slider.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
