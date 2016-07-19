@@ -15,9 +15,9 @@
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/ToggleSwitch.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/MultiPanePanel.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/UwpSlider.xaml" />
-        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Windows8Window.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/BorderlessWindows8Window.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Windows10Slider.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Windows10ToggleSwitch.xaml" />
-        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Windows10Window.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/BorderlessWindows10Window.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

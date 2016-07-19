@@ -170,11 +170,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Themes\Windows10Window.xaml">
+    <Page Include="Themes\BorderlessWindows10Window.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Themes\Windows8Window.xaml">
+    <Page Include="Themes\BorderlessWindows8Window.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
