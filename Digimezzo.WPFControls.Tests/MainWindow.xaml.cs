@@ -61,5 +61,11 @@ namespace Digimezzo.WPFControls.Tests
             var win = new UWPSliderTest();
             win.Show();
         }
+
+        private void MultiPanePanelTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new MultiPanePanelTest();
+            win.Show();
+        }
     }
 }

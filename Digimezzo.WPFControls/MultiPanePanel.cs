@@ -44,6 +44,12 @@ namespace Digimezzo.WPFControls
             set { SetValue(SeparatorMarginTopProperty, value); }
         }
 
+        public int SeparatorMarginBottom
+        {
+            get { return Convert.ToInt32(GetValue(SeparatorMarginBottomProperty)); }
+            set { SetValue(SeparatorMarginBottomProperty, value); }
+        }
+
         public int ContentResizeDelay
         {
             get { return Convert.ToInt32(GetValue(ResizeContentDelayProperty)); }
@@ -109,6 +115,7 @@ namespace Digimezzo.WPFControls
         public static readonly DependencyProperty IsRightPaneCollapsedProperty = DependencyProperty.Register("IsRightPaneCollapsed", typeof(bool), typeof(MultiPanePanel), new PropertyMetadata(false));
         public static readonly DependencyProperty CanResizeProperty = DependencyProperty.Register("CanResize", typeof(bool), typeof(MultiPanePanel), new PropertyMetadata(true));
         public static readonly DependencyProperty SeparatorMarginTopProperty = DependencyProperty.Register("SeparatorMarginTop", typeof(int), typeof(MultiPanePanel), new PropertyMetadata(0));
+        public static readonly DependencyProperty SeparatorMarginBottomProperty = DependencyProperty.Register("SeparatorMarginBottom", typeof(int), typeof(MultiPanePanel), new PropertyMetadata(0));
         public static readonly DependencyProperty ResizeContentDelayProperty = DependencyProperty.Register("ResizeContentDelay", typeof(int), typeof(MultiPanePanel), new PropertyMetadata(0));
         public static readonly DependencyProperty ResizeGripWidthProperty = DependencyProperty.Register("ResizeGripWidth", typeof(object), typeof(MultiPanePanel), new PropertyMetadata(5.0));
         public static readonly DependencyProperty LeftPaneContentProperty = DependencyProperty.Register("LeftPaneContent", typeof(object), typeof(MultiPanePanel), new PropertyMetadata(null));
@@ -144,8 +151,8 @@ namespace Digimezzo.WPFControls
             this.separatorLeft = (Border)GetTemplateChild("PART_SeparatorLeft");
             this.separatorRight = (Border)GetTemplateChild("PART_SeparatorRight");
 
-            this.separatorLeft.Margin = new Thickness(0, this.SeparatorMarginTop, 0, 0);
-            this.separatorRight.Margin = new Thickness(0, this.SeparatorMarginTop, 0, 0);
+            this.separatorLeft.Margin = new Thickness(0, this.SeparatorMarginTop, 0, this.SeparatorMarginBottom);
+            this.separatorRight.Margin = new Thickness(0, this.SeparatorMarginTop, 0, this.SeparatorMarginBottom);
 
             base.SizeChanged += this.MultiPanePanel_SizeChanged;
             base.MouseLeftButtonUp += this.MultiPanePanel_MouseLeftButtonUp;
