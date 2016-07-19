@@ -37,5 +37,11 @@ namespace Digimezzo.WPFControls.Tests
             var win = new BorderlessWindows10WindowTest();
             win.Show();
         }
+
+        private void LabelTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new LabelTest();
+            win.Show();
+        }
     }
 }

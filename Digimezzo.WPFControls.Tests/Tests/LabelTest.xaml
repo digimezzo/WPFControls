@@ -1,4 +1,4 @@
-﻿<controls:BorderlessWindows10Window x:Class="Digimezzo.WPFControls.Tests.Tests.BorderlessWindows10WindowTest"
+﻿<Window x:Class="Digimezzo.WPFControls.Tests.Tests.LabelTest"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,9 +6,11 @@
         xmlns:local="clr-namespace:Digimezzo.WPFControls.Tests.Tests"
         xmlns:controls="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls"
         mc:Ignorable="d"
-        Title="Windows10WindowTest" Height="300" Width="300"
-        Background="White">
-    <Grid>
-        <TextBlock Text="BorderlessWindows10Window" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-    </Grid>
-</controls:BorderlessWindows10Window>
+        Title="LabelTest" Height="300" Width="300">
+    <StackPanel>
+        <Label Content="LabelToLower:"/>
+        <controls:LabelToLower Content="Hello world" FontSize="20"/>
+        <Label Content="LabelToUpper:" Margin="0,20,0,0"/>
+        <controls:LabelToUpper Content="Hello world" FontSize="20"/>
+    </StackPanel>
+</Window>

@@ -61,6 +61,9 @@
     <Compile Include="Tests\BorderlessWindows8WindowTest.xaml.cs">
       <DependentUpon>BorderlessWindows8WindowTest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tests\LabelTest.xaml.cs">
+      <DependentUpon>LabelTest.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -78,6 +81,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Tests\BorderlessWindows8WindowTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tests\LabelTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

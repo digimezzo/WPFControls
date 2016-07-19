@@ -62,8 +62,6 @@
     <Compile Include="Converters\StringToLowerConverter.cs" />
     <Compile Include="Converters\StringToUpperConverter.cs" />
     <Compile Include="Enums\SlideDirection.cs" />
-    <Compile Include="FlatButton.cs" />
-    <Compile Include="FlatToggleButton.cs" />
     <Compile Include="Helpers\VisualTree.cs" />
     <Compile Include="LabelToLower.cs" />
     <Compile Include="LabelToUpper.cs" />
@@ -110,14 +108,6 @@
     <Resource Include="Licenses\MahApps.Metro.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Themes\FlatButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\FlatToggleButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
