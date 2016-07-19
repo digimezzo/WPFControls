@@ -67,6 +67,9 @@
     <Compile Include="Tests\MultiPanePanelTest.xaml.cs">
       <DependentUpon>MultiPanePanelTest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tests\MultiSelectListBoxTest.xaml.cs">
+      <DependentUpon>MultiSelectListBoxTest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tests\UWPSliderTest.xaml.cs">
       <DependentUpon>UWPSliderTest.xaml</DependentUpon>
     </Compile>
@@ -101,6 +104,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Tests\MultiPanePanelTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tests\MultiSelectListBoxTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

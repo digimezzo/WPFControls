@@ -67,5 +67,11 @@ namespace Digimezzo.WPFControls.Tests
             var win = new MultiPanePanelTest();
             win.Show();
         }
+
+        private void MultiSelectListBoxTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new MultiSelectListBoxTest();
+            win.Show();
+        }
     }
 }

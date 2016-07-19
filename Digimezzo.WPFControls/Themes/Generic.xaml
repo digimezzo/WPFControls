@@ -7,8 +7,6 @@
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/LabelToUpper.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Windows8Slider.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/ProgressRing.xaml" />
-        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/RoundButton.xaml" />
-        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/RoundToggleButton.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/SlidingContentControl.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/ToggleSwitch.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/MultiPanePanel.xaml" />

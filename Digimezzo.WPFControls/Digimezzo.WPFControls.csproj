@@ -84,8 +84,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="RoundButton.cs" />
-    <Compile Include="RoundToggleButton.cs" />
     <Compile Include="SlidingContentControl.cs" />
     <Compile Include="ToggleSwitch.cs" />
     <Compile Include="UWPSlider.cs" />
@@ -129,14 +127,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\ProgressRing.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\RoundButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\RoundToggleButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
