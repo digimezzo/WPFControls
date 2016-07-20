@@ -73,5 +73,11 @@ namespace Digimezzo.WPFControls.Tests
             var win = new MultiSelectListBoxTest();
             win.Show();
         }
+
+        private void ProgressRingTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new ProgressRingTest();
+            win.Show();
+        }
     }
 }
