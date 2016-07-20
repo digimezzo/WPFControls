@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Digimezzo.WPFControls.Tests"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="400" Width="525">
     <StackPanel>
         <Button x:Name="BorderlessWindows8WindowTestButton" Margin="10,5,10,5" Click="BorderlessWindows8WindowTestButton_Click" Content="BorderlessWindows8Window Test"/>
         <Button x:Name="BorderlessWindows10WindowTestButton" Margin="10,5,10,5" Click="BorderlessWindows10WindowTestButton_Click" Content="BorderlessWindows10Window Test"/>
@@ -16,5 +16,6 @@
         <Button x:Name="MultiPanePanelTestButton" Margin="10,5,10,5" Click="MultiPanePanelTestButton_Click" Content="MultiPanePanel Test"/>
         <Button x:Name="MultiSelectListBoxTestButton" Margin="10,5,10,5" Click="MultiSelectListBoxTestButton_Click" Content="MultiSelectListBox Test"/>
         <Button x:Name="ProgressRingTestButton" Margin="10,5,10,5" Click="ProgressRingTestButton_Click" Content="ProgressRing Test"/>
+        <Button x:Name="SlidingContentControlTestButton" Margin="10,5,10,5" Click="SlidingContentControlTestButton_Click" Content="SlidingContentControl Test"/>
     </StackPanel>
 </Window>

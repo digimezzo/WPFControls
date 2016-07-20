@@ -79,5 +79,11 @@ namespace Digimezzo.WPFControls.Tests
             var win = new ProgressRingTest();
             win.Show();
         }
+
+        private void SlidingContentControlTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new SlidingContentControlTest();
+            win.Show();
+        }
     }
 }

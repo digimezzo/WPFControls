@@ -1,0 +1,18 @@
+﻿<Window x:Class="Digimezzo.WPFControls.Tests.Tests.SlidingContentControlTest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Digimezzo.WPFControls.Tests.Tests"
+        xmlns:controls="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls"
+        mc:Ignorable="d"
+        Title="SlidingContentControlTest" Height="300" Width="300">
+    <StackPanel>
+        <controls:SlidingContentControl x:Name="ContentControl" Height="200"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
+            <Button x:Name="Content1Button" Content="Content 1" Margin="10" Padding="5,0,5,0" Click="Content1Button_Click"/>
+            <Button x:Name="Content2Button" Content="Content 2" Margin="10" Padding="5,0,5,0" Click="Content2Button_Click"/>
+            <Button x:Name="Content3Button" Content="Content 3" Margin="10" Padding="5,0,5,0" Click="Content3Button_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
