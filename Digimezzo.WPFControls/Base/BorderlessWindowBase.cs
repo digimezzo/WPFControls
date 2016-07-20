@@ -147,11 +147,11 @@ namespace Digimezzo.WPFControls.Base
                 this.closeButton.Click += CloseButton_Click;
             }
 
-            this.MouseLeftButtonDown -= WindowBase_MouseLeftButtonDown;
-            this.MouseLeftButtonDown += WindowBase_MouseLeftButtonDown;
+            this.MouseLeftButtonDown -= BorderlessWindowBase_MouseLeftButtonDown;
+            this.MouseLeftButtonDown += BorderlessWindowBase_MouseLeftButtonDown;
 
-            this.SizeChanged -= WindowBase_SizeChanged;
-            this.SizeChanged += WindowBase_SizeChanged;
+            this.SizeChanged -= BorderlessWindowBase_SizeChanged;
+            this.SizeChanged += BorderlessWindowBase_SizeChanged;
 
             this.InitializeWindow();
         }
@@ -182,8 +182,8 @@ namespace Digimezzo.WPFControls.Base
             //this.windowCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
 
             // Handlers
-            this.SizeChanged -= this.WindowBase_SizeChanged;
-            this.SizeChanged += this.WindowBase_SizeChanged;
+            this.SizeChanged -= this.BorderlessWindowBase_SizeChanged;
+            this.SizeChanged += this.BorderlessWindowBase_SizeChanged;
 
             // Update the Window for the first time
             this.UpdateWindow();
@@ -241,7 +241,7 @@ namespace Digimezzo.WPFControls.Base
         }
 
 
-        protected virtual void WindowBase_SizeChanged(object sender, SizeChangedEventArgs e)
+        protected virtual void BorderlessWindowBase_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (this.WindowState == System.Windows.WindowState.Normal && this.previousWindowState == System.Windows.WindowState.Maximized)
             {
@@ -253,7 +253,7 @@ namespace Digimezzo.WPFControls.Base
             this.UpdateWindow();
         }
 
-        private void WindowBase_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void BorderlessWindowBase_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Point point = Mouse.GetPosition(this);
 
