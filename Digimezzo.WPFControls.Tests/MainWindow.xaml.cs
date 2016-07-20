@@ -85,5 +85,11 @@ namespace Digimezzo.WPFControls.Tests
             var win = new SlidingContentControlTest();
             win.Show();
         }
+
+        private void ToggleSwitchTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new ToggleSwitchTest();
+            win.Show();
+        }
     }
 }

@@ -76,6 +76,9 @@
     <Compile Include="Tests\SlidingContentControlTest.xaml.cs">
       <DependentUpon>SlidingContentControlTest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tests\ToggleSwitchTest.xaml.cs">
+      <DependentUpon>ToggleSwitchTest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tests\UWPSliderTest.xaml.cs">
       <DependentUpon>UWPSliderTest.xaml</DependentUpon>
     </Compile>
@@ -122,6 +125,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Tests\SlidingContentControlTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tests\ToggleSwitchTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

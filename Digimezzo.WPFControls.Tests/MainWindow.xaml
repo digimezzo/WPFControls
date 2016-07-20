@@ -17,5 +17,6 @@
         <Button x:Name="MultiSelectListBoxTestButton" Margin="10,5,10,5" Click="MultiSelectListBoxTestButton_Click" Content="MultiSelectListBox Test"/>
         <Button x:Name="ProgressRingTestButton" Margin="10,5,10,5" Click="ProgressRingTestButton_Click" Content="ProgressRing Test"/>
         <Button x:Name="SlidingContentControlTestButton" Margin="10,5,10,5" Click="SlidingContentControlTestButton_Click" Content="SlidingContentControl Test"/>
+        <Button x:Name="ToggleSwitchTestButton" Margin="10,5,10,5" Click="ToggleSwitchTestButton_Click" Content="ToggleSwitch Test"/>
     </StackPanel>
 </Window>
