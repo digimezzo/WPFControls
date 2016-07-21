@@ -157,8 +157,8 @@ namespace Digimezzo.WPFControls.Base
         }
         #endregion
 
-        #region Private
-        private void InitializeWindow()
+        #region Public
+        protected void InitializeWindow()
         {
             // Create the WindowChrome
             this.windowChrome = new WindowChrome
@@ -188,7 +188,7 @@ namespace Digimezzo.WPFControls.Base
             // Update the Window for the first time
             this.UpdateWindow();
         }
-        private void UpdateWindow()
+        protected void UpdateWindow()
         {
             if (this.ResizeMode == ResizeMode.CanResize || this.ResizeMode == ResizeMode.CanResizeWithGrip)
             {
