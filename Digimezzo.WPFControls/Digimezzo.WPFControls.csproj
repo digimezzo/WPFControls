@@ -65,6 +65,7 @@
     <Compile Include="Helpers\VisualTree.cs" />
     <Compile Include="LabelToLower.cs" />
     <Compile Include="LabelToUpper.cs" />
+    <Compile Include="SharedAssemblyInfo.cs" />
     <Compile Include="Windows8Slider.cs" />
     <Compile Include="MultiPanePanel.cs" />
     <Compile Include="MultiSelectListBox.cs" />
