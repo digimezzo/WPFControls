@@ -1,6 +1,6 @@
 # WPFControls
 
-[![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg?maxAge=2592000)]()
+[![Release](https://img.shields.io/github/release/WPFControls/WPFControls.svg?style=flat-square)](https://github.com/WPFControls/WPFControls/releases/latest)
 
 WPFControls contains some simple controls which can be used in WPF projects.
 Their usage is best described by the tests which are included in the project.
