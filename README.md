@@ -1,6 +1,7 @@
 # WPFControls
 
 [![Release](https://img.shields.io/github/release/digimezzo/WPFControls.svg?style=flat-square)](https://github.com/digimezzo/WPFControls/releases/latest)
+[![Issues](https://img.shields.io/github/issues/digimezzo/WPFControls.svg?style=flat-square)](https://github.com/digimezzo/WPFControls/issues)
 
 WPFControls contains some simple controls which can be used in WPF projects.
 Their usage is best described by the tests which are included in the project.
