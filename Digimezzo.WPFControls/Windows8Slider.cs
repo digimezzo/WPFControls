@@ -26,6 +26,12 @@ namespace Digimezzo.WPFControls
             set { SetValue(ChangeValueWhileDraggingProperty, value); }
         }
 
+        public double Minimum
+        {
+            get { return Convert.ToDouble(GetValue(MinimumProperty)); }
+            set { SetValue(MinimumProperty, value); }
+        }
+
         public double Maximum
         {
             get { return Convert.ToDouble(GetValue(MaximumProperty)); }
@@ -66,7 +72,8 @@ namespace Digimezzo.WPFControls
 
         #region Dependency Properties
         public static readonly DependencyProperty ChangeValueWhileDraggingProperty = DependencyProperty.Register("ChangeValueWhileDragging", typeof(bool), typeof(Windows8Slider), new PropertyMetadata(false));
-        public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register("Maximum", typeof(double), typeof(Windows8Slider), new PropertyMetadata(100.0, IsMaximumChangedCallback));
+        public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register("Minimum", typeof(double), typeof(Windows8Slider), new PropertyMetadata(0.0, IsMinMaxChangedCallback));
+        public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register("Maximum", typeof(double), typeof(Windows8Slider), new PropertyMetadata(100.0, IsMinMaxChangedCallback));
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double), typeof(Windows8Slider), new PropertyMetadata(0.0, IsValueChangedCallback));
         public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(double), typeof(Windows8Slider), new PropertyMetadata(0.0));
         public static readonly DependencyProperty TrackBackgroundProperty = DependencyProperty.Register("TrackBackground", typeof(Brush), typeof(Windows8Slider), new PropertyMetadata(null));
@@ -156,7 +163,7 @@ namespace Digimezzo.WPFControls
         #endregion
 
         #region Callbacks
-        private static void IsMaximumChangedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        private static void IsMinMaxChangedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             Windows8Slider slider = sender as Windows8Slider;
             slider.CalculatePosition();
@@ -204,9 +211,9 @@ namespace Digimezzo.WPFControls
             {
                 this.isCalculating = true;
 
-                if (this.Maximum > 0 && this.ActualWidth > 0)
+                if ((this.Maximum - this.Minimum) > 0 && this.ActualWidth > 0)
                 {
-                    this.Position = (this.Value / this.Maximum) * this.ActualWidth;
+                    this.Position = ((this.Value -this.Minimum) / (this.Maximum - this.Minimum)) * this.ActualWidth;
                 }
                 else
                 {
@@ -223,9 +230,9 @@ namespace Digimezzo.WPFControls
             {
                 this.isCalculating = true;
 
-                if (this.Maximum > 0 && this.ActualWidth > 0)
+                if (this.ActualWidth > 0)
                 {
-                    this.Value = (this.Position * this.Maximum) / this.ActualWidth;
+                    this.Value = ((this.Position * (this.Maximum - this.Minimum)) / this.ActualWidth) + this.Minimum;
                 }
                 else
                 {
@@ -271,9 +278,9 @@ namespace Digimezzo.WPFControls
             {
                 this.isCalculating = true;
 
-                if (this.Maximum > 0 && this.ActualHeight > 0)
+                if ((this.Maximum - this.Minimum) > 0 && this.ActualHeight > 0)
                 {
-                    this.Position = (this.Value / this.Maximum) * this.ActualHeight;
+                    this.Position = ((this.Value - this.Minimum) / (this.Maximum - this.Minimum)) * this.ActualHeight;
                 }
                 else
                 {
@@ -292,7 +299,7 @@ namespace Digimezzo.WPFControls
 
                 if (this.ActualHeight > 0)
                 {
-                    this.Value = (this.Position * this.Maximum) / this.ActualHeight;
+                    this.Value = ((this.Position * (this.Maximum - this.Minimum)) / this.ActualHeight) + this.Minimum;
                 }
                 else
                 {

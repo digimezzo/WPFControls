@@ -91,5 +91,11 @@ namespace Digimezzo.WPFControls.Tests
             var win = new ToggleSwitchTest();
             win.Show();
         }
+
+        private void VirtualizingWrapPanelTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new VirtualizingWrapPanelTest();
+            win.Show();
+        }
     }
 }

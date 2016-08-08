@@ -9,13 +9,13 @@
         Title="Windows10SliderTest" Height="600" Width="800">
     <StackPanel Margin="20">
         <Label Content="HorizontalWindows10Slider (ChangeValueWhileDragging = True)"/>
-        <controls:HorizontalWindows10Slider x:Name="HorizontalWindows10SliderTrue" ButtonBackground="Black" TrackBackground="Gray" BarBackground="Blue" Margin="10,0,10,0" ChangeValueWhileDragging="True"/>
+        <controls:HorizontalWindows10Slider x:Name="HorizontalWindows10SliderTrue" ButtonBackground="Black" TrackBackground="Gray" Minimum="-20" Maximum="20" BarBackground="Blue" Margin="10,0,10,0" ChangeValueWhileDragging="True"/>
         <TextBox IsHitTestVisible="False" Text="{Binding Path=Value,ElementName=HorizontalWindows10SliderTrue}" HorizontalAlignment="Center" Width="50" Margin="0,10,0,0"/>
         <Label Content="HorizontalWindows10Slider (ChangeValueWhileDragging = False)" Margin="0,20,0,0"/>
         <controls:HorizontalWindows10Slider x:Name="HorizontalWindows10SliderFalse" ButtonBackground="Black" TrackBackground="Gray" BarBackground="Blue" Margin="10,0,10,0"/>
         <TextBox IsHitTestVisible="False" Text="{Binding Path=Value,ElementName=HorizontalWindows10SliderFalse}" HorizontalAlignment="Center" Width="50" Margin="0,10,0,0"/>
         <Label Content="VerticalWindows10Slider (ChangeValueWhileDragging = True)" Margin="0,20,0,0"/>
-        <controls:VerticalWindows10Slider x:Name="VerticalWindows10SliderTrue" ButtonBackground="Black" TrackBackground="Gray" BarBackground="Blue" Height="100" ChangeValueWhileDragging="True"/>
+        <controls:VerticalWindows10Slider x:Name="VerticalWindows10SliderTrue" ButtonBackground="Black" TrackBackground="Gray" Minimum="-45" Maximum="20" BarBackground="Blue" Height="100" ChangeValueWhileDragging="True"/>
         <TextBox IsHitTestVisible="False" Text="{Binding Path=Value,ElementName=VerticalWindows10SliderTrue}" HorizontalAlignment="Center" Width="50" Margin="0,10,0,0"/>
         <Label Content="VerticalWindows10Slider (ChangeValueWhileDragging = False)" Margin="0,20,0,0"/>
         <controls:VerticalWindows10Slider x:Name="VerticalWindows10SliderFalse" ButtonBackground="Black" TrackBackground="Gray" BarBackground="Blue" Height="100"/>

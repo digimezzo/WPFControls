@@ -82,6 +82,9 @@
     <Compile Include="Tests\UWPSliderTest.xaml.cs">
       <DependentUpon>UWPSliderTest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tests\VirtualizingWrapPanelTest.xaml.cs">
+      <DependentUpon>VirtualizingWrapPanelTest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tests\Windows8SliderTest.xaml.cs">
       <DependentUpon>Windows8SliderTest.xaml</DependentUpon>
     </Compile>
@@ -136,6 +139,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Tests\VirtualizingWrapPanelTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Tests\Windows8SliderTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -177,6 +184,11 @@
       <Project>{14cab61b-42ea-4dae-b79b-65a246d2a585}</Project>
       <Name>Digimezzo.WPFControls</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Tests\CS.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,21 @@
+﻿<Window x:Class="Digimezzo.WPFControls.Tests.Tests.VirtualizingWrapPanelTest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Digimezzo.WPFControls.Tests.Tests"
+        xmlns:controls="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls"
+        mc:Ignorable="d"
+        Title="VirtualizingWrapPanelTest" Height="400" Width="550">
+    <Grid>
+        <ListBox x:Name="Box">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <!-- ScrollOffset is the speed at which VirtualizingWrapPanel scrolls -->
+                    <controls:VirtualizingWrapPanel ChildWidth="100" ChildHeight="120" ScrollOffset="50"/>
+                    <!--<WrapPanel Width="500"/>-->
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
+    </Grid>
+</Window>
