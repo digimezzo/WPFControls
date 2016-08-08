@@ -18,6 +18,7 @@ Their usage is best described by the tests which are included in the project.
 - **SlidingContentControl**: ContentControl that slides and fades in its content on content change
 - **ToggleSwitch**: custom toggle switch
 - **UWPSlider**: slider that has a UWP look and feel
+- **VirtualizingWrapPanel**: WrapPanel that virtualizes its child collection
 - **Windows8Slider**:  slider that has a Windows 8 look and feel
 - **Windows10Slider**: slider that has a Windows 10 look and feel
 - **Windows10ToggleSwitch**: toggle switch with Windows 10 look and feel
