@@ -1,6 +1,10 @@
 # WPFControls
+
 WPFControls contains some simple controls which can be used in WPF projects.
 Their usage is best described by the tests which are included in the project.
+
+[![Release](https://img.shields.io/github/release/digimezzo/WPFControls.svg?style=flat-square)](https://github.com/digimezzo/WPFControls/releases/latest)
+[![Issues](https://img.shields.io/github/issues/digimezzo/WPFControls.svg?style=flat-square)](https://github.com/digimezzo/WPFControls/issues)
 
 ### Controls ###
 
@@ -18,4 +22,4 @@ Their usage is best described by the tests which are included in the project.
 - **Windows10Slider**: slider that has a Windows 10 look and feel
 - **Windows10ToggleSwitch**: toggle switch with Windows 10 look and feel
 
-These controls are used in my other projects [Dopamine](https://github.com/digimezzo/Dopamine) and [Knowte](https://github.com/digimezzo/Knowte).
+These controls are showcased in my other projects [Dopamine](https://github.com/digimezzo/Dopamine) and [Knowte](https://github.com/digimezzo/Knowte).
