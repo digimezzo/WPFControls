@@ -19,6 +19,7 @@ namespace Digimezzo.WPFControls.Base
         protected Border windowBorder;
         protected ContentPresenter windowCommands;
         protected WindowState previousWindowState; // Holds the previous WindowState
+        protected Thickness previousBorderThickness; // Holds the previous BorderThickness
         private WindowChrome windowChrome;
         #endregion
 
@@ -185,6 +186,9 @@ namespace Digimezzo.WPFControls.Base
             this.SizeChanged -= this.BorderlessWindowBase_SizeChanged;
             this.SizeChanged += this.BorderlessWindowBase_SizeChanged;
 
+            // Store the previous BorderThickness
+            this.previousBorderThickness = this.windowBorder.BorderThickness;
+
             // Update the Window for the first time
             this.UpdateWindow();
         }
@@ -208,7 +212,7 @@ namespace Digimezzo.WPFControls.Base
             else
             {
                 this.windowChrome.GlassFrameThickness = new Thickness(1, 0, 0, 0);
-                this.windowBorder.BorderThickness = new Thickness(0);
+                this.windowBorder.BorderThickness = this.previousBorderThickness;
                 this.maximizeButton.ToolTip = MaximizeToolTip;
             }
         }
@@ -239,7 +243,6 @@ namespace Digimezzo.WPFControls.Base
         {
             SystemCommands.CloseWindow(this);
         }
-
 
         protected virtual void BorderlessWindowBase_SizeChanged(object sender, SizeChangedEventArgs e)
         {
