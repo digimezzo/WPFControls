@@ -1,42 +1,221 @@
-﻿using System.Windows;
-using System.Windows.Media;
+﻿using Digimezzo.WPFControls.Base;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Digimezzo.WPFControls
 {
-    public class HorizontalUWPSlider : HorizontalWindows8Slider
+    public abstract class UWPSliderBase : SliderBase
     {
+        #region Variables
+        protected Canvas sliderCanvasHelper;
+        #endregion
+
         #region Properties
-        public Brush ButtonInnerBackground
+        public double BarLength
         {
-            get { return (Brush)GetValue(ButtonInnerBackgroundProperty); }
-            set { SetValue(ButtonInnerBackgroundProperty, value); }
+            get { return (double)GetValue(BarLengthProperty); }
+            set { SetValue(BarLengthProperty, value); }
+        }
+
+        public double TrackLength
+        {
+            get { return (double)GetValue(TrackLengthProperty); }
+            set { SetValue(TrackLengthProperty, value); }
         }
         #endregion
 
         #region Dependency Properties
-        public static readonly DependencyProperty ButtonInnerBackgroundProperty = DependencyProperty.Register("ButtonInnerBackground", typeof(Brush), typeof(HorizontalUWPSlider), new PropertyMetadata(null));
+        public static readonly DependencyProperty BarLengthProperty = DependencyProperty.Register("BarLength", typeof(double), typeof(UWPSliderBase), new PropertyMetadata(0.0));
+        public static readonly DependencyProperty TrackLengthProperty = DependencyProperty.Register("TrackLength", typeof(double), typeof(UWPSliderBase), new PropertyMetadata(0.0));
         #endregion
 
+        #region Overrides
+        public override void OnApplyTemplate()
+        {
+            this.sliderCanvasHelper = (Canvas)GetTemplateChild("PART_CanvasHelper");
+
+            base.Loaded += LoadedHandler;
+
+            base.OnApplyTemplate();  
+        }
+
+        private void LoadedHandler(object sender, RoutedEventArgs e)
+        {
+            this.InitializePosition();
+        }
+        #endregion
+
+        #region Private
+        protected abstract void InitializePosition();
+        #endregion
+    }
+    public class HorizontalUWPSlider : UWPSliderBase
+    {
         #region Construction
         static HorizontalUWPSlider()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(HorizontalUWPSlider), new FrameworkPropertyMetadata(typeof(HorizontalUWPSlider)));
         }
         #endregion
+
+        #region Overrides
+        protected override void UpdatePosition()
+        {
+            this.Position = Mouse.GetPosition(this.sliderCanvas).X - this.sliderButton.ActualWidth / 2;
+
+            if (this.Position > this.sliderCanvasHelper.ActualWidth)
+            {
+                this.Position = this.sliderCanvasHelper.ActualWidth;
+            }
+
+            if (this.Position < 0.0)
+            {
+                this.Position = 0.0;
+            }
+
+            this.BarLength = this.Position;
+            this.TrackLength = this.sliderCanvasHelper.ActualWidth - this.Position;
+        }
+
+        protected override void CalculatePosition()
+        {
+            if (this.sliderCanvasHelper == null) return;
+
+            if (!this.isCalculating)
+            {
+                this.isCalculating = true;
+
+                if ((this.Maximum - this.Minimum) > 0)
+                {
+                    this.Position = ((this.Value - this.Minimum) / (this.Maximum - this.Minimum)) * this.sliderCanvasHelper.ActualWidth;
+                }
+                else
+                {
+                    this.Position = 0;
+                }
+
+                this.BarLength = this.Position;
+                this.TrackLength = this.sliderCanvasHelper.ActualWidth - this.Position;
+
+                this.isCalculating = false;
+            }
+        }
+
+        protected override void CalculateValue()
+        {
+            if (this.sliderCanvasHelper == null) return;
+
+            if (!this.isCalculating)
+            {
+                this.isCalculating = true;
+
+                if (this.ActualWidth > 0)
+                {
+                    this.Value = ((this.Position * (this.Maximum - this.Minimum)) / this.sliderCanvasHelper.ActualWidth) + this.Minimum;
+                }
+                else
+                {
+                    this.Value = 0;
+                }
+
+                this.isCalculating = false;
+            }
+        }
+
+        protected override void InitializePosition()
+        {
+            this.BarLength = 0.0;
+            this.TrackLength = this.sliderCanvas.ActualWidth - this.sliderButton.ActualWidth;
+        }
+        #endregion
     }
 
-    public class HorizontalUWPBottomSlider : HorizontalWindows8Slider
+    public class VerticalUWPSlider : UWPSliderBase
     {
-        #region Properties
-        public Brush ButtonInnerBackground
+        #region Construction
+        static VerticalUWPSlider()
         {
-            get { return (Brush)GetValue(ButtonInnerBackgroundProperty); }
-            set { SetValue(ButtonInnerBackgroundProperty, value); }
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(VerticalUWPSlider), new FrameworkPropertyMetadata(typeof(VerticalUWPSlider)));
         }
         #endregion
 
-        #region Dependency Properties
-        public static readonly DependencyProperty ButtonInnerBackgroundProperty = DependencyProperty.Register("ButtonInnerBackground", typeof(Brush), typeof(HorizontalUWPBottomSlider), new PropertyMetadata(null));
+        #region Overrides
+        protected override void UpdatePosition()
+        {
+            this.Position = this.sliderCanvas.ActualHeight - Mouse.GetPosition(this.sliderCanvas).Y - this.sliderButton.ActualWidth / 2;
+
+            if (this.Position > this.sliderCanvasHelper.ActualHeight)
+            {
+                this.Position = this.sliderCanvasHelper.ActualHeight;
+            }
+
+            if (this.Position < 0.0)
+            {
+                this.Position = 0.0;
+            }
+
+            this.BarLength = this.Position;
+            this.TrackLength = this.sliderCanvasHelper.ActualHeight - this.Position;
+        }
+
+        protected override void CalculatePosition()
+        {
+            if (this.sliderCanvasHelper == null) return;
+
+            if (!this.isCalculating)
+            {
+                this.isCalculating = true;
+
+                if ((this.Maximum - this.Minimum) > 0)
+                {
+                    this.Position = ((this.Value - this.Minimum) / (this.Maximum - this.Minimum)) * this.sliderCanvasHelper.ActualHeight;
+                }
+                else
+                {
+                    this.Position = 0;
+                }
+
+                this.BarLength = this.Position;
+                this.TrackLength = this.sliderCanvasHelper.ActualHeight - this.Position;
+
+                this.isCalculating = false;
+            }
+        }
+
+        protected override void CalculateValue()
+        {
+            if (this.sliderCanvasHelper == null) return;
+
+            if (!this.isCalculating)
+            {
+                this.isCalculating = true;
+
+                if (this.sliderCanvasHelper.ActualHeight > 0)
+                {
+                    this.Value = ((this.Position * (this.Maximum - this.Minimum)) / this.sliderCanvasHelper.ActualHeight) + this.Minimum;
+                }
+                else
+                {
+                    this.Value = 0;
+                }
+
+                this.isCalculating = false;
+            }
+        }
+
+        protected override void InitializePosition()
+        {
+            this.BarLength = 0.0;
+            this.TrackLength = this.sliderCanvas.ActualHeight - this.sliderButton.ActualHeight;
+        }
+        #endregion
+    }
+
+    public class HorizontalUWPBottomSlider : HorizontalUWPSlider
+    {
+        #region Variables
+        protected Border sliderBorderHelper;
         #endregion
 
         #region Construction
@@ -45,26 +224,69 @@ namespace Digimezzo.WPFControls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(HorizontalUWPBottomSlider), new FrameworkPropertyMetadata(typeof(HorizontalUWPBottomSlider)));
         }
         #endregion
-    }
 
-    public class VerticalUWPSlider : VerticalWindows8Slider
-    {
-        #region Properties
-        public Brush ButtonInnerBackground
+        #region Overrides
+        public override void OnApplyTemplate()
         {
-            get { return (Brush)GetValue(ButtonInnerBackgroundProperty); }
-            set { SetValue(ButtonInnerBackgroundProperty, value); }
+            base.OnApplyTemplate();
+
+            this.sliderBorderHelper = (Border)GetTemplateChild("PART_BorderHelper");
         }
-        #endregion
 
-        #region Dependency Properties
-        public static readonly DependencyProperty ButtonInnerBackgroundProperty = DependencyProperty.Register("ButtonInnerBackground", typeof(Brush), typeof(VerticalUWPSlider), new PropertyMetadata(null));
-        #endregion
-
-        #region Construction
-        static VerticalUWPSlider()
+        protected override void UpdatePosition()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(VerticalUWPSlider), new FrameworkPropertyMetadata(typeof(VerticalUWPSlider)));
+            this.Position = Mouse.GetPosition(this.sliderCanvas).X - this.sliderButton.ActualWidth / 2;
+
+            if (this.Position > this.sliderCanvasHelper.ActualWidth)
+            {
+                this.Position = this.sliderCanvasHelper.ActualWidth;
+            }
+
+            if (this.Position < 0.0)
+            {
+                this.Position = 0.0;
+            }
+
+            this.BarLength = this.Position + this.sliderButton.ActualWidth / 2;
+            this.TrackLength = this.sliderCanvas.ActualWidth - this.Position - this.sliderButton.ActualWidth / 2;
+
+            if(this.Position < this.sliderCanvas.ActualWidth / 2)
+            {
+                this.sliderBorderHelper.CornerRadius = new CornerRadius(9, 9, 9, 0);
+            }else
+            {
+                this.sliderBorderHelper.CornerRadius = new CornerRadius(9, 9, 0, 9);
+            }
+        }
+
+        protected override void CalculatePosition()
+        {
+            if (this.sliderCanvasHelper == null) return;
+
+            if (!this.isCalculating)
+            {
+                this.isCalculating = true;
+
+                if ((this.Maximum - this.Minimum) > 0)
+                {
+                    this.Position = ((this.Value - this.Minimum) / (this.Maximum - this.Minimum)) * this.sliderCanvasHelper.ActualWidth;
+                }
+                else
+                {
+                    this.Position = 0;
+                }
+
+                this.BarLength = this.Position + this.sliderButton.ActualWidth / 2;
+                this.TrackLength = this.sliderCanvas.ActualWidth - this.Position - this.sliderButton.ActualWidth / 2;
+
+                this.isCalculating = false;
+            }
+        }
+
+        protected override void InitializePosition()
+        {
+            this.BarLength = 0.0;
+            this.TrackLength = this.sliderCanvas.ActualWidth;
         }
         #endregion
     }

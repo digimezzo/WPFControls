@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Digimezzo.WPFControls.Tests"
         mc:Ignorable="d"
-        Title="MainWindow" Height="410" Width="530">
+        Title="MainWindow" Height="450" Width="530">
     <StackPanel>
         <Button x:Name="BorderlessWindows8WindowTestButton" Margin="10,5,10,5" Click="BorderlessWindows8WindowTestButton_Click" Content="BorderlessWindows8Window Test"/>
         <Button x:Name="BorderlessWindows10WindowTestButton" Margin="10,5,10,5" Click="BorderlessWindows10WindowTestButton_Click" Content="BorderlessWindows10Window Test"/>
