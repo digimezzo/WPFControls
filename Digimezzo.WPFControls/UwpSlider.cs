@@ -34,12 +34,20 @@ namespace Digimezzo.WPFControls
         public override void OnApplyTemplate()
         {
             this.sliderCanvasHelper = (Canvas)GetTemplateChild("PART_CanvasHelper");
-            base.OnApplyTemplate();
+
+            base.Loaded += LoadedHandler;
+
+            base.OnApplyTemplate();  
+        }
+
+        private void LoadedHandler(object sender, RoutedEventArgs e)
+        {
+            this.InitializePosition();
         }
         #endregion
 
-        #region Protected
-        protected abstract void SetLengths();
+        #region Private
+        protected abstract void InitializePosition();
         #endregion
     }
     public class HorizontalUWPSlider : UWPSliderBase
@@ -52,12 +60,6 @@ namespace Digimezzo.WPFControls
         #endregion
 
         #region Overrides
-        protected override void SetLengths()
-        {
-            this.BarLength = this.Position;
-            this.TrackLength = this.sliderCanvasHelper.ActualWidth - this.Position;
-        }
-
         protected override void UpdatePosition()
         {
             this.Position = Mouse.GetPosition(this.sliderCanvas).X - this.sliderButton.ActualWidth / 2;
@@ -72,7 +74,8 @@ namespace Digimezzo.WPFControls
                 this.Position = 0.0;
             }
 
-            this.SetLengths();
+            this.BarLength = this.Position;
+            this.TrackLength = this.sliderCanvasHelper.ActualWidth - this.Position;
         }
 
         protected override void CalculatePosition()
@@ -92,7 +95,8 @@ namespace Digimezzo.WPFControls
                     this.Position = 0;
                 }
 
-                this.SetLengths();
+                this.BarLength = this.Position;
+                this.TrackLength = this.sliderCanvasHelper.ActualWidth - this.Position;
 
                 this.isCalculating = false;
             }
@@ -118,6 +122,12 @@ namespace Digimezzo.WPFControls
                 this.isCalculating = false;
             }
         }
+
+        protected override void InitializePosition()
+        {
+            this.BarLength = 0.0;
+            this.TrackLength = this.sliderCanvas.ActualWidth - this.sliderButton.ActualWidth;
+        }
         #endregion
     }
 
@@ -131,12 +141,6 @@ namespace Digimezzo.WPFControls
         #endregion
 
         #region Overrides
-        protected override void SetLengths()
-        {
-            this.BarLength = this.Position;
-            this.TrackLength = this.sliderCanvasHelper.ActualHeight - this.Position;
-        }
-
         protected override void UpdatePosition()
         {
             this.Position = this.sliderCanvas.ActualHeight - Mouse.GetPosition(this.sliderCanvas).Y - this.sliderButton.ActualWidth / 2;
@@ -151,7 +155,8 @@ namespace Digimezzo.WPFControls
                 this.Position = 0.0;
             }
 
-            this.SetLengths();
+            this.BarLength = this.Position;
+            this.TrackLength = this.sliderCanvasHelper.ActualHeight - this.Position;
         }
 
         protected override void CalculatePosition()
@@ -171,7 +176,8 @@ namespace Digimezzo.WPFControls
                     this.Position = 0;
                 }
 
-                this.SetLengths();
+                this.BarLength = this.Position;
+                this.TrackLength = this.sliderCanvasHelper.ActualHeight - this.Position;
 
                 this.isCalculating = false;
             }
@@ -197,6 +203,12 @@ namespace Digimezzo.WPFControls
                 this.isCalculating = false;
             }
         }
+
+        protected override void InitializePosition()
+        {
+            this.BarLength = 0.0;
+            this.TrackLength = this.sliderCanvas.ActualHeight - this.sliderButton.ActualHeight;
+        }
         #endregion
     }
 
@@ -214,12 +226,6 @@ namespace Digimezzo.WPFControls
         #endregion
 
         #region Overrides
-        protected override void SetLengths()
-        {
-            this.BarLength = this.Position + this.sliderButton.ActualWidth / 2;
-            this.TrackLength = this.sliderCanvas.ActualWidth - this.Position - this.sliderButton.ActualWidth / 2;
-        }
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -241,7 +247,8 @@ namespace Digimezzo.WPFControls
                 this.Position = 0.0;
             }
 
-            this.SetLengths();
+            this.BarLength = this.Position + this.sliderButton.ActualWidth / 2;
+            this.TrackLength = this.sliderCanvas.ActualWidth - this.Position - this.sliderButton.ActualWidth / 2;
 
             if(this.Position < this.sliderCanvas.ActualWidth / 2)
             {
@@ -250,6 +257,36 @@ namespace Digimezzo.WPFControls
             {
                 this.sliderBorderHelper.CornerRadius = new CornerRadius(9, 9, 0, 9);
             }
+        }
+
+        protected override void CalculatePosition()
+        {
+            if (this.sliderCanvasHelper == null) return;
+
+            if (!this.isCalculating)
+            {
+                this.isCalculating = true;
+
+                if ((this.Maximum - this.Minimum) > 0)
+                {
+                    this.Position = ((this.Value - this.Minimum) / (this.Maximum - this.Minimum)) * this.sliderCanvasHelper.ActualWidth;
+                }
+                else
+                {
+                    this.Position = 0;
+                }
+
+                this.BarLength = this.Position + this.sliderButton.ActualWidth / 2;
+                this.TrackLength = this.sliderCanvas.ActualWidth - this.Position - this.sliderButton.ActualWidth / 2;
+
+                this.isCalculating = false;
+            }
+        }
+
+        protected override void InitializePosition()
+        {
+            this.BarLength = 0.0;
+            this.TrackLength = this.sliderCanvas.ActualWidth;
         }
         #endregion
     }

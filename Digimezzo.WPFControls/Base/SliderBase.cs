@@ -101,7 +101,6 @@ namespace Digimezzo.WPFControls.Base
             this.sliderButton = (Button)GetTemplateChild("PART_Button");
 
             this.SizeChanged += SizeChangedHandler;
-            this.Loaded += LoadedHandler;
 
             if (this.sliderButton != null)
             {
@@ -124,11 +123,6 @@ namespace Digimezzo.WPFControls.Base
         #endregion
 
         #region Event Handlers
-        private void LoadedHandler(object sender, RoutedEventArgs e)
-        {
-            this.CalculatePosition();
-        }
-
         private void SizeChangedHandler(object sender, SizeChangedEventArgs e)
         {
             this.CalculatePosition();

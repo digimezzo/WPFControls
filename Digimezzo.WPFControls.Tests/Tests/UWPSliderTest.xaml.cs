@@ -7,9 +7,6 @@ namespace Digimezzo.WPFControls.Tests.Tests
         public UWPSliderTest()
         {
             InitializeComponent();
-
-            this.HorizontalUWPSliderTrue.Value = 10;
-            this.HorizontalUWPBottomSliderTrue.Value = 15;
         }
     }
 }
