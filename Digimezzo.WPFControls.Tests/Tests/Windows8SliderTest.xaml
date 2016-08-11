@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Digimezzo.WPFControls.Tests.Tests"
         xmlns:controls="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls"
         mc:Ignorable="d"
-        Title="Windows8SliderTest" Height="600" Width="800">
+        Title="Windows8SliderTest" Height="620" Width="800">
     <StackPanel Margin="20">
         <Label Content="HorizontalWindows8Slider (ChangeValueWhileDragging = True)"/>
         <controls:HorizontalWindows8Slider x:Name="HorizontalModernSliderTrue" ButtonBackground="Black" TrackBackground="Gray" BarBackground="Blue" Margin="10,0,10,0" ChangeValueWhileDragging="True"/>
