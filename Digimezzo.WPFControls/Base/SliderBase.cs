@@ -100,7 +100,7 @@ namespace Digimezzo.WPFControls.Base
             this.sliderBar = (Rectangle)GetTemplateChild("PART_Bar");
             this.sliderButton = (Button)GetTemplateChild("PART_Button");
 
-            this.SizeChanged += SizeChangedHandler;
+            this.sliderCanvas.SizeChanged += SizeChangedHandler;
             this.sliderCanvas.Loaded += LoadedHandler;
 
             if (this.sliderButton != null)
