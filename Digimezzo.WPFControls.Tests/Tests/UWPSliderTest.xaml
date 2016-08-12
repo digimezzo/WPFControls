@@ -21,7 +21,7 @@
         <controls:HorizontalUWPBottomSlider x:Name="HorizontalUWPBottomSliderFalse" ButtonBackground="Black" TrackBackground="Gray" BarBackground="Blue" Margin="10,0,10,0"/>
         <TextBox IsHitTestVisible="False" Text="{Binding Path=Value,ElementName=HorizontalUWPBottomSliderFalse}" HorizontalAlignment="Center" Width="50" Margin="0,10,0,0"/>
         <Label Content="VerticalUWPSlider (ChangeValueWhileDragging = True)" Margin="0,20,0,0"/>
-        <controls:VerticalUWPSlider x:Name="VerticalUWPSliderTrue" ButtonBackground="Black" TrackBackground="Gray" BarBackground="Blue" Value="50" Height="100" ChangeValueWhileDragging="True"/>
+        <controls:VerticalUWPSlider x:Name="VerticalUWPSliderTrue" ButtonBackground="Black" TrackBackground="Gray" BarBackground="Blue" Value="0" Minimum="-20" Maximum="20" Height="100" ChangeValueWhileDragging="True"/>
         <TextBox IsHitTestVisible="False" Text="{Binding Path=Value,ElementName=VerticalUWPSliderTrue}" HorizontalAlignment="Center" Width="50" Margin="0,10,0,0"/>
         <Label Content="VerticalUWPSlider (ChangeValueWhileDragging = False)" Margin="0,20,0,0"/>
         <controls:VerticalUWPSlider x:Name="VerticalUWPSliderFalse" ButtonBackground="Black" TrackBackground="Gray" BarBackground="Blue" Height="100"/>

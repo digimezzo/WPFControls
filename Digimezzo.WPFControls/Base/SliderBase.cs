@@ -101,7 +101,7 @@ namespace Digimezzo.WPFControls.Base
             this.sliderButton = (Button)GetTemplateChild("PART_Button");
 
             this.SizeChanged += SizeChangedHandler;
-            this.sliderCanvas.MouseEnter += MouseEnterHandler;
+            this.sliderCanvas.Loaded += LoadedHandler;
 
             if (this.sliderButton != null)
             {
@@ -124,7 +124,7 @@ namespace Digimezzo.WPFControls.Base
         #endregion
 
         #region Event Handlers
-        private void MouseEnterHandler(object sender, RoutedEventArgs e)
+        private void LoadedHandler(object sender, RoutedEventArgs e)
         {
             this.CalculatePosition();
         }

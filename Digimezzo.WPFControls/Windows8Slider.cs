@@ -17,6 +17,8 @@ namespace Digimezzo.WPFControls
         #region Overrides
         protected override void UpdatePosition()
         {
+            if (this.sliderCanvas == null) return;
+
             this.Position = Mouse.GetPosition(this.sliderCanvas).X;
 
             if (this.Position > this.sliderCanvas.ActualWidth)
@@ -32,13 +34,15 @@ namespace Digimezzo.WPFControls
 
         protected override void CalculatePosition()
         {
+            if (this.sliderCanvas == null) return;
+
             if (!this.isCalculating)
             {
                 this.isCalculating = true;
 
-                if ((this.Maximum - this.Minimum) > 0 && this.ActualWidth > 0)
+                if ((this.Maximum - this.Minimum) > 0 &&  this.sliderCanvas.ActualWidth > 0)
                 {
-                    this.Position = ((this.Value -this.Minimum) / (this.Maximum - this.Minimum)) * this.ActualWidth;
+                    this.Position = ((this.Value -this.Minimum) / (this.Maximum - this.Minimum)) *  this.sliderCanvas.ActualWidth;
                 }
                 else
                 {
@@ -51,13 +55,15 @@ namespace Digimezzo.WPFControls
 
         protected override void CalculateValue()
         {
+            if (this.sliderCanvas == null) return;
+
             if (!this.isCalculating)
             {
                 this.isCalculating = true;
 
-                if (this.ActualWidth > 0)
+                if ( this.sliderCanvas.ActualWidth > 0)
                 {
-                    this.Value = ((this.Position * (this.Maximum - this.Minimum)) / this.ActualWidth) + this.Minimum;
+                    this.Value = ((this.Position * (this.Maximum - this.Minimum)) /  this.sliderCanvas.ActualWidth) + this.Minimum;
                 }
                 else
                 {
@@ -83,6 +89,8 @@ namespace Digimezzo.WPFControls
         #region Overrides
         protected override void UpdatePosition()
         {
+            if (this.sliderCanvas == null) return;
+
             this.Position = this.sliderCanvas.ActualHeight - Mouse.GetPosition(this.sliderCanvas).Y;
 
             if (this.Position > this.sliderCanvas.ActualHeight)
@@ -99,13 +107,15 @@ namespace Digimezzo.WPFControls
 
         protected override void CalculatePosition()
         {
+            if (this.sliderCanvas == null) return;
+
             if (!this.isCalculating)
             {
                 this.isCalculating = true;
 
-                if ((this.Maximum - this.Minimum) > 0 && this.ActualHeight > 0)
+                if ((this.Maximum - this.Minimum) > 0 &&  this.sliderCanvas.ActualHeight > 0)
                 {
-                    this.Position = ((this.Value - this.Minimum) / (this.Maximum - this.Minimum)) * this.ActualHeight;
+                    this.Position = ((this.Value - this.Minimum) / (this.Maximum - this.Minimum)) *  this.sliderCanvas.ActualHeight;
                 }
                 else
                 {
@@ -118,13 +128,15 @@ namespace Digimezzo.WPFControls
 
         protected override void CalculateValue()
         {
+            if (this.sliderCanvas == null) return;
+
             if (!this.isCalculating)
             {
                 this.isCalculating = true;
 
-                if (this.ActualHeight > 0)
+                if ( this.sliderCanvas.ActualHeight > 0)
                 {
-                    this.Value = ((this.Position * (this.Maximum - this.Minimum)) / this.ActualHeight) + this.Minimum;
+                    this.Value = ((this.Position * (this.Maximum - this.Minimum)) /  this.sliderCanvas.ActualHeight) + this.Minimum;
                 }
                 else
                 {

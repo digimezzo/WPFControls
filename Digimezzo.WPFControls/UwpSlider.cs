@@ -1,10 +1,25 @@
-﻿using System.Windows;
+﻿using System;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Digimezzo.WPFControls
 {
     public class HorizontalUWPSlider : HorizontalWindows8Slider
     {
+        #region Properties
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public double VisibleBarLength
+        {
+            get { return Convert.ToDouble(GetValueVisibleBarLengthProperty); }
+            set { SetValue(GetValueVisibleBarLengthProperty, value); }
+        }
+        #endregion
+
+        #region Dependency Properties
+        public static readonly DependencyProperty GetValueVisibleBarLengthProperty = DependencyProperty.Register("VisibleBarLength", typeof(double), typeof(HorizontalUWPSlider), new PropertyMetadata(0.0));
+        #endregion
+
         #region Construction
         static HorizontalUWPSlider()
         {
@@ -16,28 +31,23 @@ namespace Digimezzo.WPFControls
         protected override void UpdatePosition()
         {
             base.UpdatePosition();
-            this.CalculateButtonMargin();
+            this.CalculateVisibleBarLength();
         }
 
         protected override void CalculatePosition()
         {
             base.CalculatePosition();
-            this.CalculateButtonMargin();
+            this.CalculateVisibleBarLength();
         }
         #endregion
 
         #region Virtual
-        protected virtual void CalculateButtonMargin()
+        protected virtual void CalculateVisibleBarLength()
         {
-            if (this.sliderButton == null || this.sliderCanvas == null) return;
-
-            int margin = 0;
-
-            if (this.sliderCanvas.ActualWidth != 0)
+            if (this.sliderCanvas != null && this.sliderCanvas.ActualWidth != 0 && this.sliderButton != null)
             {
-                margin = (int)(this.sliderButton.ActualWidth * (this.Position / this.sliderCanvas.ActualWidth));
+                this.VisibleBarLength = this.Position + (int)(this.sliderButton.ActualWidth * (this.Position / this.sliderCanvas.ActualWidth));
             }
-            this.sliderButton.Margin = new Thickness(-margin, 0, 0, 0);
         }
         #endregion
     }
@@ -63,15 +73,15 @@ namespace Digimezzo.WPFControls
             this.sliderButtonBorder = (Border)GetTemplateChild("PART_BorderHelper");
         }
 
-        protected override void CalculateButtonMargin()
+        protected override void CalculateVisibleBarLength()
         {
-            base.CalculateButtonMargin();
+            base.CalculateVisibleBarLength();
 
             if (this.sliderButtonBorder == null) return;
 
             if (this.Position > this.sliderCanvas.ActualWidth / 2)
             {
-                this.sliderButtonBorder.CornerRadius = new CornerRadius(8,8,0,8);
+                this.sliderButtonBorder.CornerRadius = new CornerRadius(8, 8, 0, 8);
             }
             else
             {
@@ -83,6 +93,19 @@ namespace Digimezzo.WPFControls
 
     public class VerticalUWPSlider : VerticalWindows8Slider
     {
+        #region Properties
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public double VisibleBarLength
+        {
+            get { return Convert.ToDouble(GetValueVisibleBarLengthProperty); }
+            set { SetValue(GetValueVisibleBarLengthProperty, value); }
+        }
+        #endregion
+
+        #region Dependency Properties
+        public static readonly DependencyProperty GetValueVisibleBarLengthProperty = DependencyProperty.Register("VisibleBarLength", typeof(double), typeof(VerticalUWPSlider), new PropertyMetadata(0.0));
+        #endregion
+
         #region Construction
         static VerticalUWPSlider()
         {
@@ -94,28 +117,23 @@ namespace Digimezzo.WPFControls
         protected override void UpdatePosition()
         {
             base.UpdatePosition();
-            this.CalculateButtonMargin();
+            this.CalculateVisibleBarLength();
         }
 
         protected override void CalculatePosition()
         {
             base.CalculatePosition();
-            this.CalculateButtonMargin();
+            this.CalculateVisibleBarLength();
         }
         #endregion
 
         #region Private
-        private void CalculateButtonMargin()
+        private void CalculateVisibleBarLength()
         {
-            if (this.sliderButton == null || this.sliderCanvas == null) return;
-
-            int margin = 0;
-
-            if (this.sliderCanvas.ActualHeight != 0)
+            if (this.sliderCanvas != null && this.sliderCanvas.ActualWidth != 0 && this.sliderButton != null)
             {
-                margin = (int)(this.sliderButton.ActualHeight * (this.Position / this.sliderCanvas.ActualHeight));
+                this.VisibleBarLength = this.Position + (int)(this.sliderButton.ActualHeight * (this.Position / this.sliderCanvas.ActualHeight));
             }
-            this.sliderButton.Margin = new Thickness(0, 0, 0, -margin);
         }
         #endregion
     }

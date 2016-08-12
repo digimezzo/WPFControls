@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\SliderBase.cs" />
+    <Compile Include="Converters\AddValueConverter.cs" />
     <Compile Include="Converters\BooleanToCollapsedConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\ResizeModeMinMaxButtonVisibilityConverter.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Converters\StringToLowerConverter.cs" />
     <Compile Include="Converters\StringToUpperConverter.cs" />
     <Compile Include="Enums\SlideDirection.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Helpers\VisualTree.cs" />
     <Compile Include="LabelToLower.cs" />
     <Compile Include="LabelToUpper.cs" />
