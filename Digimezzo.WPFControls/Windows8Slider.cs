@@ -28,7 +28,6 @@ namespace Digimezzo.WPFControls
             {
                 this.Position = 0.0;
             }
-
         }
 
         protected override void CalculatePosition()
