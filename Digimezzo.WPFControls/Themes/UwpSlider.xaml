@@ -4,15 +4,19 @@
     xmlns:converters="clr-namespace:Digimezzo.WPFControls.Converters">
 
     <converters:AddValueConverter x:Key="AddValueConverter" />
+    <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <converters:InvertingBooleanToVisibilityConverter x:Key="InvertingBooleanToVisibilityConverter" />
 
     <Style TargetType="{x:Type local:HorizontalUWPSlider}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:HorizontalUWPSlider}">
-                    <Grid Width="{TemplateBinding ActualWidth}">
-                        <Border x:Name="PART_VisibleTrack" Height="4" VerticalAlignment="Center" Width="{TemplateBinding ActualWidth}" Background="{Binding Path=TrackBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <Border x:Name="PART_VisibleBar" HorizontalAlignment="Left" VerticalAlignment="Center" Height="4" Width="{Binding Path=VisibleBarLength,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" Background="{Binding Path=BarBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <Canvas x:Name="PART_Canvas" Background="#00000000" VerticalAlignment="Center" Height="16" Margin="8,0,8,0" Width="{TemplateBinding ActualWidth,Converter={StaticResource AddValueConverter},ConverterParameter=-16}">
+                    <Grid x:Name="PART_Grid" Width="{TemplateBinding ActualWidth}">
+                        <Border x:Name="PART_VisibleTrack" Panel.ZIndex="0" Height="4" VerticalAlignment="Center" Width="{TemplateBinding ActualWidth}" Background="{Binding Path=TrackBackground,RelativeSource={RelativeSource TemplatedParent}}" Visibility="{Binding Path=IsMouseOver,ElementName=PART_Grid,Converter={StaticResource InvertingBooleanToVisibilityConverter}}"/>
+                        <Border x:Name="PART_VisibleBar" Panel.ZIndex="1" HorizontalAlignment="Left" VerticalAlignment="Center" Height="4" Width="{Binding Path=VisibleBarLength,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" Background="{Binding Path=BarBackground,RelativeSource={RelativeSource TemplatedParent}}" Visibility="{Binding Path=IsMouseOver,ElementName=PART_Grid,Converter={StaticResource InvertingBooleanToVisibilityConverter}}"/>
+                        <Border x:Name="PART_VisibleTrackWithButton" Panel.ZIndex="0" Height="4" HorizontalAlignment="Right" VerticalAlignment="Center" Width="{Binding Path=VisibleTrackWithButtonLength,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" Background="{Binding Path=TrackBackground,RelativeSource={RelativeSource TemplatedParent}}" Visibility="{Binding Path=IsMouseOver,ElementName=PART_Grid,Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <Border x:Name="PART_VisibleBarWithButton" Panel.ZIndex="1" HorizontalAlignment="Left" VerticalAlignment="Center" Height="4" Width="{Binding Path=VisibleBarWithButtonLength,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" Background="{Binding Path=BarBackground,RelativeSource={RelativeSource TemplatedParent}}" Visibility="{Binding Path=IsMouseOver,ElementName=PART_Grid,Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <Canvas x:Name="PART_Canvas" Panel.ZIndex="2" Background="#00000000" VerticalAlignment="Center" Height="16" Margin="8,0,8,0" Width="{TemplateBinding ActualWidth,Converter={StaticResource AddValueConverter},ConverterParameter=-16}">
                             <Rectangle x:Name="PART_Track" Canvas.Left="0" Canvas.Top="6" Panel.ZIndex="0" Height="4" Width="{Binding Width, ElementName=PART_Canvas}" Fill="Transparent"/>
                             <Rectangle x:Name="PART_Bar" Canvas.Left="0" Canvas.Top="6" Panel.ZIndex="1" Height="4" Width="{Binding Path=Position,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" Fill="Transparent"/>
                             <Button x:Name="PART_Button" Canvas.Top="0" Panel.ZIndex="2" Height="16" Width="16" Margin="-8,0,0,0" Canvas.Left="{Binding Path=Position,RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" BorderThickness="0" Opacity="0">
@@ -70,11 +74,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:HorizontalUWPBottomSlider}">
-                    <Grid Width="{TemplateBinding ActualWidth}">
+                    <Grid x:Name="PART_Grid" Width="{TemplateBinding ActualWidth}">
                         <Border x:Name="PART_BorderHelper" Visibility="Hidden"/>
-                        <Border x:Name="PART_VisibleTrack" Height="4" VerticalAlignment="Bottom" Width="{TemplateBinding ActualWidth}" Background="{Binding Path=TrackBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <Border x:Name="PART_VisibleBar" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="4" Width="{Binding Path=VisibleBarLength,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" Background="{Binding Path=BarBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <Canvas x:Name="PART_Canvas" VerticalAlignment="Center" Background="#00000000" Height="16" Margin="8,0,8,0" Width="{TemplateBinding ActualWidth,Converter={StaticResource AddValueConverter},ConverterParameter=-16}">
+                        <Border x:Name="PART_VisibleTrack" Panel.ZIndex="0" Height="4" VerticalAlignment="Bottom" Width="{TemplateBinding ActualWidth}" Background="{Binding Path=TrackBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
+                        <Border x:Name="PART_VisibleBar" Panel.ZIndex="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="4" Width="{Binding Path=VisibleBarLength,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" Background="{Binding Path=BarBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
+                        <Canvas x:Name="PART_Canvas" Panel.ZIndex="2" VerticalAlignment="Center" Background="#00000000" Height="16" Margin="8,0,8,0" Width="{TemplateBinding ActualWidth,Converter={StaticResource AddValueConverter},ConverterParameter=-16}">
                             <Rectangle x:Name="PART_Track" Canvas.Left="0" Canvas.Top="12" Panel.ZIndex="0" Height="4" Width="{Binding Width, ElementName=PART_Canvas}" Fill="Transparent"/>
                             <Rectangle x:Name="PART_Bar" Canvas.Left="0" Canvas.Top="12" Panel.ZIndex="1" Height="4" Width="{Binding Path=Position,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" Fill="Transparent"/>
                             <Button x:Name="PART_Button" Canvas.Top="-2" Panel.ZIndex="2" Height="16" Width="16" Margin="-8,0,0,0" Canvas.Left="{Binding Path=Position,RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" BorderThickness="0" Opacity="0">
@@ -132,10 +136,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:VerticalUWPSlider}">
-                    <Grid Height="{TemplateBinding ActualHeight}">
-                        <Border x:Name="PART_VisibleTrack" Width="4" HorizontalAlignment="Center" Height="{TemplateBinding ActualHeight}" Background="{Binding Path=TrackBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <Border x:Name="PART_VisibleBar" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="4" Height="{Binding Path=VisibleBarLength,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" Background="{Binding Path=BarBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <Canvas x:Name="PART_Canvas" HorizontalAlignment="Center" Background="#00000000" Margin="0,8,0,8" Height="{TemplateBinding ActualHeight,Converter={StaticResource AddValueConverter},ConverterParameter=-16}" Width="16">
+                    <Grid x:Name="PART_Grid" Height="{TemplateBinding ActualHeight}">
+                        <Border x:Name="PART_VisibleTrack" Panel.ZIndex="0" Width="4" HorizontalAlignment="Center" Height="{TemplateBinding ActualHeight}" Background="{Binding Path=TrackBackground,RelativeSource={RelativeSource TemplatedParent}}" Visibility="{Binding Path=IsMouseOver,ElementName=PART_Grid,Converter={StaticResource InvertingBooleanToVisibilityConverter}}"/>
+                        <Border x:Name="PART_VisibleBar" Panel.ZIndex="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="4" Height="{Binding Path=VisibleBarLength,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" Background="{Binding Path=BarBackground,RelativeSource={RelativeSource TemplatedParent}}" Visibility="{Binding Path=IsMouseOver,ElementName=PART_Grid,Converter={StaticResource InvertingBooleanToVisibilityConverter}}"/>
+                        <Border x:Name="PART_VisibleTrackWithButton" Panel.ZIndex="0" Width="4" HorizontalAlignment="Center" VerticalAlignment="Top" Height="{Binding Path=VisibleTrackWithButtonLength,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" Background="{Binding Path=TrackBackground,RelativeSource={RelativeSource TemplatedParent}}" Visibility="{Binding Path=IsMouseOver,ElementName=PART_Grid,Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <Border x:Name="PART_VisibleBarWithButton" Panel.ZIndex="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="4" Height="{Binding Path=VisibleBarWithButtonLength,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" Background="{Binding Path=BarBackground,RelativeSource={RelativeSource TemplatedParent}}" Visibility="{Binding Path=IsMouseOver,ElementName=PART_Grid,Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <Canvas x:Name="PART_Canvas" Panel.ZIndex="2" HorizontalAlignment="Center" Background="#00000000" Margin="0,8,0,8" Height="{TemplateBinding ActualHeight,Converter={StaticResource AddValueConverter},ConverterParameter=-16}" Width="16">
                             <Rectangle x:Name="PART_Track" Canvas.Left="6" Canvas.Bottom="0" Panel.ZIndex="0" Height="{TemplateBinding ActualHeight}" Width="4" Fill="Transparent"/>
                             <Rectangle x:Name="PART_Bar" Canvas.Left="6" Canvas.Bottom="0" Panel.ZIndex="1" Height="{Binding Path=Position,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" Width="4" Fill="Transparent"/>
                             <Button x:Name="PART_Button" Canvas.Left="0" Panel.ZIndex="2" Height="16" Width="16" Margin="0,0,0,-8" Canvas.Bottom="{Binding Path=Position,RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" BorderThickness="0" Opacity="0">
