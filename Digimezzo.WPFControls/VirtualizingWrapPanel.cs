@@ -294,6 +294,10 @@ namespace Digimezzo.WPFControls
             }
             else // alignment is WrapPanelAlignment.Center or WrapPanelAlignment.Right
             {
+                if (childrenPerRow > this.Children.Count)
+                {
+                    childrenPerRow = this.Children.Count;
+                }
                 double widthOfRow = childrenPerRow * this.ChildWidth;
                 double startXForRow = finalSize.Width - widthOfRow;
                 if (HorizontalContentAlignment == WrapPanelAlignment.Center)
