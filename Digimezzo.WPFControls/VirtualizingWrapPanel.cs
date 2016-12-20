@@ -188,6 +188,17 @@ namespace Digimezzo.WPFControls
             base.OnClearChildren();
             this.SetVerticalOffset(0);
         }
+
+        protected override void BringIndexIntoView(int index)
+        {
+            if (index < 0 || index >= Children.Count)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            int childrenPerRow = CalculateChildrenPerRow(RenderSize);
+            int row = index / childrenPerRow;
+            SetVerticalOffset(row * ChildHeight);
+        }
         #endregion
 
         #region Private
