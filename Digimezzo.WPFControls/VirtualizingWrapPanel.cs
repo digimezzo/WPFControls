@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Digimezzo.WPFControls.Enums;
+using System;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Windows;
@@ -58,6 +59,17 @@ namespace Digimezzo.WPFControls
             get { return Convert.ToDouble(GetValue(ChildHeightProperty)); }
             set { SetValue(ChildHeightProperty, value); }
         }
+
+        // Dependency property that controls the horizontal alignment of the child alignments
+        public static readonly DependencyProperty HorizontalContentAlignmentProperty = DependencyProperty.RegisterAttached("HorizontalContentAlignment", typeof(WrapPanelAlignment), typeof(VirtualizingWrapPanel), new FrameworkPropertyMetadata(WrapPanelAlignment.Left, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+
+        // Accessor for the horizontal content alignment dependency property
+        public WrapPanelAlignment HorizontalContentAlignment
+        {
+            get { return (WrapPanelAlignment)GetValue(HorizontalContentAlignmentProperty); }
+            set { SetValue(HorizontalContentAlignmentProperty, value); }
+        }
+
         #endregion
 
         #region Overrides
@@ -275,7 +287,27 @@ namespace Digimezzo.WPFControls
             int row = itemIndex / childrenPerRow;
             int column = itemIndex % childrenPerRow;
 
-            child.Arrange(new Rect(column * this.ChildWidth, row * this.ChildHeight, this.ChildWidth, this.ChildHeight));
+            double xCoordForItem = 0;
+            if (HorizontalContentAlignment == WrapPanelAlignment.Left)
+            {
+                xCoordForItem = column * this.ChildWidth;
+            }
+            else // alignment is WrapPanelAlignment.Center or WrapPanelAlignment.Right
+            {
+                if (childrenPerRow > this.Children.Count)
+                {
+                    childrenPerRow = this.Children.Count;
+                }
+                double widthOfRow = childrenPerRow * this.ChildWidth;
+                double startXForRow = finalSize.Width - widthOfRow;
+                if (HorizontalContentAlignment == WrapPanelAlignment.Center)
+                {
+                    startXForRow /= 2;
+                }
+                xCoordForItem = startXForRow + (column * this.ChildWidth);
+            }
+
+            child.Arrange(new Rect(xCoordForItem, row * this.ChildHeight, this.ChildWidth, this.ChildHeight));
         }
 
         /// <summary>
