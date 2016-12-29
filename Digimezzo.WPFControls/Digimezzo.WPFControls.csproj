@@ -59,6 +59,7 @@
     <Compile Include="Converters\AddValueConverter.cs" />
     <Compile Include="Converters\BooleanToCollapsedConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\InvertingBooleanConverter.cs" />
     <Compile Include="Converters\ResizeModeMinMaxButtonVisibilityConverter.cs" />
     <Compile Include="Converters\SolidColorBrushToColorConverter.cs" />
     <Compile Include="Converters\StringToLowerConverter.cs" />
