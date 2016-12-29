@@ -5,6 +5,7 @@ Their usage is best described by the tests which are included in the project.
 
 [![Release](https://img.shields.io/github/release/digimezzo/WPFControls.svg?style=flat-square)](https://github.com/digimezzo/WPFControls/releases/latest)
 [![Issues](https://img.shields.io/github/issues/digimezzo/WPFControls.svg?style=flat-square)](https://github.com/digimezzo/WPFControls/issues)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MQALEWTEZ7HX8)
 
 ### Controls ###
 
