@@ -97,7 +97,7 @@ namespace Digimezzo.WPFControls
         #endregion
 
         #region Dependency Properties
-        public static readonly DependencyProperty SelectedForegroundProperty = DependencyProperty.Register("SelectedForeground", typeof(Brush), typeof(PivotItem), new PropertyMetadata(Brushes.Green));
+        public static readonly DependencyProperty SelectedForegroundProperty = DependencyProperty.Register("SelectedForeground", typeof(Brush), typeof(PivotItem), new PropertyMetadata(Brushes.Black));
         public static readonly DependencyProperty SelectedFontWeightProperty = DependencyProperty.Register("SelectedFontWeight", typeof(FontWeight), typeof(PivotItem), new PropertyMetadata(FontWeights.Normal));
         #endregion
 
