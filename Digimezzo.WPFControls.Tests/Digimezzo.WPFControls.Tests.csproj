@@ -70,6 +70,9 @@
     <Compile Include="Tests\MultiSelectListBoxTest.xaml.cs">
       <DependentUpon>MultiSelectListBoxTest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tests\PivotTest.xaml.cs">
+      <DependentUpon>PivotTest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tests\ProgressRingTest.xaml.cs">
       <DependentUpon>ProgressRingTest.xaml</DependentUpon>
     </Compile>
@@ -120,6 +123,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Tests\MultiSelectListBoxTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tests\PivotTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

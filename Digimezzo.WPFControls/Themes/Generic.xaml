@@ -3,17 +3,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/BorderlessWindows8Window.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/BorderlessWindows10Window.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/LabelToLower.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/LabelToUpper.xaml" />
-        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Windows8Slider.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/MultiPanePanel.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Pivot.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/ProgressRing.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/SlidingContentControl.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/ToggleSwitch.xaml" />
-        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/MultiPanePanel.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/UWPSlider.xaml" />
-        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/BorderlessWindows8Window.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Windows8Slider.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Windows10Slider.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Windows10ToggleSwitch.xaml" />
-        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/BorderlessWindows10Window.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

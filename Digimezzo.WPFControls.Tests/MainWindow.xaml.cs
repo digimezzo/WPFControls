@@ -97,5 +97,11 @@ namespace Digimezzo.WPFControls.Tests
             var win = new VirtualizingWrapPanelTest();
             win.Show();
         }
+
+        private void PivotTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new PivotTest();
+            win.Show();
+        }
     }
 }
