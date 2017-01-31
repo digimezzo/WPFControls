@@ -15,6 +15,7 @@ Their usage is best described by the tests which are included in the project.
 - **LabelToUpper**:label that converts its text to upper case
 - **MultiPanePanel**: panel with 2 or 3 resizable (draggable) panes
 - **MultiSelectListBox**: ListBox that doesn't lose selection of multiple items when starting a mouse drag operation
+- **Pivot**: UWP-like Pivot control
 - **ProgressRing**: Windows Modern UI progress ring
 - **SlidingContentControl**: ContentControl that slides and fades in its content on content change
 - **ToggleSwitch**: custom toggle switch
