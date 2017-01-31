@@ -15,22 +15,29 @@ namespace Digimezzo.WPFControls
         #endregion
 
         #region Properties
-        public double AnimationWidth
+        public double SlideDistance
         {
-            get { return Convert.ToDouble(GetValue(AnimationWidthProperty)); }
-            set { SetValue(AnimationWidthProperty, value); }
+            get { return Convert.ToDouble(GetValue(SlideDistanceProperty)); }
+            set { SetValue(SlideDistanceProperty, value); }
         }
 
-        public double AnimationDuration
+        public double SlideDuration
         {
-            get { return Convert.ToDouble(GetValue(AnimationDurationProperty)); }
-            set { SetValue(AnimationDurationProperty, value); }
+            get { return Convert.ToDouble(GetValue(SlideDurationProperty)); }
+            set { SetValue(SlideDurationProperty, value); }
+        }
+
+        public double FadeDuration
+        {
+            get { return Convert.ToDouble(GetValue(FadeDurationProperty)); }
+            set { SetValue(FadeDurationProperty, value); }
         }
         #endregion
 
         #region Dependency Properties
-        public static readonly DependencyProperty AnimationWidthProperty = DependencyProperty.Register("AnimationWidth", typeof(double), typeof(Pivot), new PropertyMetadata(20.0));
-        public static readonly DependencyProperty AnimationDurationProperty = DependencyProperty.Register("AnimationDuration", typeof(double), typeof(Pivot), new PropertyMetadata(0.3));
+        public static readonly DependencyProperty SlideDistanceProperty = DependencyProperty.Register("SlideDistance", typeof(double), typeof(Pivot), new PropertyMetadata(20.0));
+        public static readonly DependencyProperty SlideDurationProperty = DependencyProperty.Register("SlideDuration", typeof(double), typeof(Pivot), new PropertyMetadata(0.25));
+        public static readonly DependencyProperty FadeDurationProperty = DependencyProperty.Register("FadeDuration", typeof(double), typeof(Pivot), new PropertyMetadata(0.5));
         #endregion
 
         #region Construction
@@ -60,19 +67,26 @@ namespace Digimezzo.WPFControls
             current = (sender as TabControl).SelectedIndex;
             if (previous != current)
             {
-                DoubleAnimation xTranslate = null;
+                DoubleAnimation slideAnimation = null;
+                DoubleAnimation opacityAnimation = new DoubleAnimation() { From = 0.0, To = 1.0, Duration = TimeSpan.FromSeconds(this.FadeDuration) };
 
                 if (previous > current)
                 {
-                    xTranslate = new DoubleAnimation() { From = -this.AnimationWidth, To = 0.0, Duration = TimeSpan.FromSeconds(this.AnimationDuration) };
+                    slideAnimation = new DoubleAnimation() { From = -this.SlideDistance, To = 0.0, Duration = TimeSpan.FromSeconds(this.SlideDuration) };
+
                 }
                 else
                 {
-                    xTranslate = new DoubleAnimation() { From = this.AnimationWidth, To = 0.0, Duration = TimeSpan.FromSeconds(this.AnimationDuration) };
+                    slideAnimation = new DoubleAnimation() { From = this.SlideDistance, To = 0.0, Duration = TimeSpan.FromSeconds(this.SlideDuration) };
                 }
 
                 TranslateTransform translateTransform1 = new TranslateTransform();
-                translateTransform1.BeginAnimation(TranslateTransform.XProperty, xTranslate);
+                var fadeStoryboard = new Storyboard();
+                fadeStoryboard.Children.Add(opacityAnimation);
+                Storyboard.SetTargetName(contentPanel, contentPanel.Name);
+                Storyboard.SetTargetProperty(opacityAnimation, new PropertyPath(UserControl.OpacityProperty));
+                fadeStoryboard.Begin(contentPanel);
+                translateTransform1.BeginAnimation(TranslateTransform.XProperty, slideAnimation);
                 contentPanel.RenderTransform = translateTransform1;
                 previous = current;
             }
