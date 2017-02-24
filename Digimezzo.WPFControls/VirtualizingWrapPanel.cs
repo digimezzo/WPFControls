@@ -330,13 +330,21 @@ namespace Digimezzo.WPFControls
         {
             // Figure out how many children fit on each row
             int childrenPerRow = 0;
+
             if (availableSize.Width == double.PositiveInfinity)
             {
                 childrenPerRow = this.Children.Count;
             }
             else
             {
-                childrenPerRow = Math.Max(1, Convert.ToInt32(Math.Floor(availableSize.Width / this.ChildWidth)));
+                try
+                {
+                    childrenPerRow = Math.Max(1, Convert.ToInt32(Math.Floor(availableSize.Width / this.ChildWidth)));
+                }
+                catch (Exception)
+                {
+                    childrenPerRow = this.Children.Count;
+                }
             }
             return childrenPerRow;
         }
