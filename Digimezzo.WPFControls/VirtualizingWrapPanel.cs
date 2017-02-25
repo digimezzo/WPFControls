@@ -264,16 +264,22 @@ namespace Digimezzo.WPFControls
         {
             int childrenPerRow = CalculateChildrenPerRow(this.extent);
 
-            firstVisibleItemIndex = Convert.ToInt32(Math.Floor(this.offset.Y / this.ChildHeight)) * childrenPerRow;
-            lastVisibleItemIndex = Convert.ToInt32(Math.Ceiling((this.offset.Y + this.viewport.Height) / this.ChildHeight)) * childrenPerRow - 1;
-
-            ItemsControl itemsControl1 = ItemsControl.GetItemsOwner(this);
-            int itemCount = itemsControl1.HasItems ? itemsControl1.Items.Count : 0;
-            if (lastVisibleItemIndex >= itemCount)
+            try
             {
-                lastVisibleItemIndex = itemCount - 1;
-            }
+                firstVisibleItemIndex = Convert.ToInt32(Math.Floor(this.offset.Y / this.ChildHeight)) * childrenPerRow;
+                lastVisibleItemIndex = Convert.ToInt32(Math.Ceiling((this.offset.Y + this.viewport.Height) / this.ChildHeight)) * childrenPerRow - 1;
 
+                ItemsControl itemsControl1 = ItemsControl.GetItemsOwner(this);
+                int itemCount = itemsControl1.HasItems ? itemsControl1.Items.Count : 0;
+                if (lastVisibleItemIndex >= itemCount)
+                {
+                    lastVisibleItemIndex = itemCount - 1;
+                }
+            }
+            catch (OverflowException)
+            {
+                // No idea if we can ignore this
+            }
         }
 
         /// <summary>
@@ -341,9 +347,9 @@ namespace Digimezzo.WPFControls
                 {
                     childrenPerRow = Math.Max(1, Convert.ToInt32(Math.Floor(availableSize.Width / this.ChildWidth)));
                 }
-                catch (Exception)
+                catch (OverflowException)
                 {
-                    childrenPerRow = this.Children.Count;
+                    // No idea if we can ignore this
                 }
             }
             return childrenPerRow;
