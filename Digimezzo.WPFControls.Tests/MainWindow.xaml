@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Digimezzo.WPFControls.Tests"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="530">
+        Title="MainWindow" Height="500" Width="600">
     
     <StackPanel>
         <Button x:Name="BorderlessWindows8WindowTestButton" Margin="10,5,10,5" Click="BorderlessWindows8WindowTestButton_Click" Content="BorderlessWindows8Window Test"/>
@@ -21,5 +21,6 @@
         <Button x:Name="ToggleSwitchTestButton" Margin="10,5,10,5" Click="ToggleSwitchTestButton_Click" Content="ToggleSwitch Test"/>
         <Button x:Name="VirtualizingWrapPanelTestButton" Margin="10,5,10,5" Click="VirtualizingWrapPanelTestButton_Click" Content="VirtualizingWrapPanel Test"/>
         <Button x:Name="PivotTestButton" Margin="10,5,10,5" Click="PivotTestButton_Click" Content="Pivot Test"/>
+        <Button x:Name="RippleTestButton" Margin="10,5,10,5" Click="RippleTestButton_Click" Content="Ripple Test"/>
     </StackPanel>
 </Window>

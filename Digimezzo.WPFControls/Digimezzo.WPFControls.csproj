@@ -71,6 +71,7 @@
     <Compile Include="LabelToLower.cs" />
     <Compile Include="LabelToUpper.cs" />
     <Compile Include="Pivot.cs" />
+    <Compile Include="Ripple.cs" />
     <Compile Include="SharedAssemblyInfo.cs" />
     <Compile Include="VirtualizingWrapPanel.cs" />
     <Compile Include="Windows8Slider.cs" />
@@ -129,6 +130,10 @@
     <Page Include="Themes\Pivot.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Ripple.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Windows8Slider.xaml">
       <Generator>MSBuild:Compile</Generator>
