@@ -70,6 +70,8 @@ namespace Digimezzo.WPFControls
 
                 if (!self.DoRipple) return; // Only ripple if true
 
+                self.MaxWidth = self.ActualWidth; // Make sure the width cannot expand due to ellipse expand
+
                 double targetWidth = Math.Max(self.ActualWidth, self.ActualHeight) * 2;
                 Point mousePosition = Mouse.GetPosition(self);
                 var startMargin = new Thickness(mousePosition.X, mousePosition.Y, 0, 0);

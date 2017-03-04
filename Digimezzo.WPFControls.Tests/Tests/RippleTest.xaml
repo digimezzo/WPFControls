@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="RippleTest" Height="300" Width="300">
     <StackPanel VerticalAlignment="Center">
-        <Button Content="Press me" Width="120">
+        <Button Content="Press me">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="Template">
