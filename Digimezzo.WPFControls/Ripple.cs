@@ -12,6 +12,8 @@ namespace Digimezzo.WPFControls
     {
         #region Variables
         Ellipse ellipse;
+        Grid grid;
+        Storyboard animation;
         #endregion
 
         #region Dependency Properties
@@ -20,9 +22,6 @@ namespace Digimezzo.WPFControls
 
         public static readonly DependencyProperty DoRippleProperty =
             DependencyProperty.Register("DoRipple", typeof(bool), typeof(Ripple), new PropertyMetadata(DoRippleChangedHandler));
-
-        public static readonly DependencyProperty DurationMillisecondsProperty =
-           DependencyProperty.Register("DurationMilliseconds", typeof(int), typeof(Ripple), new PropertyMetadata(1000));
         #endregion
 
         #region Properties
@@ -36,12 +35,6 @@ namespace Digimezzo.WPFControls
         {
             get { return (bool)GetValue(DoRippleProperty); }
             set { SetValue(DoRippleProperty, value); }
-        }
-
-        public int DurationMilliseconds
-        {
-            get { return (int)GetValue(DurationMillisecondsProperty); }
-            set { SetValue(DurationMillisecondsProperty, value); }
         }
         #endregion
 
@@ -58,6 +51,8 @@ namespace Digimezzo.WPFControls
             base.OnApplyTemplate();
 
             ellipse = GetTemplateChild("PART_ellipse") as Ellipse;
+            grid = GetTemplateChild("PART_grid") as Grid;
+            animation = grid.FindResource("PART_animation") as Storyboard;
         }
         #endregion
 
@@ -70,28 +65,20 @@ namespace Digimezzo.WPFControls
 
                 if (!self.DoRipple) return; // Only ripple if true
 
-                double targetWidth = Math.Max(self.ActualWidth, self.ActualHeight) * 2;
-                Point mousePosition = Mouse.GetPosition(self);
+                var targetWidth = Math.Max(self.ActualWidth, self.ActualHeight) * 2;
+                var mousePosition = Mouse.GetPosition(self);
                 var startMargin = new Thickness(mousePosition.X, mousePosition.Y, 0, 0);
-                int durationOffsetMilliseconds = self.DurationMilliseconds/4;
-                var duration = new TimeSpan(0, 0, 0, 0, self.DurationMilliseconds);
-                var afterDuration = new TimeSpan(0, 0, 0, 0, self.DurationMilliseconds + durationOffsetMilliseconds);
 
-                // Set initial ellipse Margin to mouse position
+                // Set initial margin to mouse position
                 self.ellipse.Margin = startMargin;
 
-                // Animate ellipse Width
-                var widthAnimation = new DoubleAnimation(0, targetWidth, duration);
+                // Set the "To" value of the animation that animates the width to the target width
+                (self.animation.Children[0] as DoubleAnimation).To = targetWidth;
 
-                // Animate ellipse Margin
-                var marginAnimation = new ThicknessAnimation(startMargin, new Thickness(mousePosition.X - targetWidth / 2, mousePosition.Y - targetWidth / 2, 0, 0), duration);
-
-                // Animate ellipse Opacity
-                var opacityAnimation = new DoubleAnimation(1, 0, afterDuration);
-
-                self.ellipse.BeginAnimation(WidthProperty, widthAnimation);
-                self.ellipse.BeginAnimation(MarginProperty, marginAnimation);
-                self.ellipse.BeginAnimation(OpacityProperty, opacityAnimation);
+                // Set the "To" and "From" values of the animation that animates the distance relative to the container (grid)
+                (self.animation.Children[1] as ThicknessAnimation).From = startMargin;
+                (self.animation.Children[1] as ThicknessAnimation).To = new Thickness(mousePosition.X - targetWidth / 2, mousePosition.Y - targetWidth / 2, 0, 0);
+                self.ellipse.BeginStoryboard(self.animation);
             }
             catch (Exception)
             {
