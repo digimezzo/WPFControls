@@ -10,7 +10,6 @@
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/MultiPanePanel.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Pivot.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/ProgressRing.xaml" />
-        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Ripple.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/SlidingContentControl.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/ToggleSwitch.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/UWPSlider.xaml" />

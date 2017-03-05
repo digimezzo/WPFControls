@@ -76,9 +76,6 @@
     <Compile Include="Tests\ProgressRingTest.xaml.cs">
       <DependentUpon>ProgressRingTest.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Tests\RippleTest.xaml.cs">
-      <DependentUpon>RippleTest.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Tests\SlidingContentControlTest.xaml.cs">
       <DependentUpon>SlidingContentControlTest.xaml</DependentUpon>
     </Compile>
@@ -134,10 +131,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Tests\ProgressRingTest.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Tests\RippleTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
