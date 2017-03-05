@@ -70,8 +70,7 @@ namespace Digimezzo.WPFControls
 
                 if (!self.DoRipple) return; // Only ripple if true
 
-                self.MaxWidth = self.ActualWidth; // Make sure the Width cannot expand due to ellipse expand
-                self.MaxHeight = self.ActualHeight; // Make sure the Height cannot expand due to ellipse expand
+                self.MaxWidth = self.ActualWidth; // Make sure the width cannot expand due to ellipse expand
 
                 double targetWidth = Math.Max(self.ActualWidth, self.ActualHeight) * 2;
                 Point mousePosition = Mouse.GetPosition(self);
