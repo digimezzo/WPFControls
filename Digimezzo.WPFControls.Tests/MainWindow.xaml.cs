@@ -103,5 +103,11 @@ namespace Digimezzo.WPFControls.Tests
             var win = new PivotTest();
             win.Show();
         }
+
+        private void RippleTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new RippleTest();
+            win.Show();
+        }
     }
 }
