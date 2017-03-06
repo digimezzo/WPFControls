@@ -43,7 +43,7 @@
                                 <Grid x:Name="grid" MinWidth="80" Height="28" VerticalAlignment="Center" HorizontalAlignment="Center" Width="{TemplateBinding Width}">
                                     <Border Panel.ZIndex="0" x:Name="opacityMask" MinWidth="80" Height="28" Background="#1D7DD4"/>
                                     <Label x:Name="MyLabel" Panel.ZIndex="2" Content="{TemplateBinding Content}" Foreground="White" Background="Transparent" Padding="10,0,10,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                                    <controls:Ripple Panel.ZIndex="1" RippleBackground="#33FFFFFF" DoRipple="{TemplateBinding IsPressed}"/>
+                                    <controls:Ripple Panel.ZIndex="1" RippleBackground="#33FFFFFF" DoRipple="{TemplateBinding IsPressed}" DurationMilliseconds="500"/>
                                 </Grid>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="true">
