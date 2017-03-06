@@ -22,7 +22,7 @@ namespace Digimezzo.WPFControls
             DependencyProperty.Register("DoRipple", typeof(bool), typeof(Ripple), new PropertyMetadata(DoRippleChangedHandler));
 
         public static readonly DependencyProperty DurationMillisecondsProperty =
-           DependencyProperty.Register("DurationMilliseconds", typeof(int), typeof(Ripple), new PropertyMetadata(1000));
+           DependencyProperty.Register("DurationMilliseconds", typeof(int), typeof(Ripple), new PropertyMetadata(500));
         #endregion
 
         #region Properties
