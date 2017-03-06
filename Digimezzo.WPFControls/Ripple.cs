@@ -24,11 +24,11 @@ namespace Digimezzo.WPFControls
         public static readonly DependencyProperty DurationMillisecondsProperty =
            DependencyProperty.Register("DurationMilliseconds", typeof(int), typeof(Ripple), new PropertyMetadata(500));
 
-        public static readonly DependencyProperty StartAtMouseCursorProperty =
-            DependencyProperty.Register("StartAtMouseCursor", typeof(bool), typeof(Ripple), new PropertyMetadata(true));
+        public static readonly DependencyProperty StartAtPointerProperty =
+            DependencyProperty.Register("StartAtPointer", typeof(bool), typeof(Ripple), new PropertyMetadata(true));
 
-        public static readonly DependencyProperty KeepInsideBoundsProperty =
-           DependencyProperty.Register("KeepInsideBounds", typeof(bool), typeof(Ripple), new PropertyMetadata(false));
+        public static readonly DependencyProperty ScaleProperty =
+           DependencyProperty.Register("Scale", typeof(double), typeof(Ripple), new PropertyMetadata(2.0));
         #endregion
 
         #region Properties
@@ -50,16 +50,16 @@ namespace Digimezzo.WPFControls
             set { SetValue(DurationMillisecondsProperty, value); }
         }
 
-        public bool StartAtMouseCursor
+        public bool StartAtPointer
         {
-            get { return (bool)GetValue(StartAtMouseCursorProperty); }
-            set { SetValue(StartAtMouseCursorProperty, value); }
+            get { return (bool)GetValue(StartAtPointerProperty); }
+            set { SetValue(StartAtPointerProperty, value); }
         }
 
-        public bool KeepInsideBounds
+        public double Scale
         {
-            get { return (bool)GetValue(KeepInsideBoundsProperty); }
-            set { SetValue(KeepInsideBoundsProperty, value); }
+            get { return (double)GetValue(ScaleProperty); }
+            set { SetValue(ScaleProperty, value); }
         }
         #endregion
 
@@ -91,13 +91,12 @@ namespace Digimezzo.WPFControls
                 self.MaxWidth = self.ActualWidth; // Make sure the Width cannot expand due to ellipse expand
                 self.MaxHeight = self.ActualHeight; // Make sure the Height cannot expand due to ellipse expand
 
-                double targetWidth = Math.Max(self.ActualWidth, self.ActualHeight) * 2;
-                if (self.KeepInsideBounds) targetWidth = self.ActualWidth;
+                double targetWidth = Math.Max(self.ActualWidth, self.ActualHeight) * self.Scale;
 
                 Point mousePosition = Mouse.GetPosition(self);
 
                 Thickness startMargin = new Thickness(self.ActualWidth / 2, self.ActualHeight / 2, 0, 0);
-                if (self.StartAtMouseCursor) startMargin = new Thickness(mousePosition.X, mousePosition.Y, 0, 0);
+                if (self.StartAtPointer) startMargin = new Thickness(mousePosition.X, mousePosition.Y, 0, 0);
 
                 int durationOffsetMilliseconds = self.DurationMilliseconds / 4;
                 var duration = new TimeSpan(0, 0, 0, 0, self.DurationMilliseconds);
@@ -111,7 +110,7 @@ namespace Digimezzo.WPFControls
 
                 // Animate ellipse Margin
                 var marginAnimation = new ThicknessAnimation(startMargin, new Thickness(0, self.ActualHeight / 2 - self.ActualWidth / 2, 0, 0), duration);
-                if (self.StartAtMouseCursor) marginAnimation = new ThicknessAnimation(startMargin, new Thickness(mousePosition.X - targetWidth / 2, mousePosition.Y - targetWidth / 2, 0, 0), duration);
+                if (self.StartAtPointer) marginAnimation = new ThicknessAnimation(startMargin, new Thickness(mousePosition.X - targetWidth / 2, mousePosition.Y - targetWidth / 2, 0, 0), duration);
 
                 // Animate ellipse Opacity
                 var opacityAnimation = new DoubleAnimation(1, 0, afterDuration);
