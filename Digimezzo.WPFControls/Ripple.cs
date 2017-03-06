@@ -23,6 +23,12 @@ namespace Digimezzo.WPFControls
 
         public static readonly DependencyProperty DurationMillisecondsProperty =
            DependencyProperty.Register("DurationMilliseconds", typeof(int), typeof(Ripple), new PropertyMetadata(500));
+
+        public static readonly DependencyProperty StartAtMouseCursorProperty =
+            DependencyProperty.Register("StartAtMouseCursor", typeof(bool), typeof(Ripple), new PropertyMetadata(true));
+
+        public static readonly DependencyProperty KeepInsideBoundsProperty =
+           DependencyProperty.Register("KeepInsideBounds", typeof(bool), typeof(Ripple), new PropertyMetadata(false));
         #endregion
 
         #region Properties
@@ -42,6 +48,18 @@ namespace Digimezzo.WPFControls
         {
             get { return (int)GetValue(DurationMillisecondsProperty); }
             set { SetValue(DurationMillisecondsProperty, value); }
+        }
+
+        public bool StartAtMouseCursor
+        {
+            get { return (bool)GetValue(StartAtMouseCursorProperty); }
+            set { SetValue(StartAtMouseCursorProperty, value); }
+        }
+
+        public bool KeepInsideBounds
+        {
+            get { return (bool)GetValue(KeepInsideBoundsProperty); }
+            set { SetValue(KeepInsideBoundsProperty, value); }
         }
         #endregion
 
@@ -74,9 +92,14 @@ namespace Digimezzo.WPFControls
                 self.MaxHeight = self.ActualHeight; // Make sure the Height cannot expand due to ellipse expand
 
                 double targetWidth = Math.Max(self.ActualWidth, self.ActualHeight) * 2;
+                if (self.KeepInsideBounds) targetWidth = self.ActualWidth;
+
                 Point mousePosition = Mouse.GetPosition(self);
-                var startMargin = new Thickness(mousePosition.X, mousePosition.Y, 0, 0);
-                int durationOffsetMilliseconds = self.DurationMilliseconds/4;
+
+                Thickness startMargin = new Thickness(self.ActualWidth / 2, self.ActualHeight / 2, 0, 0);
+                if (self.StartAtMouseCursor) startMargin = new Thickness(mousePosition.X, mousePosition.Y, 0, 0);
+
+                int durationOffsetMilliseconds = self.DurationMilliseconds / 4;
                 var duration = new TimeSpan(0, 0, 0, 0, self.DurationMilliseconds);
                 var afterDuration = new TimeSpan(0, 0, 0, 0, self.DurationMilliseconds + durationOffsetMilliseconds);
 
@@ -87,7 +110,8 @@ namespace Digimezzo.WPFControls
                 var widthAnimation = new DoubleAnimation(0, targetWidth, duration);
 
                 // Animate ellipse Margin
-                var marginAnimation = new ThicknessAnimation(startMargin, new Thickness(mousePosition.X - targetWidth / 2, mousePosition.Y - targetWidth / 2, 0, 0), duration);
+                var marginAnimation = new ThicknessAnimation(startMargin, new Thickness(0, self.ActualHeight / 2 - self.ActualWidth / 2, 0, 0), duration);
+                if (self.StartAtMouseCursor) marginAnimation = new ThicknessAnimation(startMargin, new Thickness(mousePosition.X - targetWidth / 2, mousePosition.Y - targetWidth / 2, 0, 0), duration);
 
                 // Animate ellipse Opacity
                 var opacityAnimation = new DoubleAnimation(1, 0, afterDuration);
