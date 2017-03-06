@@ -8,10 +8,12 @@ using System.Windows.Shapes;
 
 namespace Digimezzo.WPFControls
 {
-    public class Ripple : ContentControl
+    public class Ripple : ContentControl, IDisposable 
     {
         #region Variables
         Ellipse ellipse;
+        bool isLoaded;
+        bool needsRippleAfterLoading;
         #endregion
 
         #region Dependency Properties
@@ -76,6 +78,53 @@ namespace Digimezzo.WPFControls
             base.OnApplyTemplate();
 
             ellipse = GetTemplateChild("PART_ellipse") as Ellipse;
+            base.Loaded += Ripple_Loaded;
+        }
+
+        private void DoRippple()
+        {
+            this.MaxWidth = this.ActualWidth; // Make sure the Width cannot expand due to ellipse expand
+            this.MaxHeight = this.ActualHeight; // Make sure the Height cannot expand due to ellipse expand
+
+            double targetWidth = Math.Max(this.ActualWidth, this.ActualHeight) * this.Scale;
+
+            Point mousePosition = Mouse.GetPosition(this);
+
+            Thickness startMargin = new Thickness(this.ActualWidth / 2, this.ActualHeight / 2, 0, 0);
+            if (this.StartAtPointer) startMargin = new Thickness(mousePosition.X, mousePosition.Y, 0, 0);
+
+            int durationOffsetMilliseconds = this.DurationMilliseconds / 4;
+            var duration = new TimeSpan(0, 0, 0, 0, this.DurationMilliseconds);
+            var afterDuration = new TimeSpan(0, 0, 0, 0, this.DurationMilliseconds + durationOffsetMilliseconds);
+
+            // Set initial ellipse Margin to mouse position
+            this.ellipse.Margin = startMargin;
+
+            // Animate ellipse Width
+            var widthAnimation = new DoubleAnimation(0, targetWidth, duration);
+
+            // Animate ellipse Margin
+            var marginAnimation = new ThicknessAnimation(startMargin, new Thickness(0, this.ActualHeight / 2 - this.ActualWidth / 2, 0, 0), duration);
+            if (this.StartAtPointer) marginAnimation = new ThicknessAnimation(startMargin, new Thickness(mousePosition.X - targetWidth / 2, mousePosition.Y - targetWidth / 2, 0, 0), duration);
+
+            // Animate ellipse Opacity
+            var opacityAnimation = new DoubleAnimation(1, 0, afterDuration);
+
+            this.ellipse.BeginAnimation(WidthProperty, widthAnimation);
+            this.ellipse.BeginAnimation(MarginProperty, marginAnimation);
+            this.ellipse.BeginAnimation(OpacityProperty, opacityAnimation);
+        }
+
+        private void Ripple_Loaded(object sender, RoutedEventArgs e)
+        {
+            var self = (Ripple)sender;
+
+            self.isLoaded = true;
+
+            if(!self.needsRippleAfterLoading) return;
+            self.needsRippleAfterLoading = false;
+
+            self.DoRippple();
         }
         #endregion
 
@@ -88,40 +137,24 @@ namespace Digimezzo.WPFControls
 
                 if (!self.DoRipple) return; // Only ripple if true
 
-                self.MaxWidth = self.ActualWidth; // Make sure the Width cannot expand due to ellipse expand
-                self.MaxHeight = self.ActualHeight; // Make sure the Height cannot expand due to ellipse expand
+                // Sometimes, this gets called before the control is loaded. ActualWith and Actualheight are
+                // 0 until Loaded() is called. This workaround makes sure the ripple is drawn after loading.
+                if (!self.IsLoaded)
+                {
+                    self.needsRippleAfterLoading = true;
+                    return;
+                }
 
-                double targetWidth = Math.Max(self.ActualWidth, self.ActualHeight) * self.Scale;
-
-                Point mousePosition = Mouse.GetPosition(self);
-
-                Thickness startMargin = new Thickness(self.ActualWidth / 2, self.ActualHeight / 2, 0, 0);
-                if (self.StartAtPointer) startMargin = new Thickness(mousePosition.X, mousePosition.Y, 0, 0);
-
-                int durationOffsetMilliseconds = self.DurationMilliseconds / 4;
-                var duration = new TimeSpan(0, 0, 0, 0, self.DurationMilliseconds);
-                var afterDuration = new TimeSpan(0, 0, 0, 0, self.DurationMilliseconds + durationOffsetMilliseconds);
-
-                // Set initial ellipse Margin to mouse position
-                self.ellipse.Margin = startMargin;
-
-                // Animate ellipse Width
-                var widthAnimation = new DoubleAnimation(0, targetWidth, duration);
-
-                // Animate ellipse Margin
-                var marginAnimation = new ThicknessAnimation(startMargin, new Thickness(0, self.ActualHeight / 2 - self.ActualWidth / 2, 0, 0), duration);
-                if (self.StartAtPointer) marginAnimation = new ThicknessAnimation(startMargin, new Thickness(mousePosition.X - targetWidth / 2, mousePosition.Y - targetWidth / 2, 0, 0), duration);
-
-                // Animate ellipse Opacity
-                var opacityAnimation = new DoubleAnimation(1, 0, afterDuration);
-
-                self.ellipse.BeginAnimation(WidthProperty, widthAnimation);
-                self.ellipse.BeginAnimation(MarginProperty, marginAnimation);
-                self.ellipse.BeginAnimation(OpacityProperty, opacityAnimation);
+                self.DoRippple();
             }
             catch (Exception)
             {
             }
+        }
+
+        public void Dispose()
+        {
+          base.Loaded -= Ripple_Loaded;
         }
         #endregion
     }
