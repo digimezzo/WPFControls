@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:Digimezzo.WPFControls"
-    xmlns:converters="clr-namespace:Digimezzo.WPFControls.Converters">
+    xmlns:converters="clr-namespace:Digimezzo.WPFControls.Converters"
+    xmlns:customAnimations="clr-namespace:Digimezzo.WPFControls.CustomAnimations">
 
     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <converters:InvertingBooleanToVisibilityConverter x:Key="InvertingBooleanToVisibilityConverter" />
@@ -41,18 +42,20 @@
                                                 <DataTrigger.EnterActions>
                                                     <BeginStoryboard>
                                                         <Storyboard>
-                                                            <DoubleAnimation
-                                                               Storyboard.TargetProperty="(Canvas.Left)" From="0" To="46" 
-                                                               Duration="0:0:0.05" BeginTime="0:0:0"/>
+                                                            <customAnimations:AccelerationDoubleAnimation
+                                                                Storyboard.TargetProperty="(Canvas.Left)"
+                                                                From="0" To="46"
+                                                                Duration="0:0:0.25" BeginTime="0:0:0"/>
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </DataTrigger.EnterActions>
                                                 <DataTrigger.ExitActions>
                                                     <BeginStoryboard>
                                                         <Storyboard>
-                                                            <DoubleAnimation
-                                                               Storyboard.TargetProperty="(Canvas.Left)" From="46" To="0" 
-                                                               Duration="0:0:0.05" BeginTime="0:0:0"/>
+                                                            <customAnimations:AccelerationDoubleAnimation
+                                                                Storyboard.TargetProperty="(Canvas.Left)"
+                                                                From="46" To="0"
+                                                                Duration="0:0:0.25" BeginTime="0:0:0"/>
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </DataTrigger.ExitActions>
