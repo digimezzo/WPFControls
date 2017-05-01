@@ -109,5 +109,11 @@ namespace Digimezzo.WPFControls.Tests
             var win = new RippleTest();
             win.Show();
         }
+
+        private void SplitViewTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new SplitViewTest();
+            win.Show();
+        }
     }
 }
