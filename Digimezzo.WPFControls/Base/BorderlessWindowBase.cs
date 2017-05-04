@@ -1,5 +1,4 @@
 ﻿using Digimezzo.WPFControls.Native;
-using RaphaelGodart.Controls.Native;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -192,6 +191,7 @@ namespace Digimezzo.WPFControls.Base
             // Update the Window for the first time
             this.UpdateWindow();
         }
+
         protected void UpdateWindow()
         {
             if (this.ResizeMode == ResizeMode.CanResize || this.ResizeMode == ResizeMode.CanResizeWithGrip)
@@ -205,8 +205,23 @@ namespace Digimezzo.WPFControls.Base
 
             if (this.WindowState == WindowState.Maximized)
             {
+                var mHwnd = new WindowInteropHelper(this).Handle;
+                var monitor = NativeMethods.MonitorFromWindow(mHwnd, Constants.MONITOR_DEFAULTTONEAREST);
+
+                if (monitor != IntPtr.Zero)
+                {
+                    var monitorInfo = new MONITORINFO();
+                    NativeMethods.GetMonitorInfo(monitor, monitorInfo);
+                    int x = monitorInfo.rcWork.left;
+                    int y =  monitorInfo.rcWork.top;
+                    int cx = monitorInfo.rcWork.right - x;
+                    int cy = monitorInfo.rcWork.bottom - y;
+                    NativeMethods.SetWindowPos(mHwnd, new IntPtr(Constants.HWND_NOTOPMOST), x, y, cx, cy - 1, Constants.SWP_SHOWWINDOW);
+                }
+
                 this.windowChrome.GlassFrameThickness = new Thickness(0);
-                this.windowBorder.BorderThickness = new Thickness(6);
+                this.windowChrome.ResizeBorderThickness = new Thickness(0);
+                //this.windowBorder.BorderThickness = new Thickness(6);
                 this.maximizeButton.ToolTip = RestoreToolTip;
             }
             else

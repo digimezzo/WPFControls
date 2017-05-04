@@ -71,6 +71,8 @@
     <Compile Include="Helpers\VisualTree.cs" />
     <Compile Include="LabelToLower.cs" />
     <Compile Include="LabelToUpper.cs" />
+    <Compile Include="Native\MONITORINFO.cs" />
+    <Compile Include="Native\RECT.cs" />
     <Compile Include="Pivot.cs" />
     <Compile Include="Ripple.cs" />
     <Compile Include="SharedAssemblyInfo.cs" />
