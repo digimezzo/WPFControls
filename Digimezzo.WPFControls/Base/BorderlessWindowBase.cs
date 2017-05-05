@@ -224,7 +224,6 @@ namespace Digimezzo.WPFControls.Base
                         int cx = monitorInfo.rcWork.right - x;
                         int cy = monitorInfo.rcWork.bottom - y;
 
-
                         NativeMethods.SHAppBarMessage((int)ABMsg.ABM_GETTASKBARPOS, ref pData);
                         var uEdge = GetEdge(pData.rc);
 

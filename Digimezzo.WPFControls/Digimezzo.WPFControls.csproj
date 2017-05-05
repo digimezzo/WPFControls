@@ -77,7 +77,6 @@
     <Compile Include="Native\Monitor\Constants.cs" />
     <Compile Include="Native\Monitor\NativeMethods.cs" />
     <Compile Include="Native\Monitor\Structs.cs" />
-    <Compile Include="Native\RECT.cs" />
     <Compile Include="Pivot.cs" />
     <Compile Include="Ripple.cs" />
     <Compile Include="SharedAssemblyInfo.cs" />
