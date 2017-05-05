@@ -71,7 +71,12 @@
     <Compile Include="Helpers\VisualTree.cs" />
     <Compile Include="LabelToLower.cs" />
     <Compile Include="LabelToUpper.cs" />
-    <Compile Include="Native\MONITORINFO.cs" />
+    <Compile Include="Native\AppBar\Enums.cs" />
+    <Compile Include="Native\AppBar\NativeMethods.cs" />
+    <Compile Include="Native\AppBar\Structs.cs" />
+    <Compile Include="Native\Monitor\Constants.cs" />
+    <Compile Include="Native\Monitor\NativeMethods.cs" />
+    <Compile Include="Native\Monitor\Structs.cs" />
     <Compile Include="Native\RECT.cs" />
     <Compile Include="Pivot.cs" />
     <Compile Include="Ripple.cs" />

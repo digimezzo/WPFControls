@@ -1,5 +1,4 @@
 ﻿using System.Runtime.InteropServices;
-using Digimezzo.WPFControls.Base;
 
 namespace Digimezzo.WPFControls.Native
 {
