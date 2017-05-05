@@ -1,5 +1,6 @@
 ﻿using Digimezzo.WPFControls.Native;
 using System;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -208,20 +209,47 @@ namespace Digimezzo.WPFControls.Base
                 var mHwnd = new WindowInteropHelper(this).Handle;
                 var monitor = NativeMethods.MonitorFromWindow(mHwnd, Constants.MONITOR_DEFAULTTONEAREST);
 
-                if (monitor != IntPtr.Zero)
+                var pData = new APPBARDATA();
+                pData.cbSize = Marshal.SizeOf(pData);
+                pData.hWnd = mHwnd;
+
+                if (Convert.ToBoolean(NativeMethods.SHAppBarMessage((int)ABMsg.ABM_GETSTATE, ref pData)))
                 {
-                    var monitorInfo = new MONITORINFO();
-                    NativeMethods.GetMonitorInfo(monitor, monitorInfo);
-                    int x = monitorInfo.rcWork.left;
-                    int y =  monitorInfo.rcWork.top;
-                    int cx = monitorInfo.rcWork.right - x;
-                    int cy = monitorInfo.rcWork.bottom - y;
-                    NativeMethods.SetWindowPos(mHwnd, new IntPtr(Constants.HWND_NOTOPMOST), x, y, cx, cy - 1, Constants.SWP_SHOWWINDOW);
+                  if (monitor != IntPtr.Zero)
+                    {
+                        var monitorInfo = new MONITORINFO();
+                        NativeMethods.GetMonitorInfo(monitor, monitorInfo);
+                        int x = monitorInfo.rcWork.left;
+                        int y = monitorInfo.rcWork.top;
+                        int cx = monitorInfo.rcWork.right - x;
+                        int cy = monitorInfo.rcWork.bottom - y;
+
+                        NativeMethods.SHAppBarMessage((int)ABMsg.ABM_GETTASKBARPOS, ref pData);
+                        var uEdge = GetEdge(pData.rc);
+
+                        switch (uEdge)
+                        {
+                                case ABEdge.ABE_TOP: y++;
+                                    break;
+                                case ABEdge.ABE_BOTTOM: cy--;
+                                    break;
+                                case ABEdge.ABE_LEFT: x++;
+                                break;
+                                case ABEdge.ABE_RIGHT: cx--;
+                                break;
+                        }
+
+                        NativeMethods.SetWindowPos(mHwnd, new IntPtr(Constants.HWND_NOTOPMOST), x, y, cx, cy,
+                            Constants.SWP_SHOWWINDOW);
+                    }
+                }
+                else
+                {
+                    this.windowBorder.BorderThickness = new Thickness(6);
                 }
 
                 this.windowChrome.GlassFrameThickness = new Thickness(0);
                 this.windowChrome.ResizeBorderThickness = new Thickness(0);
-                //this.windowBorder.BorderThickness = new Thickness(6);
                 this.maximizeButton.ToolTip = RestoreToolTip;
             }
             else
@@ -230,6 +258,23 @@ namespace Digimezzo.WPFControls.Base
                 this.windowBorder.BorderThickness = this.previousBorderThickness;
                 this.maximizeButton.ToolTip = MaximizeToolTip;
             }
+        }
+
+        #endregion
+
+        #region Private
+        private static ABEdge GetEdge(RECT rc)
+        {
+            ABEdge uEdge;
+            if (rc.top == rc.left && rc.bottom > rc.right)
+                uEdge = ABEdge.ABE_LEFT;
+            else if (rc.top == rc.left && rc.bottom < rc.right)
+                uEdge = ABEdge.ABE_TOP;
+            else if (rc.top > rc.left)
+                uEdge = ABEdge.ABE_BOTTOM;
+            else
+                uEdge = ABEdge.ABE_RIGHT;
+            return uEdge;
         }
         #endregion
 
