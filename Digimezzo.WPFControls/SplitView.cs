@@ -84,7 +84,7 @@ namespace Digimezzo.WPFControls
 
             if (this.content != null)
             {
-                this.content.MouseDown += Content_MouseUp;
+                this.content.MouseUp += Content_MouseUp;
             }
         }
 
