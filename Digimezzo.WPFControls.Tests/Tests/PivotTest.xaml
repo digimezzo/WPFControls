@@ -9,13 +9,13 @@
         Title="PivotTest" Height="300" Width="300">
     <Grid>
         <controls:Pivot>
-            <controls:PivotItem Header="Item1" Foreground="LightGray" SelectedForeground="Black" FontSize="24" SelectedFontWeight="Bold">
+            <controls:PivotItem Header="Item1" Foreground="LightGray" SelectedForeground="Black" FontSize="24" SelectedFontWeight="Bold" IndicatorHeight="2" IndicatorBackground="Red">
                 <TextBlock Foreground="Black" FontSize="13">Content 1</TextBlock>
             </controls:PivotItem>
-            <controls:PivotItem Header="Item2" Foreground="LightGray" SelectedForeground="Black" FontSize="24" SelectedFontWeight="Bold">
+            <controls:PivotItem Header="Item2" Foreground="LightGray" SelectedForeground="Black" FontSize="24" SelectedFontWeight="Bold" IndicatorHeight="2" IndicatorBackground="Red">
                 <TextBlock Foreground="Black" FontSize="13">Content 2</TextBlock>
             </controls:PivotItem>
-            <controls:PivotItem Header="Item3" Foreground="LightGray" SelectedForeground="Black" FontSize="24" SelectedFontWeight="Bold">
+            <controls:PivotItem Header="Item3" Foreground="LightGray" SelectedForeground="Black" FontSize="24" SelectedFontWeight="Bold" IndicatorHeight="2" IndicatorBackground="Red">
                 <TextBlock Foreground="Black" FontSize="13">Content 3</TextBlock>
             </controls:PivotItem>
         </controls:Pivot>

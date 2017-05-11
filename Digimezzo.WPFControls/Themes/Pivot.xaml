@@ -75,10 +75,13 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:PivotItem}">
                     <Border x:Name="mainBorder">
-                        <Grid>
-                            <ContentPresenter x:Name="contentPresenter" TextBlock.Foreground="{TemplateBinding Foreground}" TextBlock.FontWeight="{TemplateBinding FontWeight}" ContentSource="Header" Focusable="False" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-                            <ContentPresenter x:Name="contentPresenterDummy" TextBlock.Foreground="{TemplateBinding Foreground}" TextBlock.FontWeight="{TemplateBinding SelectedFontWeight}" ContentSource="Header" Focusable="False" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Visibility="Hidden"/>
-                        </Grid>
+                        <StackPanel>
+                            <Grid>
+                                <ContentPresenter x:Name="contentPresenter" TextBlock.Foreground="{TemplateBinding Foreground}" TextBlock.FontWeight="{TemplateBinding FontWeight}" ContentSource="Header" Focusable="False" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                                <ContentPresenter x:Name="contentPresenterDummy" TextBlock.Foreground="{TemplateBinding Foreground}" TextBlock.FontWeight="{TemplateBinding SelectedFontWeight}" ContentSource="Header" Focusable="False" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Visibility="Hidden"/>
+                            </Grid>
+                            <Border x:Name="indicator" Height="{TemplateBinding IndicatorHeight}" Background="{TemplateBinding IndicatorBackground}" Visibility="Hidden"/>
+                        </StackPanel>
                     </Border>
                     <ControlTemplate.Triggers>
                         <MultiDataTrigger>
@@ -93,6 +96,7 @@
                             </MultiDataTrigger.Conditions>
                             <Setter Property="TextBlock.Foreground" TargetName="contentPresenter" Value="{Binding Path=SelectedForeground, RelativeSource={RelativeSource AncestorType={x:Type controls:PivotItem}}}"/>
                             <Setter Property="TextBlock.FontWeight" TargetName="contentPresenter" Value="{Binding Path=SelectedFontWeight, RelativeSource={RelativeSource AncestorType={x:Type controls:PivotItem}}}"/>
+                            <Setter Property="Visibility" TargetName="indicator" Value="Visible"/>
                         </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

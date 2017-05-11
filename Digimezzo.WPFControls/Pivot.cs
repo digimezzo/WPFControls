@@ -97,6 +97,18 @@ namespace Digimezzo.WPFControls
     public class PivotItem : TabItem
     {
         #region Properties
+        public double IndicatorHeight
+        {
+            get { return (double)GetValue(IndicatorHeightProperty); }
+            set { SetValue(IndicatorHeightProperty, value); }
+        }
+
+        public Brush IndicatorBackground
+        {
+            get { return (Brush)GetValue(IndicatorBackgroundProperty); }
+            set { SetValue(IndicatorBackgroundProperty, value); }
+        }
+
         public Brush SelectedForeground
         {
             get { return (Brush)GetValue(SelectedForegroundProperty); }
@@ -111,6 +123,8 @@ namespace Digimezzo.WPFControls
         #endregion
 
         #region Dependency Properties
+        public static readonly DependencyProperty IndicatorHeightProperty = DependencyProperty.Register("IndicatorHeight", typeof(double), typeof(PivotItem), new PropertyMetadata(0.0));
+        public static readonly DependencyProperty IndicatorBackgroundProperty = DependencyProperty.Register("IndicatorBackground", typeof(Brush), typeof(PivotItem), new PropertyMetadata(Brushes.Transparent));
         public static readonly DependencyProperty SelectedForegroundProperty = DependencyProperty.Register("SelectedForeground", typeof(Brush), typeof(PivotItem), new PropertyMetadata(Brushes.Black));
         public static readonly DependencyProperty SelectedFontWeightProperty = DependencyProperty.Register("SelectedFontWeight", typeof(FontWeight), typeof(PivotItem), new PropertyMetadata(FontWeights.Normal));
         #endregion
