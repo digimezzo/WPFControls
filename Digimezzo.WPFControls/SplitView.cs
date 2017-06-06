@@ -45,6 +45,10 @@ namespace Digimezzo.WPFControls
         public static readonly DependencyProperty OpenPaneLengthProperty = DependencyProperty.Register("OpenPaneLength", typeof(double), typeof(SplitView), new PropertyMetadata(200.0));
         #endregion
 
+        #region Events
+        public event EventHandler PaneClosed = delegate { };
+        #endregion
+
         #region Event handlers
         private static void OnIsPaneOpenChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
@@ -79,12 +83,12 @@ namespace Digimezzo.WPFControls
 
             if (this.pane != null)
             {
-                this.pane.Width = 0;
+                this.pane.Margin = new Thickness(-this.OpenPaneLength - 1, 0, 0, 0);
             }
 
             if (this.content != null)
             {
-                this.content.MouseDown += Content_MouseUp;
+                this.content.MouseUp += Content_MouseUp;
             }
         }
 
@@ -97,33 +101,33 @@ namespace Digimezzo.WPFControls
         #region Private
         private void OpenPane()
         {
-            if(this.pane != null)
+            if (this.pane != null)
             {
-                // this.pane.Width = this.OpenPaneLength;
-                DoubleAnimation widthAnimation = new DoubleAnimation
+                var marginAnimation = new ThicknessAnimation
                 {
-                    From = 0,
-                    To = this.OpenPaneLength,
+                    From = new Thickness(-this.OpenPaneLength - 1, 0, 0, 0),
+                    To = new Thickness(0, 0, 0, 0),
                     Duration = TimeSpan.FromMilliseconds(150)
                 };
 
-                this.pane.BeginAnimation(ContentPresenter.WidthProperty, widthAnimation);
+                this.pane.BeginAnimation(ContentPresenter.MarginProperty, marginAnimation);
             }
         }
         private void ClosePane()
         {
             if (this.pane != null)
             {
-                // this.pane.Width = 0;
-                DoubleAnimation widthAnimation = new DoubleAnimation
+                var marginAnimation = new ThicknessAnimation
                 {
-                    From = this.OpenPaneLength,
-                    To = 0,
+                    From = new Thickness(0, 0, 0, 0),
+                    To = new Thickness(-this.OpenPaneLength - 1, 0, 0, 0),
                     Duration = TimeSpan.FromMilliseconds(150)
                 };
 
-                this.pane.BeginAnimation(ContentPresenter.WidthProperty, widthAnimation);
+                this.pane.BeginAnimation(ContentPresenter.MarginProperty, marginAnimation);
             }
+
+            this.PaneClosed(this, new EventArgs());
         }
         #endregion
     }

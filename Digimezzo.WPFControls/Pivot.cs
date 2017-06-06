@@ -15,6 +15,24 @@ namespace Digimezzo.WPFControls
         #endregion
 
         #region Properties
+        public double Elevation
+        {
+            get { return Convert.ToDouble(GetValue(ElevationProperty)); }
+            set { SetValue(ElevationProperty, value); }
+        }
+
+        public Brush ElevationBackground
+        {
+            get { return (Brush)GetValue(ElevationBackgroundProperty); }
+            set { SetValue(ElevationBackgroundProperty, value); }
+        }
+
+        public Brush HeaderBackground
+        {
+            get { return (Brush)GetValue(HeaderBackgroundProperty); }
+            set { SetValue(HeaderBackgroundProperty, value); }
+        }
+
         public double SlideDistance
         {
             get { return Convert.ToDouble(GetValue(SlideDistanceProperty)); }
@@ -32,9 +50,26 @@ namespace Digimezzo.WPFControls
             get { return Convert.ToDouble(GetValue(FadeDurationProperty)); }
             set { SetValue(FadeDurationProperty, value); }
         }
+
+        public double IndicatorHeight
+        {
+            get { return (double)GetValue(IndicatorHeightProperty); }
+            set { SetValue(IndicatorHeightProperty, value); }
+        }
+
+        public Brush IndicatorBackground
+        {
+            get { return (Brush)GetValue(IndicatorBackgroundProperty); }
+            set { SetValue(IndicatorBackgroundProperty, value); }
+        }
         #endregion
 
         #region Dependency Properties
+        public static readonly DependencyProperty ElevationProperty = DependencyProperty.Register("Elevation", typeof(double), typeof(Pivot), new PropertyMetadata(0.0));
+        public static readonly DependencyProperty ElevationBackgroundProperty = DependencyProperty.Register("ElevationBackground", typeof(Brush), typeof(Pivot), new PropertyMetadata(Brushes.Transparent));
+        public static readonly DependencyProperty HeaderBackgroundProperty = DependencyProperty.Register("HeaderBackground", typeof(Brush), typeof(Pivot), new PropertyMetadata(Brushes.Transparent));
+        public static readonly DependencyProperty IndicatorHeightProperty = DependencyProperty.Register("IndicatorHeight", typeof(double), typeof(Pivot), new PropertyMetadata(0.0));
+        public static readonly DependencyProperty IndicatorBackgroundProperty = DependencyProperty.Register("IndicatorBackground", typeof(Brush), typeof(Pivot), new PropertyMetadata(Brushes.Transparent));
         public static readonly DependencyProperty SlideDistanceProperty = DependencyProperty.Register("SlideDistance", typeof(double), typeof(Pivot), new PropertyMetadata(20.0));
         public static readonly DependencyProperty SlideDurationProperty = DependencyProperty.Register("SlideDuration", typeof(double), typeof(Pivot), new PropertyMetadata(0.25));
         public static readonly DependencyProperty FadeDurationProperty = DependencyProperty.Register("FadeDuration", typeof(double), typeof(Pivot), new PropertyMetadata(0.5));
