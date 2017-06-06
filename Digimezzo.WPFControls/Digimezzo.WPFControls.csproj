@@ -55,6 +55,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\Constants.cs" />
     <Compile Include="Base\SliderBase.cs" />
     <Compile Include="Converters\AddValueConverter.cs" />
     <Compile Include="Converters\BooleanToCollapsedConverter.cs" />
@@ -64,7 +65,6 @@
     <Compile Include="Converters\SolidColorBrushToColorConverter.cs" />
     <Compile Include="Converters\StringToLowerConverter.cs" />
     <Compile Include="Converters\StringToUpperConverter.cs" />
-    <Compile Include="CustomAnimations\AccelerationDoubleAnimation.cs" />
     <Compile Include="Enums\SlideDirection.cs" />
     <Compile Include="Enums\WrapPanelAlignment.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
