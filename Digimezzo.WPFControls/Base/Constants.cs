@@ -13,6 +13,7 @@ namespace Digimezzo.WPFControls.Base
 
         public static Duration MouseEnterDuration = new Duration(new TimeSpan(MillisecondsToTicks(250)));
         public static Duration MouseLeaveDuration = MouseEnterDuration;
-        public static Duration ToggleSwitchDuration = MouseLeaveDuration;
+        public static Duration ToggleSwitchDuration = MouseEnterDuration;
+        public static Duration SmoothScrollingDuration = MouseEnterDuration;
     }
 }

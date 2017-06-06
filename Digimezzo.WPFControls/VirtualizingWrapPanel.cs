@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace Digimezzo.WPFControls
 {
@@ -19,6 +20,8 @@ namespace Digimezzo.WPFControls
         private Size extent = new Size(0, 0);
         private Size viewport = new Size(0, 0);
         private Point offset;
+        private DoubleAnimation transAnimation;
+        private IEasingFunction easingFunction;
         #endregion
 
         #region Construction
@@ -26,6 +29,14 @@ namespace Digimezzo.WPFControls
         {
             // For use in the IScrollInfo implementation
             this.RenderTransform = this.trans;
+
+            this.easingFunction = new SineEase() {EasingMode = EasingMode.EaseOut};
+            this.transAnimation = new DoubleAnimation()
+            {
+                Duration = Base.Constants.SmoothScrollingDuration,
+                EasingFunction = this.easingFunction,
+                FillBehavior = FillBehavior.Stop
+            };
         }
         #endregion
 
@@ -86,7 +97,6 @@ namespace Digimezzo.WPFControls
             int firstVisibleItemIndex = 0;
             int lastVisibleItemIndex = 0;
             GetVisibleRange(ref firstVisibleItemIndex, ref lastVisibleItemIndex);
-
             // We need to access InternalChildren before the generator to work around a bug
             UIElementCollection children = this.InternalChildren;
             IItemContainerGenerator generator = this.ItemContainerGenerator;
@@ -224,11 +234,18 @@ namespace Digimezzo.WPFControls
             UIElementCollection children = this.InternalChildren;
             IItemContainerGenerator generator = this.ItemContainerGenerator;
 
+            int itemCount = GetItemCount();
+            int childrenPerRow = CalculateChildrenPerRow(this.extent);
+            if (minDesiredGenerated - 2 * childrenPerRow > 0)
+                minDesiredGenerated -= 2 * childrenPerRow;
+            if (maxDesiredGenerated + 2 * childrenPerRow < itemCount)
+                maxDesiredGenerated += 2 * childrenPerRow;
+
             for (int i = children.Count - 1; i >= 0; i += -1)
             {
                 GeneratorPosition childGeneratorPos = new GeneratorPosition(i, 0);
                 int itemIndex = generator.IndexFromGeneratorPosition(childGeneratorPos);
-                if (itemIndex < minDesiredGenerated || itemIndex > maxDesiredGenerated)
+                if ((itemIndex > 2 * childrenPerRow && itemIndex < minDesiredGenerated) || (itemIndex < itemCount - 2 * childrenPerRow && itemIndex > maxDesiredGenerated))
                 {
                     generator.Remove(childGeneratorPos, 1);
                     RemoveInternalChildRange(i, 1);
@@ -269,8 +286,7 @@ namespace Digimezzo.WPFControls
                 firstVisibleItemIndex = Convert.ToInt32(Math.Floor(this.offset.Y / this.ChildHeight)) * childrenPerRow;
                 lastVisibleItemIndex = Convert.ToInt32(Math.Ceiling((this.offset.Y + this.viewport.Height) / this.ChildHeight)) * childrenPerRow - 1;
 
-                ItemsControl itemsControl1 = ItemsControl.GetItemsOwner(this);
-                int itemCount = itemsControl1.HasItems ? itemsControl1.Items.Count : 0;
+                int itemCount = GetItemCount();
                 if (lastVisibleItemIndex >= itemCount)
                 {
                     lastVisibleItemIndex = itemCount - 1;
@@ -354,15 +370,22 @@ namespace Digimezzo.WPFControls
             }
             return childrenPerRow;
         }
+
+        private int GetItemCount()
+        {
+            // See how many items there are
+            ItemsControl itemsControl = ItemsControl.GetItemsOwner(this);
+            int itemCount = itemsControl.HasItems ? itemsControl.Items.Count : 0;
+
+            return itemCount;
+        }
         #endregion
 
         #region IScrollInfo implementation
         // See Ben Constable's series of posts at http://blogs.msdn.com/bencon/
         private void UpdateScrollInfo(Size availableSize)
         {
-            // See how many items there are
-            ItemsControl itemsControl__1 = ItemsControl.GetItemsOwner(this);
-            int itemCount = itemsControl__1.HasItems ? itemsControl__1.Items.Count : 0;
+            int itemCount = GetItemCount();
 
             Size extent = CalculateExtent(availableSize, itemCount);
             // Update extent
@@ -456,12 +479,12 @@ namespace Digimezzo.WPFControls
 
         public void MouseWheelUp()
         {
-            this.SetVerticalOffset(this.VerticalOffset - this.ScrollOffset);
+            this.EasingSetVerticalOffset(this.VerticalOffset - this.ScrollOffset);
         }
 
         public void MouseWheelDown()
         {
-            this.SetVerticalOffset(this.VerticalOffset + this.ScrollOffset);
+            this.EasingSetVerticalOffset(this.VerticalOffset + this.ScrollOffset);
         }
 
         public void LineLeft()
@@ -499,13 +522,35 @@ namespace Digimezzo.WPFControls
             throw new InvalidOperationException();
         }
 
-
         public void SetHorizontalOffset(double offset)
         {
             throw new InvalidOperationException();
         }
 
+        public void EasingSetVerticalOffset(double offset)
+        {
+            AdjustVerticalOffset(ref offset);
+
+            transAnimation.From = trans.Y;
+            transAnimation.To = -offset;
+            this.trans.BeginAnimation(TranslateTransform.YProperty, transAnimation);
+            this.trans.Y = -offset;
+
+            // Force us to realize the correct children
+            this.InvalidateMeasure();
+        }
+
         public void SetVerticalOffset(double offset)
+        {
+            AdjustVerticalOffset(ref offset);
+
+            this.trans.Y = -offset;
+
+            // Force us to realize the correct children
+            this.InvalidateMeasure();
+        }
+
+        private void AdjustVerticalOffset(ref double offset)
         {
             if (offset < 0 || this.viewport.Height >= this.extent.Height)
             {
@@ -525,11 +570,6 @@ namespace Digimezzo.WPFControls
             {
                 this.owner.InvalidateScrollInfo();
             }
-
-            this.trans.Y = -offset;
-
-            // Force us to realize the correct children
-            this.InvalidateMeasure();
         }
         #endregion
     }
