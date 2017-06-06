@@ -9,11 +9,9 @@ namespace Digimezzo.WPFControls.Base
 {
     internal static class Constants
     {
-        private static long MillisecondsToTicks(int ms) => ms * 10000;
-
-        public static Duration MouseEnterDuration = new Duration(new TimeSpan(MillisecondsToTicks(250)));
-        public static Duration MouseLeaveDuration = MouseEnterDuration;
-        public static Duration ToggleSwitchDuration = MouseEnterDuration;
-        public static Duration SmoothScrollingDuration = MouseEnterDuration;
+        public static readonly Duration MouseEnterDuration = new Duration(TimeSpan.FromMilliseconds(250));
+        public static readonly Duration MouseLeaveDuration = MouseEnterDuration;
+        public static readonly Duration ToggleSwitchDuration = MouseEnterDuration;
+        public static readonly Duration SmoothScrollingDuration = MouseEnterDuration;
     }
 }

@@ -245,7 +245,8 @@ namespace Digimezzo.WPFControls
             {
                 GeneratorPosition childGeneratorPos = new GeneratorPosition(i, 0);
                 int itemIndex = generator.IndexFromGeneratorPosition(childGeneratorPos);
-                if ((itemIndex > 2 * childrenPerRow && itemIndex < minDesiredGenerated) || (itemIndex < itemCount - 2 * childrenPerRow && itemIndex > maxDesiredGenerated))
+                if ((itemIndex > 2 * childrenPerRow - 1 && itemIndex < minDesiredGenerated) ||
+                    (itemIndex < itemCount - 2 * childrenPerRow - 1 && itemIndex > maxDesiredGenerated))
                 {
                     generator.Remove(childGeneratorPos, 1);
                     RemoveInternalChildRange(i, 1);
