@@ -2,7 +2,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:Digimezzo.WPFControls"
     xmlns:converters="clr-namespace:Digimezzo.WPFControls.Converters"
-    xmlns:customAnimations="clr-namespace:Digimezzo.WPFControls.CustomAnimations">
+    xmlns:base="clr-namespace:Digimezzo.WPFControls.Base">
 
     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <converters:InvertingBooleanToVisibilityConverter x:Key="InvertingBooleanToVisibilityConverter" />
@@ -42,20 +42,28 @@
                                                 <DataTrigger.EnterActions>
                                                     <BeginStoryboard>
                                                         <Storyboard>
-                                                            <customAnimations:AccelerationDoubleAnimation
+                                                            <DoubleAnimation
                                                                 Storyboard.TargetProperty="(Canvas.Left)"
                                                                 From="0" To="46"
-                                                                Duration="0:0:0.25" BeginTime="0:0:0"/>
+                                                                Duration="{x:Static base:Constants.ToggleSwitchDuration}" BeginTime="0:0:0">
+                                                                <DoubleAnimation.EasingFunction>
+                                                                    <QuadraticEase EasingMode="EaseOut"/>
+                                                                </DoubleAnimation.EasingFunction>
+                                                            </DoubleAnimation>
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </DataTrigger.EnterActions>
                                                 <DataTrigger.ExitActions>
                                                     <BeginStoryboard>
                                                         <Storyboard>
-                                                            <customAnimations:AccelerationDoubleAnimation
+                                                            <DoubleAnimation
                                                                 Storyboard.TargetProperty="(Canvas.Left)"
                                                                 From="46" To="0"
-                                                                Duration="0:0:0.25" BeginTime="0:0:0"/>
+                                                                Duration="{x:Static base:Constants.ToggleSwitchDuration}" BeginTime="0:0:0">
+                                                                <DoubleAnimation.EasingFunction>
+                                                                    <QuadraticEase EasingMode="EaseOut"/>
+                                                                </DoubleAnimation.EasingFunction>
+                                                            </DoubleAnimation>
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </DataTrigger.ExitActions>
@@ -76,7 +84,7 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="PART_Thumb" 
                                            Storyboard.TargetProperty="Canvas.Left" From="0" To="46" 
-                                           Duration="0:0:0.25" BeginTime="0:0:0"/>
+                                           Duration="{x:Static base:Constants.ToggleSwitchDuration}" BeginTime="0:0:0"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </DataTrigger.EnterActions>

@@ -207,7 +207,7 @@ namespace Digimezzo.WPFControls.Base
             if (this.WindowState == WindowState.Maximized)
             {
                 var mHwnd = new WindowInteropHelper(this).Handle;
-                var monitor = NativeMethods.MonitorFromWindow(mHwnd, Constants.MONITOR_DEFAULTTONEAREST);
+                var monitor = NativeMethods.MonitorFromWindow(mHwnd, Native.Constants.MONITOR_DEFAULTTONEAREST);
 
                 var pData = new APPBARDATA();
                 pData.cbSize = Marshal.SizeOf(pData);
@@ -239,8 +239,8 @@ namespace Digimezzo.WPFControls.Base
                                 break;
                         }
 
-                        NativeMethods.SetWindowPos(mHwnd, new IntPtr(Constants.HWND_NOTOPMOST), x, y, cx, cy,
-                            Constants.SWP_SHOWWINDOW);
+                        NativeMethods.SetWindowPos(mHwnd, new IntPtr(Native.Constants.HWND_NOTOPMOST), x, y, cx, cy,
+                            Native.Constants.SWP_SHOWWINDOW);
                     }
                 }
                 else
@@ -337,7 +337,7 @@ namespace Digimezzo.WPFControls.Base
                     int lParam = Convert.ToInt32(Convert.ToInt32(x)) | (y << 16);
 
                     IntPtr windowHandle = new WindowInteropHelper(this).Handle;
-                    NativeMethods.SendMessage(windowHandle, Constants.WM_NCLBUTTONDOWN, Constants.HT_CAPTION, lParam);
+                    NativeMethods.SendMessage(windowHandle, Native.Constants.WM_NCLBUTTONDOWN, Native.Constants.HT_CAPTION, lParam);
                 }
             }
         }
