@@ -1,11 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:Digimezzo.WPFControls"
-    xmlns:converters="clr-namespace:Digimezzo.WPFControls.Converters">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Digimezzo.WPFControls"
+                    xmlns:converters="clr-namespace:Digimezzo.WPFControls.Converters"
+                    xmlns:base="clr-namespace:Digimezzo.WPFControls.Base">
 
     <converters:AddValueConverter x:Key="AddValueConverter" />
-    <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    <converters:InvertingBooleanToVisibilityConverter x:Key="InvertingBooleanToVisibilityConverter" />
 
     <Style TargetType="{x:Type local:HorizontalUWPSlider}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
@@ -42,7 +41,7 @@
                                                     <Storyboard>
                                                         <DoubleAnimation  
                                                                 Storyboard.TargetProperty="Opacity"
-                                                                From="0.0" To="1.0" Duration="0:0:0.25" />
+                                                                From="0.0" To="1.0" Duration="{x:Static base:Constants.MouseEnterDuration}" />
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </DataTrigger.EnterActions>
@@ -51,7 +50,7 @@
                                                     <Storyboard>
                                                         <DoubleAnimation  
                                                                 Storyboard.TargetProperty="Opacity"
-                                                                From="1.0" To="0.0" Duration="0:0:0.25" />
+                                                                From="1.0" To="0.0" Duration="{x:Static base:Constants.MouseLeaveDuration}" />
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </DataTrigger.ExitActions>
@@ -71,57 +70,55 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:HorizontalUWPBottomSlider}">
-                    <Canvas x:Name="PART_Canvas" Height="16" Width="{TemplateBinding ActualWidth}">
+                    <Canvas x:Name="PART_Canvas" Background="Transparent" Height="16" Width="{TemplateBinding ActualWidth}">
                         <Border x:Name="PART_BorderHelper" Visibility="Hidden"/>
                         <Rectangle x:Name="PART_Track" Canvas.Left="0" Canvas.Top="12" Panel.ZIndex="0" Height="4" Width="{Binding Width, ElementName=PART_Canvas}" Fill="{Binding Path=TrackBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
                         <Rectangle x:Name="PART_Bar" Canvas.Left="0" Canvas.Top="12" Panel.ZIndex="1" Height="4" Width="{Binding Path=Position,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" Fill="{Binding Path=BarBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <Canvas x:Name="PART_ButtonCanvas" Canvas.Top="0" Panel.ZIndex="2" VerticalAlignment="Center" Background="Transparent" Height="16" Margin="8,0,8,0" Width="{TemplateBinding ActualWidth,Converter={StaticResource AddValueConverter},ConverterParameter=-16}">
-                            <Button x:Name="PART_Button" Canvas.Top="-4" Panel.ZIndex="2" Height="16" Width="16" Margin="-8,0,0,0" Canvas.Left="{Binding Path=ButtonPosition,RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" BorderThickness="0" Opacity="0">
-                                <Button.Style>
-                                    <Style TargetType="{x:Type Button}">
-                                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type Button}">
-                                                    <Border x:Name="PART_Border" Background="{Binding Path=ButtonInnerBackground,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalUWPBottomSlider}}}" BorderThickness="1.5" BorderBrush="{Binding Path=ButtonBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalUWPBottomSlider}}}" CornerRadius="{Binding Path=CornerRadius,ElementName=PART_BorderHelper}"/>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="true">
-                                                            <Setter Property="Cursor" Value="Hand"/>
-                                                        </Trigger>
-                                                        <Trigger Property="IsPressed" Value="True">
-                                                            <Setter TargetName="PART_Border" Property="Background" Value="{Binding Path=ButtonBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalUWPBottomSlider}}}"/>
-                                                            <Setter TargetName="PART_Border" Property="BorderThickness" Value="0"/>
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Path=IsMouseOver, ElementName=PART_Canvas}" Value="True">
-                                                <DataTrigger.EnterActions>
-                                                    <BeginStoryboard>
-                                                        <Storyboard>
-                                                            <DoubleAnimation  
+                        <Button x:Name="PART_Button" Canvas.Top="-4" Panel.ZIndex="2" Height="16" Width="16" Canvas.Left="{Binding Path=ButtonPosition,RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" BorderThickness="0" Opacity="0">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                <Border x:Name="PART_Border" Background="{Binding Path=ButtonInnerBackground,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalUWPBottomSlider}}}" BorderThickness="1.5" BorderBrush="{Binding Path=ButtonBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalUWPBottomSlider}}}" CornerRadius="{Binding Path=CornerRadius,ElementName=PART_BorderHelper}"/>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="true">
+                                                        <Setter Property="Cursor" Value="Hand"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed" Value="True">
+                                                        <Setter TargetName="PART_Border" Property="Background" Value="{Binding Path=ButtonBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalUWPBottomSlider}}}"/>
+                                                        <Setter TargetName="PART_Border" Property="BorderThickness" Value="0"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsMouseOver, ElementName=PART_Canvas}" Value="True">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation  
                                                                 Storyboard.TargetProperty="Opacity"
-                                                                From="0.0" To="1.0" Duration="0:0:0.25" />
-                                                        </Storyboard>
-                                                    </BeginStoryboard>
-                                                </DataTrigger.EnterActions>
-                                                <DataTrigger.ExitActions>
-                                                    <BeginStoryboard>
-                                                        <Storyboard>
-                                                            <DoubleAnimation  
+                                                                From="0.0" To="1.0" Duration="{x:Static base:Constants.MouseEnterDuration}" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation  
                                                                 Storyboard.TargetProperty="Opacity"
-                                                                From="1.0" To="0.0" Duration="0:0:0.25" />
-                                                        </Storyboard>
-                                                    </BeginStoryboard>
-                                                </DataTrigger.ExitActions>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
-                            </Button>
-                        </Canvas>
+                                                                From="1.0" To="0.0" Duration="{x:Static base:Constants.MouseLeaveDuration}" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
                     </Canvas>
                 </ControlTemplate>
             </Setter.Value>
@@ -163,7 +160,7 @@
                                                     <Storyboard>
                                                         <DoubleAnimation  
                                                             Storyboard.TargetProperty="Opacity"
-                                                            From="0.0" To="1.0" Duration="0:0:0.25" />
+                                                            From="0.0" To="1.0" Duration="{x:Static base:Constants.MouseEnterDuration}" />
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </DataTrigger.EnterActions>
@@ -172,7 +169,7 @@
                                                     <Storyboard>
                                                         <DoubleAnimation  
                                                             Storyboard.TargetProperty="Opacity"
-                                                            From="1.0" To="0.0" Duration="0:0:0.25" />
+                                                            From="1.0" To="0.0" Duration="{x:Static base:Constants.MouseLeaveDuration}" />
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </DataTrigger.ExitActions>
