@@ -54,7 +54,7 @@ namespace Digimezzo.WPFControls
         {
             if (this.sliderCanvas != null && this.sliderCanvas.ActualWidth != 0 && this.sliderButton != null)
             {
-                this.BarFillPosition = this.Position * (this.sliderCanvas.ActualWidth + 16) /
+                this.BarFillPosition = this.Position * (this.sliderCanvas.ActualWidth - Constants.UWPSliderCanvasLengthOffset) /
                                       this.sliderCanvas.ActualWidth;
             }
         }
@@ -65,6 +65,8 @@ namespace Digimezzo.WPFControls
     {
         #region Variables
         protected Border sliderButtonBorder;
+        CornerRadius rightCornerRadius = new CornerRadius(Constants.UWPSliderBaseUnit, Constants.UWPSliderBaseUnit, 0, Constants.UWPSliderBaseUnit);
+        CornerRadius leftCornerRadius = new CornerRadius(Constants.UWPSliderBaseUnit, Constants.UWPSliderBaseUnit, Constants.UWPSliderBaseUnit,0);
         #endregion
 
         #region Construction
@@ -88,14 +90,7 @@ namespace Digimezzo.WPFControls
 
             if (this.sliderButtonBorder == null) return;
 
-            if (this.Position > this.sliderCanvas.ActualWidth / 2)
-            {
-                this.sliderButtonBorder.CornerRadius = new CornerRadius(8, 8, 0, 8);
-            }
-            else
-            {
-                this.sliderButtonBorder.CornerRadius = new CornerRadius(8, 8, 8, 0);
-            }
+            this.sliderButtonBorder.CornerRadius = this.Position > this.sliderCanvas.ActualWidth / 2 ? rightCornerRadius : leftCornerRadius;
         }
         #endregion
     }
@@ -146,7 +141,7 @@ namespace Digimezzo.WPFControls
         {
             if (this.sliderCanvas != null && this.sliderCanvas.ActualWidth != 0 && this.sliderButton != null)
             {
-                this.BarFillPosition = this.Position * (this.sliderCanvas.ActualHeight + 16) /
+                this.BarFillPosition = this.Position * (this.sliderCanvas.ActualHeight - Constants.UWPSliderCanvasLengthOffset) /
                                       this.sliderCanvas.ActualHeight;
             }
         }
