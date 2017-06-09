@@ -2,38 +2,30 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using Digimezzo.WPFControls.Base;
 
 namespace Digimezzo.WPFControls
 {
     public class HorizontalUWPSlider : HorizontalWindows8Slider
     {
         #region Properties
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public double VisibleBarLength
+        public double ButtonPosition
         {
-            get { return Convert.ToDouble(VisibleBarLengthProperty); }
-            set { SetValue(VisibleBarLengthProperty, value); }
+            get { return Convert.ToDouble(ButtonPositionProperty); }
+            set { SetValue(ButtonPositionProperty, value); }
         }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public double VisibleBarWithButtonLength
+        public Brush ButtonInnerBackground
         {
-            get { return Convert.ToDouble(VisibleBarWithButtonLengthProperty); }
-            set { SetValue(VisibleBarWithButtonLengthProperty, value); }
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public double VisibleTrackWithButtonLength
-        {
-            get { return Convert.ToDouble(VisibleTrackWithButtonLengthProperty); }
-            set { SetValue(VisibleTrackWithButtonLengthProperty, value); }
+            get { return (Brush) GetValue(ButtonInnerBackgroundProperty); }
+            set { SetValue(ButtonInnerBackgroundProperty, value);}
         }
         #endregion
 
         #region Dependency Properties
-        public static readonly DependencyProperty VisibleBarLengthProperty = DependencyProperty.Register("VisibleBarLength", typeof(double), typeof(HorizontalUWPSlider), new PropertyMetadata(0.0));
-        public static readonly DependencyProperty VisibleBarWithButtonLengthProperty = DependencyProperty.Register("VisibleBarWithButtonLength", typeof(double), typeof(HorizontalUWPSlider), new PropertyMetadata(0.0));
-        public static readonly DependencyProperty VisibleTrackWithButtonLengthProperty = DependencyProperty.Register("VisibleTrackWithButtonLength", typeof(double), typeof(HorizontalUWPSlider), new PropertyMetadata(0.0));
+        public static readonly DependencyProperty ButtonPositionProperty = DependencyProperty.Register("ButtonPosition", typeof(double), typeof(HorizontalUWPSlider), new PropertyMetadata(0.0));
+        public static readonly DependencyProperty ButtonInnerBackgroundProperty = DependencyProperty.Register("ButtonInnerBackground", typeof(Brush), typeof(HorizontalUWPSlider), new PropertyMetadata(null));
         #endregion
 
         #region Construction
@@ -62,9 +54,8 @@ namespace Digimezzo.WPFControls
         {
             if (this.sliderCanvas != null && this.sliderCanvas.ActualWidth != 0 && this.sliderButton != null)
             {
-                this.VisibleBarLength = this.Position + (int)(this.sliderButton.ActualWidth * (this.Position / this.sliderCanvas.ActualWidth));
-                this.VisibleBarWithButtonLength = this.Position + 1;
-                this.VisibleTrackWithButtonLength = this.sliderCanvas.ActualWidth - this.Position + 1;
+                this.ButtonPosition = this.Position * (this.sliderCanvas.ActualWidth - 16) /
+                                      this.sliderCanvas.ActualWidth;
             }
         }
         #endregion
@@ -112,32 +103,21 @@ namespace Digimezzo.WPFControls
     public class VerticalUWPSlider : VerticalWindows8Slider
     {
         #region Properties
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public double VisibleBarLength
+        public double ButtonPosition
         {
-            get { return Convert.ToDouble(VisibleBarLengthProperty); }
-            set { SetValue(VisibleBarLengthProperty, value); }
+            get { return Convert.ToDouble(ButtonPositionProperty); }
+            set { SetValue(ButtonPositionProperty, value); }
         }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public double VisibleBarWithButtonLength
+        public Brush ButtonInnerBackground
         {
-            get { return Convert.ToDouble(VisibleBarWithButtonLengthProperty); }
-            set { SetValue(VisibleBarWithButtonLengthProperty, value); }
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public double VisibleTrackWithButtonLength
-        {
-            get { return Convert.ToDouble(VisibleTrackWithButtonLengthProperty); }
-            set { SetValue(VisibleTrackWithButtonLengthProperty, value); }
+            get { return (Brush)GetValue(ButtonInnerBackgroundProperty); }
+            set { SetValue(ButtonInnerBackgroundProperty, value); }
         }
         #endregion
 
-        #region Dependency Properties
-        public static readonly DependencyProperty VisibleBarLengthProperty = DependencyProperty.Register("VisibleBarLength", typeof(double), typeof(VerticalUWPSlider), new PropertyMetadata(0.0));
-        public static readonly DependencyProperty VisibleBarWithButtonLengthProperty = DependencyProperty.Register("VisibleBarWithButtonLength", typeof(double), typeof(VerticalUWPSlider), new PropertyMetadata(0.0));
-        public static readonly DependencyProperty VisibleTrackWithButtonLengthProperty = DependencyProperty.Register("VisibleTrackWithButtonLength", typeof(double), typeof(VerticalUWPSlider), new PropertyMetadata(0.0));
+        #region DependencyProperty
+        public static readonly DependencyProperty ButtonPositionProperty = DependencyProperty.Register("ButtonPosition", typeof(double), typeof(VerticalUWPSlider), new PropertyMetadata(0.0));
+        public static readonly DependencyProperty ButtonInnerBackgroundProperty = DependencyProperty.Register("ButtonInnerBackground", typeof(Brush), typeof(VerticalUWPSlider), new PropertyMetadata(null));
         #endregion
 
         #region Construction
@@ -166,9 +146,8 @@ namespace Digimezzo.WPFControls
         {
             if (this.sliderCanvas != null && this.sliderCanvas.ActualWidth != 0 && this.sliderButton != null)
             {
-                this.VisibleBarLength = this.Position + (int)(this.sliderButton.ActualHeight * (this.Position / this.sliderCanvas.ActualHeight));
-                this.VisibleBarWithButtonLength = this.Position + 1;
-                this.VisibleTrackWithButtonLength = this.sliderCanvas.ActualHeight - this.Position + 1;
+                this.ButtonPosition = this.Position * (this.sliderCanvas.ActualHeight - 16) /
+                                      this.sliderCanvas.ActualHeight;
             }
         }
         #endregion
