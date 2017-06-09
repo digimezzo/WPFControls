@@ -13,5 +13,11 @@ namespace Digimezzo.WPFControls.Base
         public static readonly Duration MouseLeaveDuration = MouseEnterDuration;
         public static readonly Duration ToggleSwitchDuration = MouseEnterDuration;
         public static readonly Duration SmoothScrollingDuration = MouseEnterDuration;
+
+        public const int UWPSliderBaseUnit = 8;
+        public const int UWPSliderLengthOffset = 2 * UWPSliderBaseUnit;
+        public static readonly Thickness HorizontalUWPSliderMargin = new Thickness(-UWPSliderBaseUnit, 0,0,0);
+        public static readonly Thickness VerticalUWPSliderMargin = new Thickness(0,-UWPSliderBaseUnit,0,0);
+
     }
 }

@@ -10,10 +10,10 @@ namespace Digimezzo.WPFControls
     public class HorizontalUWPSlider : HorizontalWindows8Slider
     {
         #region Properties
-        public double ButtonPosition
+        public double BarFillPosition
         {
-            get { return Convert.ToDouble(ButtonPositionProperty); }
-            set { SetValue(ButtonPositionProperty, value); }
+            get { return Convert.ToDouble(BarFillPositionProperty); }
+            set { SetValue(BarFillPositionProperty, value); }
         }
 
         public Brush ButtonInnerBackground
@@ -24,7 +24,7 @@ namespace Digimezzo.WPFControls
         #endregion
 
         #region Dependency Properties
-        public static readonly DependencyProperty ButtonPositionProperty = DependencyProperty.Register("ButtonPosition", typeof(double), typeof(HorizontalUWPSlider), new PropertyMetadata(0.0));
+        public static readonly DependencyProperty BarFillPositionProperty = DependencyProperty.Register("BarFillPosition", typeof(double), typeof(HorizontalUWPSlider), new PropertyMetadata(0.0));
         public static readonly DependencyProperty ButtonInnerBackgroundProperty = DependencyProperty.Register("ButtonInnerBackground", typeof(Brush), typeof(HorizontalUWPSlider), new PropertyMetadata(null));
         #endregion
 
@@ -54,7 +54,7 @@ namespace Digimezzo.WPFControls
         {
             if (this.sliderCanvas != null && this.sliderCanvas.ActualWidth != 0 && this.sliderButton != null)
             {
-                this.ButtonPosition = this.Position * (this.sliderCanvas.ActualWidth - 16) /
+                this.BarFillPosition = this.Position * (this.sliderCanvas.ActualWidth + 16) /
                                       this.sliderCanvas.ActualWidth;
             }
         }
@@ -103,10 +103,10 @@ namespace Digimezzo.WPFControls
     public class VerticalUWPSlider : VerticalWindows8Slider
     {
         #region Properties
-        public double ButtonPosition
+        public double BarFillPosition
         {
-            get { return Convert.ToDouble(ButtonPositionProperty); }
-            set { SetValue(ButtonPositionProperty, value); }
+            get { return Convert.ToDouble(BarFillPositionProperty); }
+            set { SetValue(BarFillPositionProperty, value); }
         }
         public Brush ButtonInnerBackground
         {
@@ -116,7 +116,7 @@ namespace Digimezzo.WPFControls
         #endregion
 
         #region DependencyProperty
-        public static readonly DependencyProperty ButtonPositionProperty = DependencyProperty.Register("ButtonPosition", typeof(double), typeof(VerticalUWPSlider), new PropertyMetadata(0.0));
+        public static readonly DependencyProperty BarFillPositionProperty = DependencyProperty.Register("BarFillPosition", typeof(double), typeof(VerticalUWPSlider), new PropertyMetadata(0.0));
         public static readonly DependencyProperty ButtonInnerBackgroundProperty = DependencyProperty.Register("ButtonInnerBackground", typeof(Brush), typeof(VerticalUWPSlider), new PropertyMetadata(null));
         #endregion
 
@@ -146,7 +146,7 @@ namespace Digimezzo.WPFControls
         {
             if (this.sliderCanvas != null && this.sliderCanvas.ActualWidth != 0 && this.sliderButton != null)
             {
-                this.ButtonPosition = this.Position * (this.sliderCanvas.ActualHeight - 16) /
+                this.BarFillPosition = this.Position * (this.sliderCanvas.ActualHeight + 16) /
                                       this.sliderCanvas.ActualHeight;
             }
         }
