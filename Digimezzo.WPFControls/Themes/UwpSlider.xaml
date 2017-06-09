@@ -70,11 +70,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:HorizontalUWPBottomSlider}">
-                    <Canvas x:Name="PART_Canvas" Background="Transparent" Height="16" Width="{TemplateBinding ActualWidth,Converter={StaticResource AddValueConverter},ConverterParameter={x:Static base:Constants.UWPSliderCanvasLengthOffset}}">
+                    <Canvas x:Name="PART_Canvas" Background="Transparent" Height="16" Width="{TemplateBinding ActualWidth}">
                         <Border x:Name="PART_BorderHelper" Visibility="Hidden"/>
-                        <Rectangle x:Name="PART_Track" Margin="{x:Static base:Constants.HorizontalUWPSliderMargin}" Canvas.Top="12" Panel.ZIndex="0" Height="4" Width="{TemplateBinding ActualWidth}" Fill="{Binding Path=TrackBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <Rectangle x:Name="PART_Bar" Margin="{x:Static base:Constants.HorizontalUWPSliderMargin}" HorizontalAlignment="Left" Canvas.Top="12" Panel.ZIndex="1" Height="4" Width="{Binding Path=BarFillPosition,RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" Fill="{Binding Path=BarBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <Button x:Name="PART_Button" Margin="{x:Static base:Constants.HorizontalUWPSliderMargin}" Canvas.Top="-4" Panel.ZIndex="2" Height="{x:Static base:Constants.UWPSliderButtonSize}" Width="{x:Static base:Constants.UWPSliderButtonSize}" Canvas.Left="{Binding Path=Position,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" BorderThickness="0" Opacity="0">
+                        <Rectangle x:Name="PART_Track" Canvas.Top="12" Panel.ZIndex="0" Height="4" Width="{TemplateBinding ActualWidth}" Fill="{Binding Path=TrackBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
+                        <Rectangle x:Name="PART_Bar" HorizontalAlignment="Left" Canvas.Top="12" Panel.ZIndex="1" Height="4" Width="{Binding Path=Position,RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" Fill="{Binding Path=BarBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
+                        <Button x:Name="PART_Button" Canvas.Top="-4" Panel.ZIndex="2" Height="{x:Static base:Constants.UWPSliderButtonSize}" Width="{x:Static base:Constants.UWPSliderButtonSize}" Canvas.Left="{Binding Path=Position,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" BorderThickness="0" Opacity="0">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}">
                                     <Setter Property="FocusVisualStyle" Value="{x:Null}"/>

@@ -65,8 +65,10 @@ namespace Digimezzo.WPFControls
     {
         #region Variables
         protected Border sliderButtonBorder;
-        CornerRadius rightCornerRadius = new CornerRadius(Constants.UWPSliderBaseUnit, Constants.UWPSliderBaseUnit, 0, Constants.UWPSliderBaseUnit);
-        CornerRadius leftCornerRadius = new CornerRadius(Constants.UWPSliderBaseUnit, Constants.UWPSliderBaseUnit, Constants.UWPSliderBaseUnit,0);
+        private static readonly CornerRadius rightCornerRadius = new CornerRadius(Constants.UWPSliderBaseUnit, Constants.UWPSliderBaseUnit, 0, Constants.UWPSliderBaseUnit);
+        private static readonly CornerRadius leftCornerRadius = new CornerRadius(Constants.UWPSliderBaseUnit, Constants.UWPSliderBaseUnit, Constants.UWPSliderBaseUnit, 0);
+        private static readonly Thickness rightButtonMargin = new Thickness(-2 * Constants.UWPSliderBaseUnit, 0, 0, -Constants.UWPSliderBaseUnit);
+        private static readonly Thickness leftButtonMargin = new Thickness(0, 0, 0, -Constants.UWPSliderBaseUnit);
         #endregion
 
         #region Construction
@@ -90,7 +92,16 @@ namespace Digimezzo.WPFControls
 
             if (this.sliderButtonBorder == null) return;
 
-            this.sliderButtonBorder.CornerRadius = this.Position > this.sliderCanvas.ActualWidth / 2 ? rightCornerRadius : leftCornerRadius;
+            if (this.Position > this.sliderCanvas.ActualWidth / 2)
+            {
+                this.sliderButtonBorder.CornerRadius = rightCornerRadius;
+                this.sliderButton.Margin = rightButtonMargin;
+            }
+            else
+            {
+                this.sliderButtonBorder.CornerRadius = leftCornerRadius;
+                this.sliderButton.Margin = leftButtonMargin;
+            }
         }
         #endregion
     }
