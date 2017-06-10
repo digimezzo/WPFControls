@@ -1,8 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using Digimezzo.WPFControls.Base;
 
@@ -111,8 +108,6 @@ namespace Digimezzo.WPFControls
 
         protected override void CalculateVisibleLengths()
         {
-            //base.CalculateVisibleLengths();
-
             if (this.sliderCanvas == null) return;
 
             if (this.Position > this.sliderCanvas.ActualWidth / 2)

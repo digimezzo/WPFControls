@@ -12,8 +12,8 @@ namespace Digimezzo.WPFControls.Base
     {
         #region Variables
         protected Canvas sliderCanvas;
-        private Rectangle sliderTrack;
-        private Rectangle sliderBar;
+        protected Rectangle sliderTrack;
+        protected Rectangle sliderBar;
         protected Button sliderButton;
         protected bool isCalculating;
         protected bool isDragging;
