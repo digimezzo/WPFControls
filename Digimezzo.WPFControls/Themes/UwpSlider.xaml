@@ -40,8 +40,8 @@
                                                 <BeginStoryboard>
                                                     <Storyboard>
                                                         <DoubleAnimation  
-                                                                Storyboard.TargetProperty="Opacity"
-                                                                From="0.0" To="1.0" Duration="{x:Static base:Constants.MouseEnterDuration}" />
+                                                            Storyboard.TargetProperty="Opacity"
+                                                            From="0.0" To="1.0" Duration="{x:Static base:Constants.MouseEnterDuration}" />
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </DataTrigger.EnterActions>
@@ -49,8 +49,8 @@
                                                 <BeginStoryboard>
                                                     <Storyboard>
                                                         <DoubleAnimation  
-                                                                Storyboard.TargetProperty="Opacity"
-                                                                From="1.0" To="0.0" Duration="{x:Static base:Constants.MouseLeaveDuration}" />
+                                                            Storyboard.TargetProperty="Opacity"
+                                                            From="1.0" To="0.0" Duration="{x:Static base:Constants.MouseLeaveDuration}" />
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </DataTrigger.ExitActions>
@@ -70,18 +70,19 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:HorizontalUWPBottomSlider}">
-                    <Canvas x:Name="PART_Canvas" Background="Transparent" Height="16" Width="{TemplateBinding ActualWidth}">
-                        <Border x:Name="PART_BorderHelper" Visibility="Hidden"/>
+                    <Canvas x:Name="PART_Canvas" Background="Transparent" HorizontalAlignment="Center" Height="16" Width="{TemplateBinding ActualWidth}">
                         <Rectangle x:Name="PART_Track" Canvas.Top="12" Panel.ZIndex="0" Height="4" Width="{TemplateBinding ActualWidth}" Fill="{Binding Path=TrackBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <Rectangle x:Name="PART_Bar" HorizontalAlignment="Left" Canvas.Top="12" Panel.ZIndex="1" Height="4" Width="{Binding Path=Position,RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" Fill="{Binding Path=BarBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
-                        <Button x:Name="PART_Button" Canvas.Top="-4" Panel.ZIndex="2" Height="{x:Static base:Constants.UWPSliderButtonSize}" Width="{x:Static base:Constants.UWPSliderButtonSize}" Canvas.Left="{Binding Path=Position,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}" BorderThickness="0" Opacity="0">
+                        <Rectangle x:Name="PART_Bar" HorizontalAlignment="Left" Canvas.Top="12" Panel.ZIndex="1" Height="4" Width="{Binding Path=BarFillPosition,RelativeSource={RelativeSource TemplatedParent}}" Fill="{Binding Path=BarBackground,RelativeSource={RelativeSource TemplatedParent}}"/>
+                        <Button x:Name="PART_Button" Margin="-20,0,0,0" Canvas.Top="-4" Panel.ZIndex="2" Canvas.Left="{Binding Path=Position,RelativeSource={RelativeSource TemplatedParent}}" BorderThickness="0" Opacity="0">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}">
                                     <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="{x:Type Button}">
-                                                <Border x:Name="PART_Border" Background="{Binding Path=ButtonInnerBackground,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalUWPBottomSlider}}}" BorderThickness="1.5" BorderBrush="{Binding Path=ButtonBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalUWPBottomSlider}}}" CornerRadius="{Binding Path=CornerRadius,ElementName=PART_BorderHelper}"/>
+                                                <Canvas Width="32" Height="{x:Static base:Constants.UWPSliderButtonSize}">
+                                                    <Border Canvas.Left="{Binding Path=SliderButtonBorderLeft,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type local:HorizontalUWPBottomSlider}}}" Height="{x:Static base:Constants.UWPSliderButtonSize}" Width="{x:Static base:Constants.UWPSliderButtonSize}" x:Name="PART_Border" Background="{Binding Path=ButtonInnerBackground,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalUWPBottomSlider}}}" BorderThickness="1.5" BorderBrush="{Binding Path=ButtonBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalUWPBottomSlider}}}" CornerRadius="{Binding Path=SliderButtonCornerRadius,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:HorizontalUWPBottomSlider}}}"/>
+                                                </Canvas>
                                                 <ControlTemplate.Triggers>
                                                     <Trigger Property="IsMouseOver" Value="true">
                                                         <Setter Property="Cursor" Value="Hand"/>

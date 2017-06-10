@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using Digimezzo.WPFControls.Base;
 
@@ -18,8 +19,8 @@ namespace Digimezzo.WPFControls
 
         public Brush ButtonInnerBackground
         {
-            get { return (Brush) GetValue(ButtonInnerBackgroundProperty); }
-            set { SetValue(ButtonInnerBackgroundProperty, value);}
+            get { return (Brush)GetValue(ButtonInnerBackgroundProperty); }
+            set { SetValue(ButtonInnerBackgroundProperty, value); }
         }
         #endregion
 
@@ -55,7 +56,7 @@ namespace Digimezzo.WPFControls
             if (this.sliderCanvas != null && this.sliderCanvas.ActualWidth != 0 && this.sliderButton != null)
             {
                 this.BarFillPosition = this.Position * (this.sliderCanvas.ActualWidth - Constants.UWPSliderCanvasLengthOffset) /
-                                      this.sliderCanvas.ActualWidth;
+                                       this.sliderCanvas.ActualWidth;
             }
         }
         #endregion
@@ -64,11 +65,39 @@ namespace Digimezzo.WPFControls
     public class HorizontalUWPBottomSlider : HorizontalUWPSlider
     {
         #region Variables
-        protected Border sliderButtonBorder;
         private static readonly CornerRadius rightCornerRadius = new CornerRadius(Constants.UWPSliderBaseUnit, Constants.UWPSliderBaseUnit, 0, Constants.UWPSliderBaseUnit);
         private static readonly CornerRadius leftCornerRadius = new CornerRadius(Constants.UWPSliderBaseUnit, Constants.UWPSliderBaseUnit, Constants.UWPSliderBaseUnit, 0);
-        private static readonly Thickness rightButtonMargin = new Thickness(-2 * Constants.UWPSliderBaseUnit, 0, 0, -Constants.UWPSliderBaseUnit);
-        private static readonly Thickness leftButtonMargin = new Thickness(0, 0, 0, -Constants.UWPSliderBaseUnit);
+        private static readonly Thickness rightButtonMargin = new Thickness(-24, 0, 0, 0);
+        private static readonly Thickness leftButtonMargin = new Thickness(-8, 0, 0, 0);
+        private static readonly double leftButtonBorderLeft = 20;
+        private static readonly double rightButtonBorderLeft = 4;
+        #endregion
+
+        #region Properties
+        private CornerRadius SliderButtonCornerRadius
+        {
+            get { return (CornerRadius)GetValue(SliderButtonCornerRadiusProperty); }
+            set { SetValue(SliderButtonCornerRadiusProperty, value); }
+        }
+
+        private Thickness SliderButtonMargin
+        {
+            get { return (Thickness)GetValue(SliderButtonMarginProperty); }
+            set { SetValue(SliderButtonMarginProperty, value); }
+        }
+
+        private double SliderButtonBorderLeft
+        {
+            get { return (double)GetValue(SliderButtonBorderLeftProperty); }
+            set { SetValue(SliderButtonBorderLeftProperty, value); }
+        }
+        #endregion
+
+        #region Dependency Properties
+        private static readonly DependencyProperty SliderButtonCornerRadiusProperty = DependencyProperty.Register("SliderButtonCornerRadius", typeof(CornerRadius), typeof(HorizontalUWPBottomSlider), new PropertyMetadata(null));
+        private static readonly DependencyProperty SliderButtonMarginProperty = DependencyProperty.Register("SliderButtonMargin", typeof(Thickness), typeof(HorizontalUWPBottomSlider), new PropertyMetadata(null));
+        private static readonly DependencyProperty SliderButtonBorderLeftProperty = DependencyProperty.Register("SliderButtonBorderLeft", typeof(double), typeof(HorizontalUWPBottomSlider), new PropertyMetadata(null));
+   
         #endregion
 
         #region Construction
@@ -79,28 +108,26 @@ namespace Digimezzo.WPFControls
         #endregion
 
         #region Overrides
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-            this.sliderButtonBorder = (Border)GetTemplateChild("PART_BorderHelper");
-        }
 
         protected override void CalculateVisibleLengths()
         {
-            base.CalculateVisibleLengths();
+            //base.CalculateVisibleLengths();
 
-            if (this.sliderButtonBorder == null) return;
+            if (this.sliderCanvas == null) return;
 
             if (this.Position > this.sliderCanvas.ActualWidth / 2)
             {
-                this.sliderButtonBorder.CornerRadius = rightCornerRadius;
-                this.sliderButton.Margin = rightButtonMargin;
+                this.SliderButtonCornerRadius = rightCornerRadius;
+                this.SliderButtonMargin = rightButtonMargin;
+                this.SliderButtonBorderLeft= rightButtonBorderLeft;
+                this.BarFillPosition = this.Position ;
             }
             else
             {
-                this.sliderButtonBorder.CornerRadius = leftCornerRadius;
-                this.sliderButton.Margin = leftButtonMargin;
+                this.SliderButtonCornerRadius = leftCornerRadius;
+                this.SliderButtonMargin = leftButtonMargin;
+                this.SliderButtonBorderLeft = leftButtonBorderLeft;
+                this.BarFillPosition = this.Position;
             }
         }
         #endregion
@@ -153,7 +180,7 @@ namespace Digimezzo.WPFControls
             if (this.sliderCanvas != null && this.sliderCanvas.ActualWidth != 0 && this.sliderButton != null)
             {
                 this.BarFillPosition = this.Position * (this.sliderCanvas.ActualHeight - Constants.UWPSliderCanvasLengthOffset) /
-                                      this.sliderCanvas.ActualHeight;
+                                       this.sliderCanvas.ActualHeight;
             }
         }
         #endregion
