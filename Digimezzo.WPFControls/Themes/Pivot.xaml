@@ -99,6 +99,7 @@
                             <Setter Property="TextBlock.Foreground" TargetName="contentPresenter" Value="{Binding Path=SelectedForeground, RelativeSource={RelativeSource AncestorType={x:Type controls:PivotItem}}}"/>
                             <Setter Property="TextBlock.FontWeight" TargetName="contentPresenter" Value="{Binding Path=SelectedFontWeight, RelativeSource={RelativeSource AncestorType={x:Type controls:PivotItem}}}"/>
                             <Setter Property="Visibility" TargetName="indicator" Value="Visible"/>
+                            <Setter Property="Opacity" TargetName="contentPresenter" Value="1.0"/>
                         </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
