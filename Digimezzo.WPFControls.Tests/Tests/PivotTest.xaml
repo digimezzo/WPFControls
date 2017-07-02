@@ -9,14 +9,14 @@
         Title="PivotTest" Height="300" Width="300">
     <Grid>
         <controls:Pivot IndicatorHeight="2" IndicatorBackground="Red" HeaderBackground="Gray" Elevation="4" ElevationBackground="Blue">
-            <controls:PivotItem Header="Item1" Foreground="LightGray" Padding="10,5,10,5" SelectedForeground="Black" FontSize="24" SelectedFontWeight="Bold">
-                <TextBlock Foreground="Black" FontSize="13">Content 1</TextBlock>
+            <controls:PivotItem Header="Item1" Foreground="LightGray" Padding="10,5,10,5" SelectedForeground="Black" HeaderFontSize="24" SelectedFontWeight="Bold">
+                <TextBlock Foreground="Black">Content 1</TextBlock>
             </controls:PivotItem>
-            <controls:PivotItem Header="Item2" Foreground="LightGray" Padding="10,5,10,5" SelectedForeground="Black" FontSize="24" SelectedFontWeight="Bold">
-                <TextBlock Foreground="Black" FontSize="13">Content 2</TextBlock>
+            <controls:PivotItem Header="Item2" Foreground="LightGray" Padding="10,5,10,5" SelectedForeground="Black" HeaderFontSize="24" SelectedFontWeight="Bold">
+                <TextBlock Foreground="Black">Content 2</TextBlock>
             </controls:PivotItem>
-            <controls:PivotItem Header="Item3" Foreground="LightGray" Padding="10,5,10,5" SelectedForeground="Black" FontSize="24" SelectedFontWeight="Bold">
-                <TextBlock Foreground="Black" FontSize="13">Content 3</TextBlock>
+            <controls:PivotItem Header="Item3" Foreground="LightGray" Padding="10,5,10,5" SelectedForeground="Black" HeaderFontSize="24" SelectedFontWeight="Bold">
+                <TextBlock Foreground="Black">Content 3</TextBlock>
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>

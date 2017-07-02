@@ -132,6 +132,12 @@ namespace Digimezzo.WPFControls
     public class PivotItem : TabItem
     {
         #region Properties
+        public double HeaderFontSize
+        {
+            get { return (double)GetValue(HeaderFontSizeProperty); }
+            set { SetValue(HeaderFontSizeProperty, value); }
+        }
+
         public Brush SelectedForeground
         {
             get { return (Brush)GetValue(SelectedForegroundProperty); }
@@ -146,6 +152,7 @@ namespace Digimezzo.WPFControls
         #endregion
 
         #region Dependency Properties
+        public static readonly DependencyProperty HeaderFontSizeProperty = DependencyProperty.Register("HeaderFontSize", typeof(double), typeof(PivotItem), new PropertyMetadata(13.0));
         public static readonly DependencyProperty SelectedForegroundProperty = DependencyProperty.Register("SelectedForeground", typeof(Brush), typeof(PivotItem), new PropertyMetadata(Brushes.Black));
         public static readonly DependencyProperty SelectedFontWeightProperty = DependencyProperty.Register("SelectedFontWeight", typeof(FontWeight), typeof(PivotItem), new PropertyMetadata(FontWeights.Normal));
         #endregion
