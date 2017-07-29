@@ -215,8 +215,9 @@ namespace Digimezzo.WPFControls
         {
             if (index < 0 || index >= Children.Count)
             {
-                throw new ArgumentOutOfRangeException();
+                return;
             }
+
             int childrenPerRow = CalculateChildrenPerRow(RenderSize);
             int row = index / childrenPerRow;
             SetVerticalOffset(row * ChildHeight);
