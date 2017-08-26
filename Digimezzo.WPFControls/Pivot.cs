@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
@@ -62,6 +63,12 @@ namespace Digimezzo.WPFControls
             get { return (Brush)GetValue(IndicatorBackgroundProperty); }
             set { SetValue(IndicatorBackgroundProperty, value); }
         }
+
+        public bool DisableTabKey
+        {
+            get { return (bool)GetValue(DisableTabKeyProperty); }
+            set { SetValue(DisableTabKeyProperty, value); }
+        }
         #endregion
 
         #region Dependency Properties
@@ -73,6 +80,7 @@ namespace Digimezzo.WPFControls
         public static readonly DependencyProperty SlideDistanceProperty = DependencyProperty.Register("SlideDistance", typeof(double), typeof(Pivot), new PropertyMetadata(20.0));
         public static readonly DependencyProperty SlideDurationProperty = DependencyProperty.Register("SlideDuration", typeof(double), typeof(Pivot), new PropertyMetadata(0.25));
         public static readonly DependencyProperty FadeDurationProperty = DependencyProperty.Register("FadeDuration", typeof(double), typeof(Pivot), new PropertyMetadata(0.5));
+        public static readonly DependencyProperty DisableTabKeyProperty = DependencyProperty.Register("DisableTabKey", typeof(bool), typeof(Pivot), new PropertyMetadata(false));
         #endregion
 
         #region Construction
@@ -92,6 +100,19 @@ namespace Digimezzo.WPFControls
             if (this.contentPanel != null)
             {
                 this.SelectionChanged += Pivot_SelectionChanged;
+            }
+
+            if (this.DisableTabKey)
+            {
+                this.PreviewKeyDown += Pivot_PreviewKeyDown;
+            }
+        }
+
+        private void Pivot_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Tab)
+            {
+                e.Handled = true;
             }
         }
         #endregion
