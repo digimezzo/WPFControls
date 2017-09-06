@@ -1,0 +1,13 @@
+﻿<Window x:Class="Digimezzo.WPFControls.Tests.Tests.MaterialControlsTest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls"
+        mc:Ignorable="d"
+        Title="MaterialControlsTest" Height="300" Width="300">
+    
+    <StackPanel Margin="20">
+        <controls:MaterialRaisedButton Content="Test" HorizontalAlignment="Center"/>
+    </StackPanel>
+</Window>

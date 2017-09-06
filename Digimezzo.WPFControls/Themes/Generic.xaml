@@ -7,6 +7,7 @@
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/BorderlessWindows10Window.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/LabelToLower.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/LabelToUpper.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/MaterialButtons.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/MultiPanePanel.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Pivot.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/ProgressRing.xaml" />

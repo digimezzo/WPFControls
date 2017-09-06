@@ -115,5 +115,11 @@ namespace Digimezzo.WPFControls.Tests
             var win = new SplitViewTest();
             win.Show();
         }
+
+        private void MaterialControlsTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new MaterialControlsTest();
+            win.Show();
+        }
     }
 }
