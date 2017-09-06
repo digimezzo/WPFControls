@@ -7,20 +7,35 @@ using System.Windows.Media.Animation;
 
 namespace Digimezzo.WPFControls
 {
+    public enum PivotAnimationType
+    {
+        Fade = 1,
+        Slide = 2
+    }
+
     public class Pivot : TabControl
     {
-        #region Variables
         private Border contentPanel;
         private int previous = -1;
         private int current = -1;
-        #endregion
 
-        #region Properties
+        public PivotAnimationType AnimationType
+        {
+            get { return (PivotAnimationType)GetValue(animationTypeProperty); }
+            set { SetValue(animationTypeProperty, value); }
+        }
+
+        public static readonly DependencyProperty animationTypeProperty =
+            DependencyProperty.Register(nameof(AnimationType), typeof(PivotAnimationType), typeof(Pivot), new PropertyMetadata(PivotAnimationType.Fade));
+
         public double Elevation
         {
             get { return Convert.ToDouble(GetValue(ElevationProperty)); }
             set { SetValue(ElevationProperty, value); }
         }
+
+        public static readonly DependencyProperty ElevationProperty =
+          DependencyProperty.Register(nameof(Elevation), typeof(double), typeof(Pivot), new PropertyMetadata(0.0));
 
         public Brush ElevationBackground
         {
@@ -28,11 +43,17 @@ namespace Digimezzo.WPFControls
             set { SetValue(ElevationBackgroundProperty, value); }
         }
 
+        public static readonly DependencyProperty ElevationBackgroundProperty =
+           DependencyProperty.Register(nameof(ElevationBackground), typeof(Brush), typeof(Pivot), new PropertyMetadata(Brushes.Transparent));
+
         public Brush HeaderBackground
         {
             get { return (Brush)GetValue(HeaderBackgroundProperty); }
             set { SetValue(HeaderBackgroundProperty, value); }
         }
+
+        public static readonly DependencyProperty HeaderBackgroundProperty =
+         DependencyProperty.Register(nameof(HeaderBackground), typeof(Brush), typeof(Pivot), new PropertyMetadata(Brushes.Transparent));
 
         public double SlideDistance
         {
@@ -40,11 +61,17 @@ namespace Digimezzo.WPFControls
             set { SetValue(SlideDistanceProperty, value); }
         }
 
+        public static readonly DependencyProperty SlideDistanceProperty =
+         DependencyProperty.Register(nameof(SlideDistance), typeof(double), typeof(Pivot), new PropertyMetadata(20.0));
+
         public double SlideDuration
         {
             get { return Convert.ToDouble(GetValue(SlideDurationProperty)); }
             set { SetValue(SlideDurationProperty, value); }
         }
+
+        public static readonly DependencyProperty SlideDurationProperty =
+           DependencyProperty.Register(nameof(SlideDuration), typeof(double), typeof(Pivot), new PropertyMetadata(0.25));
 
         public double FadeDuration
         {
@@ -52,11 +79,17 @@ namespace Digimezzo.WPFControls
             set { SetValue(FadeDurationProperty, value); }
         }
 
+        public static readonly DependencyProperty FadeDurationProperty =
+           DependencyProperty.Register(nameof(FadeDuration), typeof(double), typeof(Pivot), new PropertyMetadata(0.5));
+
         public double IndicatorHeight
         {
             get { return (double)GetValue(IndicatorHeightProperty); }
             set { SetValue(IndicatorHeightProperty, value); }
         }
+
+        public static readonly DependencyProperty IndicatorHeightProperty =
+          DependencyProperty.Register(nameof(IndicatorHeight), typeof(double), typeof(Pivot), new PropertyMetadata(0.0));
 
         public Brush IndicatorBackground
         {
@@ -64,33 +97,23 @@ namespace Digimezzo.WPFControls
             set { SetValue(IndicatorBackgroundProperty, value); }
         }
 
+        public static readonly DependencyProperty IndicatorBackgroundProperty =
+          DependencyProperty.Register(nameof(IndicatorBackground), typeof(Brush), typeof(Pivot), new PropertyMetadata(Brushes.Transparent));
+
         public bool DisableTabKey
         {
             get { return (bool)GetValue(DisableTabKeyProperty); }
             set { SetValue(DisableTabKeyProperty, value); }
         }
-        #endregion
 
-        #region Dependency Properties
-        public static readonly DependencyProperty ElevationProperty = DependencyProperty.Register("Elevation", typeof(double), typeof(Pivot), new PropertyMetadata(0.0));
-        public static readonly DependencyProperty ElevationBackgroundProperty = DependencyProperty.Register("ElevationBackground", typeof(Brush), typeof(Pivot), new PropertyMetadata(Brushes.Transparent));
-        public static readonly DependencyProperty HeaderBackgroundProperty = DependencyProperty.Register("HeaderBackground", typeof(Brush), typeof(Pivot), new PropertyMetadata(Brushes.Transparent));
-        public static readonly DependencyProperty IndicatorHeightProperty = DependencyProperty.Register("IndicatorHeight", typeof(double), typeof(Pivot), new PropertyMetadata(0.0));
-        public static readonly DependencyProperty IndicatorBackgroundProperty = DependencyProperty.Register("IndicatorBackground", typeof(Brush), typeof(Pivot), new PropertyMetadata(Brushes.Transparent));
-        public static readonly DependencyProperty SlideDistanceProperty = DependencyProperty.Register("SlideDistance", typeof(double), typeof(Pivot), new PropertyMetadata(20.0));
-        public static readonly DependencyProperty SlideDurationProperty = DependencyProperty.Register("SlideDuration", typeof(double), typeof(Pivot), new PropertyMetadata(0.25));
-        public static readonly DependencyProperty FadeDurationProperty = DependencyProperty.Register("FadeDuration", typeof(double), typeof(Pivot), new PropertyMetadata(0.5));
-        public static readonly DependencyProperty DisableTabKeyProperty = DependencyProperty.Register("DisableTabKey", typeof(bool), typeof(Pivot), new PropertyMetadata(false));
-        #endregion
+        public static readonly DependencyProperty DisableTabKeyProperty =
+          DependencyProperty.Register(nameof(DisableTabKey), typeof(bool), typeof(Pivot), new PropertyMetadata(false));
 
-        #region Construction
         static Pivot()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Pivot), new FrameworkPropertyMetadata(typeof(Pivot)));
         }
-        #endregion
 
-        #region Overrides
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -115,49 +138,88 @@ namespace Digimezzo.WPFControls
                 e.Handled = true;
             }
         }
-        #endregion
 
-        #region Event handlers
+        private void DoFadeAnimation()
+        {
+            DoubleAnimation slideAnimation = null;
+            DoubleAnimation opacityAnimation = new DoubleAnimation() { From = 0.0, To = 1.0, Duration = TimeSpan.FromSeconds(this.FadeDuration) };
+
+            if (previous > current)
+            {
+                slideAnimation = new DoubleAnimation() { From = -this.SlideDistance, To = 0.0, Duration = TimeSpan.FromSeconds(this.SlideDuration) };
+
+            }
+            else
+            {
+                slideAnimation = new DoubleAnimation() { From = this.SlideDistance, To = 0.0, Duration = TimeSpan.FromSeconds(this.SlideDuration) };
+            }
+
+            TranslateTransform translateTransform1 = new TranslateTransform();
+            var fadeStoryboard = new Storyboard();
+            fadeStoryboard.Children.Add(opacityAnimation);
+            Storyboard.SetTargetName(contentPanel, contentPanel.Name);
+            Storyboard.SetTargetProperty(opacityAnimation, new PropertyPath(UserControl.OpacityProperty));
+            fadeStoryboard.Begin(contentPanel);
+            translateTransform1.BeginAnimation(TranslateTransform.XProperty, slideAnimation);
+            contentPanel.RenderTransform = translateTransform1;
+            previous = current;
+        }
+
+        private void DoSlideAnimation()
+        {
+            double slideDistance = contentPanel.ActualWidth;
+
+            if(slideDistance == Double.NaN || slideDistance == 0)
+            {
+                slideDistance = 500;
+            }
+
+            var ta = new ThicknessAnimation();
+            ta.Duration = TimeSpan.FromSeconds(this.SlideDuration);
+            ta.DecelerationRatio = 0.7;
+            ta.To = new Thickness(0, 0, 0, 0);
+
+            if (previous > current)
+            {
+                ta.From = new Thickness(-slideDistance, 0, 0, 0);
+            }
+            else
+            {
+                ta.From = new Thickness(slideDistance, 0, 0, 0);
+            }
+
+            contentPanel.BeginAnimation(MarginProperty, ta);
+            previous = current;
+        }
+
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             current = (sender as TabControl).SelectedIndex;
             if (previous != current)
             {
-                DoubleAnimation slideAnimation = null;
-                DoubleAnimation opacityAnimation = new DoubleAnimation() { From = 0.0, To = 1.0, Duration = TimeSpan.FromSeconds(this.FadeDuration) };
 
-                if (previous > current)
+                if(this.AnimationType == PivotAnimationType.Fade)
                 {
-                    slideAnimation = new DoubleAnimation() { From = -this.SlideDistance, To = 0.0, Duration = TimeSpan.FromSeconds(this.SlideDuration) };
-
+                    this.DoFadeAnimation();
                 }
-                else
+                else if (this.AnimationType == PivotAnimationType.Slide)
                 {
-                    slideAnimation = new DoubleAnimation() { From = this.SlideDistance, To = 0.0, Duration = TimeSpan.FromSeconds(this.SlideDuration) };
+                    this.DoSlideAnimation();
                 }
-
-                TranslateTransform translateTransform1 = new TranslateTransform();
-                var fadeStoryboard = new Storyboard();
-                fadeStoryboard.Children.Add(opacityAnimation);
-                Storyboard.SetTargetName(contentPanel, contentPanel.Name);
-                Storyboard.SetTargetProperty(opacityAnimation, new PropertyPath(UserControl.OpacityProperty));
-                fadeStoryboard.Begin(contentPanel);
-                translateTransform1.BeginAnimation(TranslateTransform.XProperty, slideAnimation);
-                contentPanel.RenderTransform = translateTransform1;
-                previous = current;
             }
         }
-        #endregion
     }
 
     public class PivotItem : TabItem
     {
-        #region Properties
         public double HeaderFontSize
         {
             get { return (double)GetValue(HeaderFontSizeProperty); }
             set { SetValue(HeaderFontSizeProperty, value); }
         }
+
+        public static readonly DependencyProperty HeaderFontSizeProperty =
+           DependencyProperty.Register(nameof(HeaderFontSize), typeof(double), typeof(PivotItem), new PropertyMetadata(13.0));
 
         public Brush SelectedForeground
         {
@@ -165,24 +227,21 @@ namespace Digimezzo.WPFControls
             set { SetValue(SelectedForegroundProperty, value); }
         }
 
+        public static readonly DependencyProperty SelectedForegroundProperty =
+           DependencyProperty.Register(nameof(SelectedForeground), typeof(Brush), typeof(PivotItem), new PropertyMetadata(Brushes.Black));
+
         public FontWeight SelectedFontWeight
         {
             get { return (FontWeight)GetValue(SelectedFontWeightProperty); }
             set { SetValue(SelectedFontWeightProperty, value); }
         }
-        #endregion
 
-        #region Dependency Properties
-        public static readonly DependencyProperty HeaderFontSizeProperty = DependencyProperty.Register("HeaderFontSize", typeof(double), typeof(PivotItem), new PropertyMetadata(13.0));
-        public static readonly DependencyProperty SelectedForegroundProperty = DependencyProperty.Register("SelectedForeground", typeof(Brush), typeof(PivotItem), new PropertyMetadata(Brushes.Black));
-        public static readonly DependencyProperty SelectedFontWeightProperty = DependencyProperty.Register("SelectedFontWeight", typeof(FontWeight), typeof(PivotItem), new PropertyMetadata(FontWeights.Normal));
-        #endregion
+        public static readonly DependencyProperty SelectedFontWeightProperty =
+             DependencyProperty.Register(nameof(SelectedFontWeight), typeof(FontWeight), typeof(PivotItem), new PropertyMetadata(FontWeights.Normal));
 
-        #region Construction
         static PivotItem()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(PivotItem), new FrameworkPropertyMetadata(typeof(PivotItem)));
         }
-        #endregion
     }
 }

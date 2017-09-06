@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="PivotTest" Height="300" Width="300">
     <Grid>
-        <controls:Pivot IndicatorHeight="2" IndicatorBackground="Red" HeaderBackground="Gray" Elevation="4" ElevationBackground="Blue" DisableTabKey="True">
+        <controls:Pivot IndicatorHeight="2" IndicatorBackground="Red" HeaderBackground="Gray" Elevation="4" ElevationBackground="Blue" DisableTabKey="True" AnimationType="Fade">
             <controls:PivotItem Header="Item1" Foreground="LightGray" Padding="10,5,10,5" SelectedForeground="Black" HeaderFontSize="24" SelectedFontWeight="Bold">
                 <TextBlock Foreground="Black">Content 1</TextBlock>
             </controls:PivotItem>
