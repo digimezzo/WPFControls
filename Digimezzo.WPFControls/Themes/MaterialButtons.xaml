@@ -23,7 +23,7 @@
                                 Background="Black" Opacity="0" BorderThickness="0" VerticalAlignment="Center"/>
                         <Label x:Name="myContent" Content="{TemplateBinding Content, Converter={StaticResource StringToUpperConverter}}" 
                                FontWeight="SemiBold" FontSize="14" Foreground="White" Panel.ZIndex="4" Background="Transparent" Padding="16,0,16,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        <local:Ripple Panel.ZIndex="3" RippleBackground="#44FFFFFF" DoRipple="{TemplateBinding IsPressed}">
+                        <local:Ripple Panel.ZIndex="3" RippleBackground="White" Opacity="0.5" DoRipple="{TemplateBinding IsPressed}">
                             <local:Ripple.OpacityMask>
                                 <VisualBrush Visual="{Binding ElementName=myborder}" />
                             </local:Ripple.OpacityMask>
