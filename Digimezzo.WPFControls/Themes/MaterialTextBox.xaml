@@ -9,7 +9,7 @@
                 <ControlTemplate TargetType="{x:Type local:MaterialTextBox}">
                     <StackPanel x:Name="PART_Panel">
                         <Grid>
-                            <TextBlock x:Name="PART_InputLabel" Panel.ZIndex="0" Foreground="{TemplateBinding Foreground}" Opacity="0.55" Margin="2,0,2,0"/>
+                            <TextBlock x:Name="PART_InputLabel" Panel.ZIndex="0" Foreground="{TemplateBinding Foreground}"/>
                             <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center" Foreground="{TemplateBinding Foreground}"/>
                         </Grid>
                         <Grid Margin="0,8,0,0">

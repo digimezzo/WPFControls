@@ -12,6 +12,7 @@ namespace Digimezzo.WPFControls
         private Border inputLine;
         private StackPanel panel;
         private bool previousIsFloating;
+        private double opacity = 0.55;
 
         public bool IsFloating
         {
@@ -53,6 +54,7 @@ namespace Digimezzo.WPFControls
             this.inputLine = (Border)GetTemplateChild("PART_InputLine");
             this.panel = (StackPanel)GetTemplateChild("PART_Panel");
             this.inputLabel.Text = this.Label;
+            this.inputLabel.Opacity = this.opacity;
 
             this.panel.Margin = this.IsFloating ? new Thickness(0, 16, 0, 0) : new Thickness(0);
         }
@@ -67,48 +69,67 @@ namespace Digimezzo.WPFControls
             }
             else
             {
-                this.ClearInputLabel(this.Text.Length > 0);
+                this.SetInputLabelText(this.Text.Length > 0);
             }
         }
 
         protected override void OnIsKeyboardFocusedChanged(DependencyPropertyChangedEventArgs e)
         {
             base.OnIsKeyboardFocusedChanged(e);
-            this.AnimateInputLine((bool)e.NewValue);
+            bool isFocused = (bool)e.NewValue;
+            this.AnimateInputLine(isFocused);
+            this.SetInputLabelForeground(isFocused);
         }
 
-        private void ClearInputLabel(bool hasText)
+        private void SetInputLabelText(bool mustClear)
         {
-            this.inputLabel.Text = hasText ? string.Empty : this.Label;
+            this.inputLabel.Text = mustClear ? string.Empty : this.Label;
         }
 
-        private void AnimateInputLabel(bool hasText)
+        private void SetInputLabelForeground(bool mustFocus)
+        {
+            this.inputLabel.Foreground = mustFocus ? this.Accent : Brushes.Black;
+            this.inputLabel.Opacity = mustFocus ? 1.0 : this.opacity;
+        }
+
+        private void AnimateInputLabel(bool mustFloat)
         {
             var duration = new TimeSpan(0, 0, 0, 0, 200);
-            this.inputLabel.Foreground = hasText ? this.Accent : Brushes.Black;
-            this.inputLabel.Opacity = hasText ? 1.0 : 0.54;
 
-            var enlarge = new DoubleAnimation(10, this.FontSize, duration);
-            var reduce = new DoubleAnimation(this.FontSize, 10, duration);
+            this.SetInputLabelForeground(mustFloat);
 
-            var moveUp = new ThicknessAnimation(new Thickness(2, 0, 2, 0), new Thickness(2, -16, 2, 16), duration);
-            var moveDown = new ThicknessAnimation(new Thickness(2, -16, 2, 16), new Thickness(2, 0, 2, 0), duration);
+            double smallFontSize = 0;
+            double margin = 2;
 
-            if (!previousIsFloating.Equals(hasText))
+            if (this.FontSize != double.NaN)
             {
-                previousIsFloating = hasText;
-                this.inputLabel.BeginAnimation(FontSizeProperty, hasText ? reduce : enlarge);
-                this.inputLabel.BeginAnimation(MarginProperty, hasText ? moveUp : moveDown);
+                smallFontSize = this.FontSize > 14? this.FontSize * 0.7 : 10;
+                margin = this.FontSize * 0.3;
+            }
+
+            double offset = smallFontSize + margin;
+
+            var enlarge = new DoubleAnimation(smallFontSize, this.FontSize, duration);
+            var reduce = new DoubleAnimation(this.FontSize, smallFontSize, duration);
+
+            var moveUp = new ThicknessAnimation(new Thickness(2, 0, 2, 0), new Thickness(2, -offset, 2, offset), duration);
+            var moveDown = new ThicknessAnimation(new Thickness(2, -offset, 2, offset), new Thickness(2, 0, 2, 0), duration);
+
+            if (!previousIsFloating.Equals(mustFloat))
+            {
+                previousIsFloating = mustFloat;
+                this.inputLabel.BeginAnimation(FontSizeProperty, mustFloat ? reduce : enlarge);
+                this.inputLabel.BeginAnimation(MarginProperty, mustFloat ? moveUp : moveDown);
             }
         }
 
-        private void AnimateInputLine(bool show)
+        private void AnimateInputLine(bool mustFocus)
         {
             var duration = new TimeSpan(0, 0, 0, 0, 200);
             var enlarge = new DoubleAnimation(0, this.ActualWidth, duration);
             var reduce = new DoubleAnimation(this.ActualWidth, 0, duration);
 
-            this.inputLine.BeginAnimation(WidthProperty, show ? enlarge : reduce);
+            this.inputLine.BeginAnimation(WidthProperty, mustFocus ? enlarge : reduce);
         }
     }
 }

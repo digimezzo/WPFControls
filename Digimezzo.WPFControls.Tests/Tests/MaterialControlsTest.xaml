@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls"
         mc:Ignorable="d"
-        Title="MaterialControlsTest" Height="300" Width="300">
+        Title="MaterialControlsTest" Height="500" Width="300">
     
     <StackPanel Margin="20">
         <controls:MaterialRaisedButton Margin="10" Content="Test" HorizontalAlignment="Center" Accent="#2196F3"/>
         <controls:MaterialTextBox Margin="10" Label="Write something" Accent="#E91E63"/>
         <controls:MaterialTextBox Margin="10" Label="Write something" IsFloating="True" Accent="#4CAF50"/>
+        <controls:MaterialTextBox Margin="10" Label="Write something" IsFloating="True" Accent="#4CAF50" FontSize="18"/>
     </StackPanel>
 </Window>
