@@ -6,7 +6,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:Ripple}">
-                    <Border x:Name="PART_border" ClipToBounds="True" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Border x:Name="PART_border" ClipToBounds="True" Background="#00FFFFFF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Ellipse x:Name="PART_ellipse"
                                  Fill="{Binding Path=RippleBackground, RelativeSource={RelativeSource TemplatedParent}}" 
                                  Width="0" Height="{Binding Path=Width, RelativeSource={RelativeSource Self}}" 

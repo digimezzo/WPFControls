@@ -8,20 +8,15 @@ using System.Windows.Shapes;
 
 namespace Digimezzo.WPFControls
 {
-    public class Ripple : ContentControl, IDisposable 
+    public class Ripple : ContentControl
     {
         #region Variables
         Ellipse ellipse;
-        bool isLoaded;
-        bool needsRippleAfterLoading;
         #endregion
 
         #region Dependency Properties
         public static readonly DependencyProperty RippleBackgroundProperty =
             DependencyProperty.Register("RippleBackground", typeof(Brush), typeof(Ripple), new PropertyMetadata(Brushes.White));
-
-        public static readonly DependencyProperty DoRippleProperty =
-            DependencyProperty.Register("DoRipple", typeof(bool), typeof(Ripple), new PropertyMetadata(DoRippleChangedHandler));
 
         public static readonly DependencyProperty DurationMillisecondsProperty =
            DependencyProperty.Register("DurationMilliseconds", typeof(int), typeof(Ripple), new PropertyMetadata(500));
@@ -38,12 +33,6 @@ namespace Digimezzo.WPFControls
         {
             get { return (Brush)GetValue(RippleBackgroundProperty); }
             set { SetValue(RippleBackgroundProperty, value); }
-        }
-
-        public bool DoRipple
-        {
-            get { return (bool)GetValue(DoRippleProperty); }
-            set { SetValue(DoRippleProperty, value); }
         }
 
         public int DurationMilliseconds
@@ -78,7 +67,8 @@ namespace Digimezzo.WPFControls
             base.OnApplyTemplate();
 
             ellipse = GetTemplateChild("PART_ellipse") as Ellipse;
-            base.Loaded += Ripple_Loaded;
+            this.HorizontalAlignment = HorizontalAlignment.Stretch;
+            this.VerticalAlignment = VerticalAlignment.Stretch;
         }
 
         private void DoRippple()
@@ -115,46 +105,10 @@ namespace Digimezzo.WPFControls
             this.ellipse.BeginAnimation(OpacityProperty, opacityAnimation);
         }
 
-        private void Ripple_Loaded(object sender, RoutedEventArgs e)
+        protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            var self = (Ripple)sender;
-
-            self.isLoaded = true;
-
-            if(!self.needsRippleAfterLoading) return;
-            self.needsRippleAfterLoading = false;
-
-            self.DoRippple();
-        }
-        #endregion
-
-        #region Private
-        private static void DoRippleChangedHandler(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            try
-            {
-                var self = (Ripple)d;
-
-                if (!self.DoRipple) return; // Only ripple if true
-
-                // Sometimes, this gets called before the control is loaded. ActualWith and Actualheight are
-                // 0 until Loaded() is called. This workaround makes sure the ripple is drawn after loading.
-                if (!self.IsLoaded)
-                {
-                    self.needsRippleAfterLoading = true;
-                    return;
-                }
-
-                self.DoRippple();
-            }
-            catch (Exception)
-            {
-            }
-        }
-
-        public void Dispose()
-        {
-          base.Loaded -= Ripple_Loaded;
+            base.OnPreviewMouseLeftButtonDown(e);
+            this.DoRippple();
         }
         #endregion
     }

@@ -40,15 +40,16 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBoxItem}">
                     <Grid>
-                        <Border x:Name="Border" Panel.ZIndex="1" Background="{TemplateBinding Foreground}" Opacity="0"/>
-                        <Label x:Name="Label" Panel.ZIndex="1" Padding="10" Foreground="{TemplateBinding Foreground}" Content="{TemplateBinding Content}"/>
+                        <Border x:Name="myborder" Panel.ZIndex="0" Background="{TemplateBinding Foreground}" Opacity="0"/>
+                        <Label Panel.ZIndex="1" Padding="10" Foreground="{TemplateBinding Foreground}" Content="{TemplateBinding Content}"/>
+                        <local:Ripple Panel.ZIndex="2" RippleBackground="White" Opacity="0.5"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="Opacity" Value="0.1" />
+                            <Setter TargetName="myborder" Property="Opacity" Value="0.1" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="Border" Property="Opacity" Value="0.15" />
+                            <Setter TargetName="myborder" Property="Opacity" Value="0.15" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.5" />
