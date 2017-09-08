@@ -17,5 +17,10 @@
             <TextBlock Text="Two"/>
             <TextBlock Text="Three"/>
         </controls:MaterialComboBox>
+        <controls:MaterialComboBox Margin="10" Background="White" IsFloating="true" Label="Choose...">
+            <TextBlock Text="One"/>
+            <TextBlock Text="Two"/>
+            <TextBlock Text="Three"/>
+        </controls:MaterialComboBox>
     </StackPanel>
 </Window>

@@ -9,10 +9,10 @@ namespace Digimezzo.WPFControls
     public class MaterialTextBox : TextBox
     {
         private TextBlock inputLabel;
+        private bool previousIsFloating;
         private Border inputLine;
         private Border inputLineUnfocused;
         private StackPanel panel;
-        private bool previousIsFloating;
         private double opacity = 0.55;
         private bool isFocused;
 
@@ -60,7 +60,7 @@ namespace Digimezzo.WPFControls
             this.inputLabel.Opacity = this.opacity;
             this.inputLineUnfocused.Opacity = this.opacity;
 
-            this.panel.Margin = this.IsFloating ? new Thickness(0, 16, 0, 0) : new Thickness(0);
+            this.panel.Margin = this.IsFloating ? new Thickness(0, this.GetSmallFontSize() + this.GetMargin(), 0, 0) : new Thickness(0);
         }
 
         protected override void OnTextChanged(TextChangedEventArgs e)
@@ -96,6 +96,16 @@ namespace Digimezzo.WPFControls
             this.inputLabel.Opacity = mustFocus ? 1.0 : this.opacity;
         }
 
+        private double GetSmallFontSize()
+        {
+            return this.FontSize > 14 ? this.FontSize * 0.7 : 10;
+        }
+
+        private double GetMargin()
+        {
+            return this.FontSize * 0.3;
+        }
+
         private void AnimateInputLabel(bool mustFloat)
         {
             var duration = new TimeSpan(0, 0, 0, 0, 200);
@@ -107,8 +117,8 @@ namespace Digimezzo.WPFControls
 
             if (this.FontSize != double.NaN)
             {
-                smallFontSize = this.FontSize > 14? this.FontSize * 0.7 : 10;
-                margin = this.FontSize * 0.3;
+                smallFontSize = this.GetSmallFontSize();
+                margin = this.GetMargin();
             }
 
             double offset = smallFontSize + margin;
