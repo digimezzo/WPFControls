@@ -72,6 +72,7 @@
     <Compile Include="LabelToLower.cs" />
     <Compile Include="LabelToUpper.cs" />
     <Compile Include="MaterialButtons.cs" />
+    <Compile Include="MaterialComboBox.cs" />
     <Compile Include="MaterialTextBox.cs" />
     <Compile Include="Native\AppBar\Enums.cs" />
     <Compile Include="Native\AppBar\NativeMethods.cs" />
@@ -138,6 +139,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\MaterialButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\MaterialComboBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -13,7 +13,7 @@
                         <Border x:Name="myshadowborder" CornerRadius="2" Height="36" Panel.ZIndex="0" 
                                 Background="White" Margin="0.5" BorderThickness="0" VerticalAlignment="Center">
                             <Border.Effect>
-                                <DropShadowEffect BlurRadius="5" ShadowDepth="3" Opacity="0.3"/>
+                                <DropShadowEffect BlurRadius="5" ShadowDepth="3" Color="Black" Opacity="0.3"/>
                             </Border.Effect>
                         </Border>
                         <Border x:Name="myborder" CornerRadius="2" Height="36" Panel.ZIndex="1" 

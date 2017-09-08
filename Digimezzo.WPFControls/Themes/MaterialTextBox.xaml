@@ -13,8 +13,8 @@
                             <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center" Foreground="{TemplateBinding Foreground}"/>
                         </Grid>
                         <Grid Margin="0,8,0,0">
-                            <Border Panel.ZIndex="0" Height="1" Background="Black" Opacity="0.54"/>
-                            <Border x:Name="PART_InputLine" Panel.ZIndex="1" Height="2" Width="0" Background="{TemplateBinding Accent}"/>
+                            <Border x:Name="PART_InputLineUnfocused" Panel.ZIndex="0" Height="1" Margin="0,0,0,1" Background="{TemplateBinding Foreground}"/>
+                            <Border x:Name="PART_InputLine" Panel.ZIndex="1" Height="2" Width="0" Background="{TemplateBinding Accent}" HorizontalAlignment="Stretch"/>
                         </Grid>
                     </StackPanel>
                 </ControlTemplate>

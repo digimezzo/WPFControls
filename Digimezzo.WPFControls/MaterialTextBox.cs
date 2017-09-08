@@ -10,9 +10,11 @@ namespace Digimezzo.WPFControls
     {
         private TextBlock inputLabel;
         private Border inputLine;
+        private Border inputLineUnfocused;
         private StackPanel panel;
         private bool previousIsFloating;
         private double opacity = 0.55;
+        private bool isFocused;
 
         public bool IsFloating
         {
@@ -52,9 +54,11 @@ namespace Digimezzo.WPFControls
 
             this.inputLabel = (TextBlock)GetTemplateChild("PART_InputLabel");
             this.inputLine = (Border)GetTemplateChild("PART_InputLine");
+            this.inputLineUnfocused = (Border)GetTemplateChild("PART_InputLineUnfocused");
             this.panel = (StackPanel)GetTemplateChild("PART_Panel");
             this.inputLabel.Text = this.Label;
             this.inputLabel.Opacity = this.opacity;
+            this.inputLineUnfocused.Opacity = this.opacity;
 
             this.panel.Margin = this.IsFloating ? new Thickness(0, 16, 0, 0) : new Thickness(0);
         }
@@ -78,7 +82,7 @@ namespace Digimezzo.WPFControls
             base.OnIsKeyboardFocusedChanged(e);
             bool isFocused = (bool)e.NewValue;
             this.AnimateInputLine(isFocused);
-            this.SetInputLabelForeground(isFocused);
+            this.SetInputLabelForeground(isFocused & this.Text.Length > 0);
         }
 
         private void SetInputLabelText(bool mustClear)
@@ -88,7 +92,7 @@ namespace Digimezzo.WPFControls
 
         private void SetInputLabelForeground(bool mustFocus)
         {
-            this.inputLabel.Foreground = mustFocus ? this.Accent : Brushes.Black;
+            this.inputLabel.Foreground = mustFocus ? this.Accent : this.Foreground;
             this.inputLabel.Opacity = mustFocus ? 1.0 : this.opacity;
         }
 
@@ -125,11 +129,24 @@ namespace Digimezzo.WPFControls
 
         private void AnimateInputLine(bool mustFocus)
         {
+            this.isFocused = mustFocus;
+
             var duration = new TimeSpan(0, 0, 0, 0, 200);
             var enlarge = new DoubleAnimation(0, this.ActualWidth, duration);
             var reduce = new DoubleAnimation(this.ActualWidth, 0, duration);
 
             this.inputLine.BeginAnimation(WidthProperty, mustFocus ? enlarge : reduce);
+        }
+
+        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+        {
+            base.OnRenderSizeChanged(sizeInfo);
+
+            if (this.isFocused)
+            {
+                this.inputLine.BeginAnimation(WidthProperty, null);
+                this.inputLine.Width = this.ActualWidth;
+            }
         }
     }
 }
