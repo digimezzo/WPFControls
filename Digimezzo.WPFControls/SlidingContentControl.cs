@@ -12,8 +12,8 @@ namespace Digimezzo.WPFControls
     public class SlidingContentControl : ContentControl
     {
         #region Variables
-        private ContentPresenter mainContent;
-        private Shape paintArea;
+        protected ContentPresenter mainContent;
+        protected Shape paintArea;
         #endregion
 
         #region Properties
@@ -97,32 +97,11 @@ namespace Digimezzo.WPFControls
             {
             }
         }
-        #endregion
-
-        #region Private
-        /// <summary>
-        /// Creates a brush based on the current appearance of a visual element. 
-        /// The brush is an ImageBrush and once created, won't update its look
-        /// </summary>
-        /// <param name="visual">The visual element to take a snapshot of</param>
-        private Brush CreateBrushFromVisual(Visual visual)
-        {
-            if (visual == null)
-            {
-                throw new ArgumentNullException("visual");
-            }
-
-            var target = new RenderTargetBitmap(Convert.ToInt32(this.ActualWidth), Convert.ToInt32(this.ActualHeight), 96, 96, PixelFormats.Pbgra32);
-            target.Render(visual);
-            var brush = new ImageBrush(target);
-            brush.Freeze();
-            return brush;
-        }
 
         /// <summary>
         /// Starts the animation for the new content
         /// </summary>
-        private void BeginAnimateContentReplacement()
+        protected virtual void BeginAnimateContentReplacement()
         {
             var newContentTransform = new TranslateTransform();
             var oldContentTransform = new TranslateTransform();
@@ -148,10 +127,6 @@ namespace Digimezzo.WPFControls
                     newContentTransform.BeginAnimation(TranslateTransform.YProperty, this.CreateSlideAnimation(this.ActualHeight, 0));
                     oldContentTransform.BeginAnimation(TranslateTransform.YProperty, this.CreateSlideAnimation(0, -this.ActualHeight, (s, e) => this.paintArea.Visibility = Visibility.Hidden));
                     break;
-                default:
-                    newContentTransform.BeginAnimation(TranslateTransform.XProperty, this.CreateSlideAnimation(this.ActualWidth, 0));
-                    oldContentTransform.BeginAnimation(TranslateTransform.XProperty, this.CreateSlideAnimation(0, -this.ActualWidth, (s, e) => this.paintArea.Visibility = Visibility.Hidden));
-                    break;
             }
 
             if (this.FadeOnSlide)
@@ -162,13 +137,32 @@ namespace Digimezzo.WPFControls
         }
 
         /// <summary>
+        /// Creates a brush based on the current appearance of a visual element. 
+        /// The brush is an ImageBrush and once created, won't update its look
+        /// </summary>
+        /// <param name="visual">The visual element to take a snapshot of</param>
+        protected Brush CreateBrushFromVisual(Visual visual)
+        {
+            if (visual == null)
+            {
+                throw new ArgumentNullException("visual");
+            }
+
+            var target = new RenderTargetBitmap(Convert.ToInt32(this.ActualWidth), Convert.ToInt32(this.ActualHeight), 96, 96, PixelFormats.Pbgra32);
+            target.Render(visual);
+            var brush = new ImageBrush(target);
+            brush.Freeze();
+            return brush;
+        }
+
+        /// <summary>
         /// Creates the animation that moves content in or out of view.
         /// </summary>
         /// <param name="from">The starting value of the animation.</param>
         /// <param name="to">The end value of the animation.</param>
         /// <param name="whenDone">(optional)
         ///   A callback that will be called when the animation has completed.</param>
-        private AnimationTimeline CreateSlideAnimation(double from, double to, EventHandler whenDone = null)
+        protected AnimationTimeline CreateSlideAnimation(double from, double to, EventHandler whenDone = null)
         {
 
             IEasingFunction ease = new BackEase
@@ -181,13 +175,13 @@ namespace Digimezzo.WPFControls
             var anim = new DoubleAnimation(from, to, duration) { EasingFunction = ease };
 
             if (whenDone != null) anim.Completed += whenDone;
-            
+
             anim.Freeze();
 
             return anim;
         }
 
-        private AnimationTimeline CreateFadeAnimation(double from, double to, double durationSeconds, EventHandler whenDone = null)
+        protected AnimationTimeline CreateFadeAnimation(double from, double to, double durationSeconds, EventHandler whenDone = null)
         {
             var duration = new Duration(TimeSpan.FromSeconds(durationSeconds));
             var anim = new DoubleAnimation(from, to, duration);
