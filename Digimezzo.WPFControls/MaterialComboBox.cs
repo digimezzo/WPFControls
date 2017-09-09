@@ -17,6 +17,7 @@ namespace Digimezzo.WPFControls
         private ToggleButton toggleButton;
         private double opacity = 0.55;
         private bool isFocused;
+        private Border dropDownBorder;
 
         public bool IsFloating
         {
@@ -57,6 +58,7 @@ namespace Digimezzo.WPFControls
             this.toggleButton = (ToggleButton)GetTemplateChild("ToggleButton");
             this.inputLine = (Border)GetTemplateChild("PART_InputLine");
             this.inputLineUnfocused = (Border)GetTemplateChild("PART_InputLineUnfocused");
+            this.dropDownBorder = (Border)GetTemplateChild("DropDownBorder");
             this.panel = (Grid)GetTemplateChild("PART_Panel");
             this.toggleButton.Opacity = this.opacity;
             this.inputLineUnfocused.Opacity = this.opacity;
@@ -64,6 +66,7 @@ namespace Digimezzo.WPFControls
             this.inputLabel.Opacity = this.opacity;
 
             this.panel.Margin = this.IsFloating ? new Thickness(0, this.GetSmallFontSize() + this.GetMargin(), 0, 0) : new Thickness(0);
+            this.dropDownBorder.Background = this.Background == null ? Brushes.White : this.Background;
         }
 
         private double GetSmallFontSize()
