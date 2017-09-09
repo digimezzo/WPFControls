@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:Digimezzo.WPFControls">
 
     <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="ToggleButton">
-        <Grid Background="#00FFFFFF" >
+        <Grid Background="#00FFFFFF">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="20" />
@@ -115,7 +115,7 @@
                             AllowsTransparency="True" 
                             Focusable="False"
                             PopupAnimation="Slide">
-                            <Border Margin="10">
+                            <Border Margin="10,0,10,10">
                                 <Border.Effect>
                                     <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="Black" Opacity="0.5"/>
                                 </Border.Effect>

@@ -132,17 +132,10 @@ namespace Digimezzo.WPFControls
             }
         }
 
-        protected override void OnIsKeyboardFocusedChanged(DependencyPropertyChangedEventArgs e)
+        protected override void OnDropDownOpened(EventArgs e)
         {
-            base.OnIsKeyboardFocusedChanged(e);
-            bool isFocused = (bool)e.NewValue;
-
-            if (!this.isFocused)
-            {
-                this.isFocused = true;
-                this.AnimateInputLine(isFocused);
-                this.SetInputLabelForeground(isFocused);
-            }
+            base.OnDropDownOpened(e);
+            this.AnimateInputLine(true);
         }
 
         protected override void OnLostFocus(RoutedEventArgs e)
