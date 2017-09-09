@@ -6,6 +6,7 @@
     <converters:StringToUpperConverter x:Key="StringToUpperConverter" />
 
     <Style TargetType="{x:Type local:MaterialRaisedButton}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:MaterialRaisedButton}">
