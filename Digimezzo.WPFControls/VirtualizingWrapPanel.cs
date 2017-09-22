@@ -186,8 +186,10 @@ namespace Digimezzo.WPFControls
             {
                 case NotifyCollectionChangedAction.Remove:
                 case NotifyCollectionChangedAction.Replace:
-                case NotifyCollectionChangedAction.Move:
                     RemoveInternalChildRange(args.Position.Index, args.ItemUICount);
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    RemoveInternalChildRange(args.OldPosition.Index, args.ItemUICount);
                     break;
             }
         }
