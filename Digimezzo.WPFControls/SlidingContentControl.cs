@@ -12,11 +12,21 @@ namespace Digimezzo.WPFControls
     public class SlidingContentControl : ContentControl
     {
         #region Variables
-        protected ContentPresenter mainContent;
-        protected Shape paintArea;
+        private ContentPresenter mainContent;
+        private Shape paintArea;
         #endregion
 
         #region Properties
+        public ContentPresenter MainContent
+        {
+            get { return this.mainContent; }
+        }
+
+        public Shape PaintArea
+        {
+            get { return this.paintArea; }
+        }
+
         public SlideDirection SlideDirection
         {
             get { return (SlideDirection)GetValue(SlideDirectionProperty); }
