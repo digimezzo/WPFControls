@@ -12,7 +12,7 @@
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <!-- ScrollOffset is the speed at which VirtualizingWrapPanel scrolls -->
-                    <controls:VirtualizingWrapPanel ChildWidth="100" ChildHeight="120" ScrollOffset="50"/>
+                    <controls:VirtualizingWrapPanel ChildWidth="100" ChildHeight="120"/>
                     <!--<WrapPanel Width="500"/>-->
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>

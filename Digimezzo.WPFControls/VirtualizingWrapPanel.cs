@@ -41,46 +41,41 @@ namespace Digimezzo.WPFControls
         #endregion
 
         #region Properties and Dependency Properties
-        // Dependency property that controls the ScrollOffset
-        public static readonly DependencyProperty ScrollOffsetProperty = DependencyProperty.RegisterAttached("ScrollOffset", typeof(int), typeof(VirtualizingWrapPanel), new PropertyMetadata(10));
-
-        // Accessor for the ScrollOffset dependency property
         public int ScrollOffset
         {
             get { return Convert.ToInt32(GetValue(ScrollOffsetProperty)); }
             set { SetValue(ScrollOffsetProperty, value); }
         }
 
-        // Dependency property that controls the width of the child elements
-        public static readonly DependencyProperty ChildWidthProperty = DependencyProperty.RegisterAttached("ChildWidth", typeof(double), typeof(VirtualizingWrapPanel), new FrameworkPropertyMetadata(200.0, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+        public static readonly DependencyProperty ScrollOffsetProperty = 
+            DependencyProperty.RegisterAttached("ScrollOffset", typeof(int), typeof(VirtualizingWrapPanel), new PropertyMetadata(0));
 
-        // Accessor for the child width dependency property
         public double ChildWidth
         {
             get { return Convert.ToDouble(GetValue(ChildWidthProperty)); }
             set { SetValue(ChildWidthProperty, value); }
         }
 
-        // Dependency property that controls the height of the child elements
-        public static readonly DependencyProperty ChildHeightProperty = DependencyProperty.RegisterAttached("ChildHeight", typeof(double), typeof(VirtualizingWrapPanel), new FrameworkPropertyMetadata(200.0, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+        public static readonly DependencyProperty ChildWidthProperty = 
+            DependencyProperty.RegisterAttached("ChildWidth", typeof(double), typeof(VirtualizingWrapPanel), new FrameworkPropertyMetadata(200.0, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
-        // Accessor for the child size dependency property
         public double ChildHeight
         {
             get { return Convert.ToDouble(GetValue(ChildHeightProperty)); }
             set { SetValue(ChildHeightProperty, value); }
         }
 
-        // Dependency property that controls the horizontal alignment of the child alignments
-        public static readonly DependencyProperty HorizontalContentAlignmentProperty = DependencyProperty.RegisterAttached("HorizontalContentAlignment", typeof(WrapPanelAlignment), typeof(VirtualizingWrapPanel), new FrameworkPropertyMetadata(WrapPanelAlignment.Left, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+        public static readonly DependencyProperty ChildHeightProperty = 
+            DependencyProperty.RegisterAttached("ChildHeight", typeof(double), typeof(VirtualizingWrapPanel), new FrameworkPropertyMetadata(200.0, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
-        // Accessor for the horizontal content alignment dependency property
         public WrapPanelAlignment HorizontalContentAlignment
         {
             get { return (WrapPanelAlignment)GetValue(HorizontalContentAlignmentProperty); }
             set { SetValue(HorizontalContentAlignmentProperty, value); }
         }
 
+        public static readonly DependencyProperty HorizontalContentAlignmentProperty =
+            DependencyProperty.RegisterAttached("HorizontalContentAlignment", typeof(WrapPanelAlignment), typeof(VirtualizingWrapPanel), new FrameworkPropertyMetadata(WrapPanelAlignment.Left, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
         #endregion
 
         #region Overrides
@@ -463,12 +458,12 @@ namespace Digimezzo.WPFControls
 
         public void LineUp()
         {
-            this.SetVerticalOffset(this.VerticalOffset - this.ScrollOffset);
+            this.SetVerticalOffset(this.VerticalOffset - (this.ScrollOffset > 0 ? this.ScrollOffset : this.ChildHeight));
         }
 
         public void LineDown()
         {
-            this.SetVerticalOffset(this.VerticalOffset + this.ScrollOffset);
+            this.SetVerticalOffset(this.VerticalOffset + (this.ScrollOffset > 0 ? this.ScrollOffset : this.ChildHeight));
         }
 
         public void PageUp()
@@ -483,12 +478,12 @@ namespace Digimezzo.WPFControls
 
         public void MouseWheelUp()
         {
-            this.EasingSetVerticalOffset(this.VerticalOffset - this.ScrollOffset);
+            this.EasingSetVerticalOffset(this.VerticalOffset - (this.ScrollOffset > 0 ? this.ScrollOffset : this.ChildHeight));
         }
 
         public void MouseWheelDown()
         {
-            this.EasingSetVerticalOffset(this.VerticalOffset + this.ScrollOffset);
+            this.EasingSetVerticalOffset(this.VerticalOffset + (this.ScrollOffset > 0 ? this.ScrollOffset : this.ChildHeight));
         }
 
         public void LineLeft()
