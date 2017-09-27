@@ -11,6 +11,7 @@
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/MaterialComboBox.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/MaterialTextBox.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/MultiPanePanel.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/PageIndicator.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Pivot.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/ProgressRing.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Ripple.xaml" />

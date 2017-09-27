@@ -1,0 +1,37 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Digimezzo.WPFControls">
+
+    <Style TargetType="{x:Type controls:PageIndicator}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:PageIndicator}">
+                    <ItemsControl ItemsSource="{Binding Path=Items,RelativeSource={RelativeSource TemplatedParent}}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Ellipse x:Name="PageIndicatorItem" 
+                                         Width="{Binding Path=ItemSize,RelativeSource={RelativeSource AncestorType=controls:PageIndicator}}"
+                                         Height="{Binding Path=ItemSize,RelativeSource={RelativeSource AncestorType=controls:PageIndicator}}" 
+                                         Margin="{Binding Path=ItemMargin,RelativeSource={RelativeSource AncestorType=controls:PageIndicator}}" 
+                                         Fill="{Binding Path=ItemFill,RelativeSource={RelativeSource AncestorType=controls:PageIndicator}}" />
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding Path=IsActive}" Value="False">
+                                        <Setter TargetName="PageIndicatorItem" Property="Fill" Value="{Binding Path=ItemFill,RelativeSource={RelativeSource AncestorType=controls:PageIndicator}}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=IsActive}" Value="True">
+                                        <Setter TargetName="PageIndicatorItem" Property="Fill" Value="{Binding Path=SelectedItemFill,RelativeSource={RelativeSource AncestorType=controls:PageIndicator}}" />
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

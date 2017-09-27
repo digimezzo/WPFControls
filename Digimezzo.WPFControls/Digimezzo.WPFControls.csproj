@@ -55,6 +55,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\BindableBase.cs" />
     <Compile Include="Base\Constants.cs" />
     <Compile Include="Base\SliderBase.cs" />
     <Compile Include="Converters\AddValueConverter.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Native\Monitor\Constants.cs" />
     <Compile Include="Native\Monitor\NativeMethods.cs" />
     <Compile Include="Native\Monitor\Structs.cs" />
+    <Compile Include="PageIndicator.cs" />
     <Compile Include="Pivot.cs" />
     <Compile Include="Ripple.cs" />
     <Compile Include="SharedAssemblyInfo.cs" />
@@ -147,6 +149,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\MaterialTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\PageIndicator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
