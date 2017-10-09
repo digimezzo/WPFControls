@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Digimezzo.WPFControls.Utils;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Shapes;
 
 namespace Digimezzo.WPFControls
 {
@@ -15,7 +17,9 @@ namespace Digimezzo.WPFControls
 
     public class Pivot : TabControl
     {
-        private Border contentPanel;
+        private Grid contentPanel;
+        private ContentPresenter mainContent;
+        private Shape paintArea;
         private int previous = -1;
         private int current = -1;
 
@@ -71,7 +75,16 @@ namespace Digimezzo.WPFControls
         }
 
         public static readonly DependencyProperty SlideDurationProperty =
-           DependencyProperty.Register(nameof(SlideDuration), typeof(double), typeof(Pivot), new PropertyMetadata(0.25));
+           DependencyProperty.Register(nameof(SlideDuration), typeof(double), typeof(Pivot), new PropertyMetadata(0.5));
+
+        public double EasingAmplitude
+        {
+            get { return Convert.ToDouble(GetValue(EasingAmplitudeProperty)); }
+            set { SetValue(EasingAmplitudeProperty, value); }
+        }
+
+        public static readonly DependencyProperty EasingAmplitudeProperty = 
+            DependencyProperty.Register(nameof(EasingAmplitude), typeof(double), typeof(Pivot), new PropertyMetadata(0.0));
 
         public double FadeDuration
         {
@@ -118,7 +131,9 @@ namespace Digimezzo.WPFControls
         {
             base.OnApplyTemplate();
 
-            this.contentPanel = (Border)GetTemplateChild("contentPanel");
+            this.contentPanel = (Grid)GetTemplateChild("contentPanel");
+            this.mainContent = (ContentPresenter)GetTemplateChild("PART_SelectedContentHost");
+            this.paintArea = (Shape)GetTemplateChild("PART_PaintArea");
 
             if (this.contentPanel != null)
             {
@@ -167,38 +182,46 @@ namespace Digimezzo.WPFControls
 
         private void DoSlideAnimation()
         {
-            double slideDistance = contentPanel.ActualWidth;
-
-            if(slideDistance == Double.NaN || slideDistance == 0)
+            try
             {
-                slideDistance = 500;
+                if (this.paintArea != null && this.mainContent != null)
+                {
+                    this.paintArea.Fill = AnimationUtils.CreateBrushFromVisual(this.mainContent, this.ActualWidth, this.ActualHeight);
+
+                    var newContentTransform = new TranslateTransform();
+                    var oldContentTransform = new TranslateTransform();
+                    this.paintArea.RenderTransform = oldContentTransform;
+                    this.mainContent.RenderTransform = newContentTransform;
+                    this.paintArea.Visibility = Visibility.Visible;
+
+                    if (previous > current)
+                    {
+                        newContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(-this.ActualWidth, 0, this.EasingAmplitude, this.SlideDuration));
+                        oldContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(0, this.ActualWidth, this.EasingAmplitude, this.SlideDuration, (s, e) => this.paintArea.Visibility = Visibility.Hidden));
+
+                    }
+                    else
+                    {
+                        newContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(this.ActualWidth, 0, this.EasingAmplitude, this.SlideDuration));
+                        oldContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(0, -this.ActualWidth, this.EasingAmplitude, this.SlideDuration, (s, e) => this.paintArea.Visibility = Visibility.Hidden));
+                    }
+
+                    previous = current;
+                }
             }
-
-            var ta = new ThicknessAnimation();
-            ta.Duration = TimeSpan.FromSeconds(this.SlideDuration);
-            ta.DecelerationRatio = 0.7;
-            ta.To = new Thickness(0, 0, 0, 0);
-
-            if (previous > current)
+            catch (Exception)
             {
-                ta.From = new Thickness(-slideDistance, 0, 0, 0);
             }
-            else
-            {
-                ta.From = new Thickness(slideDistance, 0, 0, 0);
-            }
-
-            contentPanel.BeginAnimation(MarginProperty, ta);
-            previous = current;
         }
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             current = (sender as TabControl).SelectedIndex;
+
             if (previous != current)
             {
 
-                if(this.AnimationType == PivotAnimationType.Fade)
+                if (this.AnimationType == PivotAnimationType.Fade)
                 {
                     this.DoFadeAnimation();
                 }

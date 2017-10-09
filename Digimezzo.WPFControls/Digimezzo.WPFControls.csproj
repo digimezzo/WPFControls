@@ -66,10 +66,12 @@
     <Compile Include="Converters\SolidColorBrushToColorConverter.cs" />
     <Compile Include="Converters\StringToLowerConverter.cs" />
     <Compile Include="Converters\StringToUpperConverter.cs" />
+    <Compile Include="Effects\FeatheringEffect.cs" />
     <Compile Include="Enums\SlideDirection.cs" />
     <Compile Include="Enums\WrapPanelAlignment.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Helpers\VisualTree.cs" />
+    <Compile Include="Utils\UriUtils.cs" />
+    <Compile Include="Utils\VisualTreeUtils.cs" />
     <Compile Include="LabelToLower.cs" />
     <Compile Include="LabelToUpper.cs" />
     <Compile Include="MaterialButtons.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="Ripple.cs" />
     <Compile Include="SharedAssemblyInfo.cs" />
     <Compile Include="SplitView.cs" />
+    <Compile Include="Utils\AnimationUtils.cs" />
     <Compile Include="VirtualizingWrapPanel.cs" />
     <Compile Include="Windows8Slider.cs" />
     <Compile Include="MultiPanePanel.cs" />
@@ -118,6 +121,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Effects\FeatheringEffect.ps" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -209,7 +213,9 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Effects\FeatheringEffect.fx" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

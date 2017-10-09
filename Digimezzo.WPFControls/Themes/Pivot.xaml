@@ -21,18 +21,19 @@
                             <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
                             <RowDefinition x:Name="RowDefinition1" Height="*"/>
                         </Grid.RowDefinitions>
-                        <!--<TabPanel x:Name="headerPanel" Background="Transparent" Grid.Column="0" IsItemsHost="true" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>-->
                         <StackPanel>
                             <StackPanel x:Name="headerPanel" Orientation="Horizontal" Background="{TemplateBinding HeaderBackground}" Grid.Column="0" IsItemsHost="true" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
                             <Border x:Name="elevation" Height="{TemplateBinding Elevation}" Background="{TemplateBinding ElevationBackground}"/>
                         </StackPanel>
-                        <Border x:Name="contentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
-                                Background="{TemplateBinding Background}" KeyboardNavigation.DirectionalNavigation="Contained" 
-                                Grid.Column="0" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local"
-                                Width="{TemplateBinding ActualWidth}">
+                        <Grid x:Name="contentPanel" ClipToBounds="True" Background="{TemplateBinding Background}" 
+                              KeyboardNavigation.DirectionalNavigation="Contained" Grid.Column="0" Grid.Row="1" 
+                              KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local"
+                              Width="{TemplateBinding ActualWidth}">
+                            <Rectangle x:Name="PART_PaintArea" Panel.ZIndex="0"/>
                             <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent" 
-                                              Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                        </Border>
+                                              Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              Panel.ZIndex="1"/>
+                        </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="TabStripPlacement" Value="Bottom">

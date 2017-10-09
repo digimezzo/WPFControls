@@ -2,9 +2,9 @@
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
-namespace Digimezzo.WPFControls.Helpers
+namespace Digimezzo.WPFControls.Utils
 {
-    public static class VisualTree
+    public sealed class VisualTreeUtils
     {
         public static T FindAncestor<T>(DependencyObject d) where T : class
         {
