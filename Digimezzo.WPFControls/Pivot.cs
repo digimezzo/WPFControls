@@ -134,6 +134,33 @@ namespace Digimezzo.WPFControls
         public static DependencyProperty FeatheringRadiusProperty =
             DependencyProperty.Register(nameof(FeatheringRadius), typeof(double), typeof(Pivot), new PropertyMetadata(0.0));
 
+        public double FadeOutDuration
+        {
+            get { return Convert.ToDouble(GetValue(FadeOutDurationProperty)); }
+            set { SetValue(FadeOutDurationProperty, value); }
+        }
+
+        public static readonly DependencyProperty FadeOutDurationProperty =
+          DependencyProperty.Register(nameof(FadeOutDuration), typeof(double), typeof(Pivot), new PropertyMetadata(0.3));
+
+        public double FadeInDuration
+        {
+            get { return Convert.ToDouble(GetValue(FadeInDurationProperty)); }
+            set { SetValue(FadeInDurationProperty, value); }
+        }
+
+        public static readonly DependencyProperty FadeInDurationProperty =
+          DependencyProperty.Register(nameof(FadeInDuration), typeof(double), typeof(Pivot), new PropertyMetadata(0.7));
+
+        public bool FadeOnSlide
+        {
+            get { return (bool)GetValue(FadeOnSlideProperty); }
+            set { SetValue(FadeOnSlideProperty, value); }
+        }
+
+        public static readonly DependencyProperty FadeOnSlideProperty = 
+            DependencyProperty.Register(nameof(FadeOnSlide), typeof(bool), typeof(Pivot), new PropertyMetadata(false));
+
         static Pivot()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Pivot), new FrameworkPropertyMetadata(typeof(Pivot)));
@@ -206,49 +233,43 @@ namespace Digimezzo.WPFControls
                 this.Effect = effect;
             }
 
-            try
+            if (this.paintArea != null && this.mainContent != null)
             {
-                if (this.paintArea != null && this.mainContent != null)
+                this.paintArea.Fill = AnimationUtils.CreateBrushFromVisual(this.mainContent, this.ActualWidth, this.ActualHeight);
+
+                var newContentTransform = new TranslateTransform();
+                var oldContentTransform = new TranslateTransform();
+                this.paintArea.RenderTransform = oldContentTransform;
+                this.mainContent.RenderTransform = newContentTransform;
+                this.paintArea.Visibility = Visibility.Visible;
+
+                if (previous > current)
                 {
-                    this.paintArea.Fill = AnimationUtils.CreateBrushFromVisual(this.mainContent, this.ActualWidth, this.ActualHeight);
-
-                    var newContentTransform = new TranslateTransform();
-                    var oldContentTransform = new TranslateTransform();
-                    this.paintArea.RenderTransform = oldContentTransform;
-                    this.mainContent.RenderTransform = newContentTransform;
-                    this.paintArea.Visibility = Visibility.Visible;
-
-                    if (previous > current)
+                    newContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(-this.ActualWidth, 0, this.EasingAmplitude, this.SlideDuration));
+                    oldContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(0, this.ActualWidth, this.EasingAmplitude, this.SlideDuration, (s, e) =>
                     {
-                        newContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(-this.ActualWidth, 0, this.EasingAmplitude, this.SlideDuration, (s, e) =>
-                        {
-                            this.Effect = null;
-                        }));
-                        oldContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(0, this.ActualWidth, this.EasingAmplitude, this.SlideDuration, (s, e) =>
-                        {
-                            this.paintArea.Visibility = Visibility.Hidden;
-                            this.Effect = null;
-                        }));
+                        this.paintArea.Visibility = Visibility.Hidden;
+                        this.Effect = null;
+                    }));
 
-                    }
-                    else
-                    {
-                        newContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(this.ActualWidth, 0, this.EasingAmplitude, this.SlideDuration, (s, e) =>
-                        {
-                            this.Effect = null;
-                        }));
-                        oldContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(0, -this.ActualWidth, this.EasingAmplitude, this.SlideDuration, (s, e) =>
-                        {
-                            this.paintArea.Visibility = Visibility.Hidden;
-                            this.Effect = null;
-                        }));
-                    }
-
-                    previous = current;
                 }
-            }
-            catch (Exception)
-            {
+                else
+                {
+                    newContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(this.ActualWidth, 0, this.EasingAmplitude, this.SlideDuration));
+                    oldContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(0, -this.ActualWidth, this.EasingAmplitude, this.SlideDuration, (s, e) =>
+                    {
+                        this.paintArea.Visibility = Visibility.Hidden;
+                        this.Effect = null;
+                    }));
+                }
+
+                previous = current;
+
+                if (this.FadeOnSlide)
+                {
+                    this.mainContent.BeginAnimation(OpacityProperty, AnimationUtils.CreateFadeAnimation(0, 1, this.FadeInDuration));
+                    this.paintArea.BeginAnimation(OpacityProperty, AnimationUtils.CreateFadeAnimation(1, 0, this.FadeOutDuration));
+                }
             }
         }
 
