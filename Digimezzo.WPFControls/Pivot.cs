@@ -1,4 +1,5 @@
-﻿using Digimezzo.WPFControls.Utils;
+﻿using Digimezzo.WPFControls.Effects;
+using Digimezzo.WPFControls.Utils;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,6 +23,8 @@ namespace Digimezzo.WPFControls
         private Shape paintArea;
         private int previous = -1;
         private int current = -1;
+        private FeatheringEffect effect;
+        private bool isFirstShow = true;
 
         public PivotAnimationType AnimationType
         {
@@ -83,7 +86,7 @@ namespace Digimezzo.WPFControls
             set { SetValue(EasingAmplitudeProperty, value); }
         }
 
-        public static readonly DependencyProperty EasingAmplitudeProperty = 
+        public static readonly DependencyProperty EasingAmplitudeProperty =
             DependencyProperty.Register(nameof(EasingAmplitude), typeof(double), typeof(Pivot), new PropertyMetadata(0.0));
 
         public double FadeDuration
@@ -122,6 +125,15 @@ namespace Digimezzo.WPFControls
         public static readonly DependencyProperty DisableTabKeyProperty =
           DependencyProperty.Register(nameof(DisableTabKey), typeof(bool), typeof(Pivot), new PropertyMetadata(false));
 
+        public double FeatheringRadius
+        {
+            get => (double)GetValue(FeatheringRadiusProperty);
+            set => SetValue(FeatheringRadiusProperty, value);
+        }
+
+        public static DependencyProperty FeatheringRadiusProperty =
+            DependencyProperty.Register(nameof(FeatheringRadius), typeof(double), typeof(Pivot), new PropertyMetadata(0.0));
+
         static Pivot()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Pivot), new FrameworkPropertyMetadata(typeof(Pivot)));
@@ -134,6 +146,7 @@ namespace Digimezzo.WPFControls
             this.contentPanel = (Grid)GetTemplateChild("contentPanel");
             this.mainContent = (ContentPresenter)GetTemplateChild("PART_SelectedContentHost");
             this.paintArea = (Shape)GetTemplateChild("PART_PaintArea");
+            this.effect = new FeatheringEffect() { FeatheringRadius = this.FeatheringRadius };
 
             if (this.contentPanel != null)
             {
@@ -182,6 +195,17 @@ namespace Digimezzo.WPFControls
 
         private void DoSlideAnimation()
         {
+            // When the first time we show the content, do not apply the effect to prevent side-effects.
+            if (this.isFirstShow)
+            {
+                this.isFirstShow = false;
+            }
+            else if (this.FeatheringRadius > 0.0)
+            {
+                this.effect.TexWidth = ActualWidth;
+                this.Effect = effect;
+            }
+
             try
             {
                 if (this.paintArea != null && this.mainContent != null)
@@ -196,14 +220,28 @@ namespace Digimezzo.WPFControls
 
                     if (previous > current)
                     {
-                        newContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(-this.ActualWidth, 0, this.EasingAmplitude, this.SlideDuration));
-                        oldContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(0, this.ActualWidth, this.EasingAmplitude, this.SlideDuration, (s, e) => this.paintArea.Visibility = Visibility.Hidden));
+                        newContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(-this.ActualWidth, 0, this.EasingAmplitude, this.SlideDuration, (s, e) =>
+                        {
+                            this.Effect = null;
+                        }));
+                        oldContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(0, this.ActualWidth, this.EasingAmplitude, this.SlideDuration, (s, e) =>
+                        {
+                            this.paintArea.Visibility = Visibility.Hidden;
+                            this.Effect = null;
+                        }));
 
                     }
                     else
                     {
-                        newContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(this.ActualWidth, 0, this.EasingAmplitude, this.SlideDuration));
-                        oldContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(0, -this.ActualWidth, this.EasingAmplitude, this.SlideDuration, (s, e) => this.paintArea.Visibility = Visibility.Hidden));
+                        newContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(this.ActualWidth, 0, this.EasingAmplitude, this.SlideDuration, (s, e) =>
+                        {
+                            this.Effect = null;
+                        }));
+                        oldContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(0, -this.ActualWidth, this.EasingAmplitude, this.SlideDuration, (s, e) =>
+                        {
+                            this.paintArea.Visibility = Visibility.Hidden;
+                            this.Effect = null;
+                        }));
                     }
 
                     previous = current;

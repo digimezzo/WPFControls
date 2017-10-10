@@ -8,7 +8,7 @@
         Title="PivotTest" Height="300" Width="300">
     <DockPanel>
         <controls:PageIndicator DockPanel.Dock="Bottom" ItemSize="8" ItemSpacing="4" ItemFill="LightGray" SelectedItemFill="Green" Margin="10" NumberOfItems="3" ActiveItem="{Binding SelectedIndex,ElementName=mypivot}"/>
-        <controls:Pivot x:Name="mypivot" IndicatorHeight="2" IndicatorBackground="Red" HeaderBackground="Gray" Elevation="4" ElevationBackground="Blue" DisableTabKey="True" AnimationType="Fade">
+        <controls:Pivot x:Name="mypivot" IndicatorHeight="2" IndicatorBackground="Red" HeaderBackground="Gray" Elevation="4" ElevationBackground="Blue" DisableTabKey="True" AnimationType="Slide" FeatheringRadius="24">
             <controls:PivotItem Header="Item1" Foreground="LightGray" Padding="10,5,10,5" SelectedForeground="Black" HeaderFontSize="24" SelectedFontWeight="Bold">
                 <TextBlock Foreground="Black">Content 1</TextBlock>
             </controls:PivotItem>
