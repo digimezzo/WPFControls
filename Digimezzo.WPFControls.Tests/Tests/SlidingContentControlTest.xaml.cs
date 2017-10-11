@@ -38,8 +38,8 @@ namespace Digimezzo.WPFControls.Tests.Tests
             ContentControl.SlideDirection = Enums.SlideDirection.LeftToRight;
             ContentControl.EasingAmplitude = 0;
             ContentControl.Duration = 1.0;
-            ContentControl.UseSoftSlide = true;
-            ContentControl.SoftSlideDuration = 1;
+            ContentControl.SlideFadeIn = true;
+            ContentControl.SlideFadeInDuration = 1;
             ContentControl.Content = border;
         }
     }

@@ -126,23 +126,23 @@ namespace Digimezzo.WPFControls
         public static DependencyProperty FeatheringRadiusProperty =
             DependencyProperty.Register(nameof(FeatheringRadius), typeof(double), typeof(Pivot), new PropertyMetadata(0.0));
 
-        public bool UseSoftSlide
+        public bool SlideFadeIn
         {
-            get { return (bool)GetValue(UseSoftSlideProperty); }
-            set { SetValue(UseSoftSlideProperty, value); }
+            get { return (bool)GetValue(SlideFadeInProperty); }
+            set { SetValue(SlideFadeInProperty, value); }
         }
 
-        public static readonly DependencyProperty UseSoftSlideProperty =
-            DependencyProperty.Register(nameof(UseSoftSlide), typeof(bool), typeof(Pivot), new PropertyMetadata(false));
+        public static readonly DependencyProperty SlideFadeInProperty =
+            DependencyProperty.Register(nameof(SlideFadeIn), typeof(bool), typeof(Pivot), new PropertyMetadata(false));
 
-        public double SoftSlideDuration
+        public double SlideFadeInDuration
         {
-            get { return Convert.ToDouble(GetValue(SoftSlideDurationProperty)); }
-            set { SetValue(SoftSlideDurationProperty, value); }
+            get { return Convert.ToDouble(GetValue(SlideFadeInDurationProperty)); }
+            set { SetValue(SlideFadeInDurationProperty, value); }
         }
 
-        public static readonly DependencyProperty SoftSlideDurationProperty =
-          DependencyProperty.Register(nameof(SoftSlideDuration), typeof(double), typeof(Pivot), new PropertyMetadata(0.5));
+        public static readonly DependencyProperty SlideFadeInDurationProperty =
+          DependencyProperty.Register(nameof(SlideFadeInDuration), typeof(double), typeof(Pivot), new PropertyMetadata(0.5));
 
         static Pivot()
         {
@@ -259,10 +259,10 @@ namespace Digimezzo.WPFControls
 
                 previous = current;
 
-                if (this.UseSoftSlide)
+                if (this.SlideFadeIn)
                 {
-                    this.mainContent.BeginAnimation(OpacityProperty, AnimationUtils.CreateFadeAnimation(0, 1, this.SoftSlideDuration));
-                    this.paintArea.BeginAnimation(OpacityProperty, AnimationUtils.CreateFadeAnimation(1, 0, this.SoftSlideDuration));
+                    this.mainContent.BeginAnimation(OpacityProperty, AnimationUtils.CreateFadeAnimation(0, 1, this.SlideFadeInDuration));
+                    this.paintArea.BeginAnimation(OpacityProperty, AnimationUtils.CreateFadeAnimation(1, 0, this.SlideFadeInDuration));
                 }
             }
         }
