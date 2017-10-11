@@ -11,23 +11,10 @@ namespace Digimezzo.WPFControls
 {
     public class SlidingContentControl : ContentControl
     {
-        #region Variables
         private ContentPresenter mainContent;
         private Shape paintArea;
         private FeatheringEffect effect;
-        private bool isFirstShow = true;
-        #endregion
-
-        #region Properties
-        public ContentPresenter MainContent
-        {
-            get { return this.mainContent; }
-        }
-
-        public Shape PaintArea
-        {
-            get { return this.paintArea; }
-        }
+        private bool isFirstEffectDisplay = true;
 
         public SlideDirection SlideDirection
         {
@@ -35,68 +22,59 @@ namespace Digimezzo.WPFControls
             set { SetValue(SlideDirectionProperty, value); }
         }
 
+        public static readonly DependencyProperty SlideDirectionProperty =
+            DependencyProperty.Register(nameof(SlideDirection), typeof(SlideDirection), typeof(SlidingContentControl), new PropertyMetadata(Enums.SlideDirection.RightToLeft));
+
         public double EasingAmplitude
         {
             get { return Convert.ToDouble(GetValue(EasingAmplitudeProperty)); }
             set { SetValue(EasingAmplitudeProperty, value); }
         }
 
-        public double SlideDuration
+        public static readonly DependencyProperty EasingAmplitudeProperty =
+            DependencyProperty.Register(nameof(EasingAmplitude), typeof(double), typeof(SlidingContentControl), new PropertyMetadata(0.0));
+
+        public double Duration
         {
-            get { return Convert.ToDouble(GetValue(SlideDurationProperty)); }
-            set { SetValue(SlideDurationProperty, value); }
+            get { return Convert.ToDouble(GetValue(DurationProperty)); }
+            set { SetValue(DurationProperty, value); }
         }
 
-        public double FadeOutDuration
-        {
-            get { return Convert.ToDouble(GetValue(FadeOutDurationProperty)); }
-            set { SetValue(FadeOutDurationProperty, value); }
-        }
-
-        public double FadeInDuration
-        {
-            get { return Convert.ToDouble(GetValue(FadeInDurationProperty)); }
-            set { SetValue(FadeInDurationProperty, value); }
-        }
-
-        public bool FadeOnSlide
-        {
-            get { return (bool)GetValue(FadeOnSlideProperty); }
-            set { SetValue(FadeOnSlideProperty, value); }
-        }
+        public static readonly DependencyProperty DurationProperty =
+           DependencyProperty.Register(nameof(Duration), typeof(double), typeof(SlidingContentControl), new PropertyMetadata(0.5));
 
         public double FeatheringRadius
         {
             get => (double)GetValue(FeatheringRadiusProperty);
             set => SetValue(FeatheringRadiusProperty, value);
         }
-        #endregion
 
-        #region Dependency Properties
-        public static readonly DependencyProperty SlideDirectionProperty = DependencyProperty.Register("SlideDirection", 
-            typeof(SlideDirection), typeof(SlidingContentControl), new PropertyMetadata(Enums.SlideDirection.RightToLeft));
-        public static readonly DependencyProperty EasingAmplitudeProperty = DependencyProperty.Register("EasingAmplitude", 
-            typeof(double), typeof(SlidingContentControl), new PropertyMetadata(0.0));
-        public static readonly DependencyProperty SlideDurationProperty = DependencyProperty.Register("SlideDuration", 
-            typeof(double), typeof(SlidingContentControl), new PropertyMetadata(0.5));
-        public static readonly DependencyProperty FadeOutDurationProperty = DependencyProperty.Register("FadeOutDuration", 
-            typeof(double), typeof(SlidingContentControl), new PropertyMetadata(0.3));
-        public static readonly DependencyProperty FadeInDurationProperty = DependencyProperty.Register("FadeInDuration", 
-            typeof(double), typeof(SlidingContentControl), new PropertyMetadata(0.7));
-        public static readonly DependencyProperty FadeOnSlideProperty = DependencyProperty.Register("FadeOnSlide", 
-            typeof(bool), typeof(SlidingContentControl), new PropertyMetadata(false));
-        public static DependencyProperty FeatheringRadiusProperty = DependencyProperty.Register("FeatheringRadius",
-           typeof(double), typeof(SlidingContentControl), new PropertyMetadata(0.0));
-        #endregion
+        public static DependencyProperty FeatheringRadiusProperty =
+            DependencyProperty.Register(nameof(FeatheringRadius), typeof(double), typeof(SlidingContentControl), new PropertyMetadata(0.0));
 
-        #region Construction
+        public bool UseSoftSlide
+        {
+            get { return (bool)GetValue(UseSoftSlideProperty); }
+            set { SetValue(UseSoftSlideProperty, value); }
+        }
+
+        public static readonly DependencyProperty UseSoftSlideProperty =
+            DependencyProperty.Register(nameof(UseSoftSlide), typeof(bool), typeof(SlidingContentControl), new PropertyMetadata(false));
+
+        public double SoftSlideDuration
+        {
+            get { return Convert.ToDouble(GetValue(SoftSlideDurationProperty)); }
+            set { SetValue(SoftSlideDurationProperty, value); }
+        }
+
+        public static readonly DependencyProperty SoftSlideDurationProperty =
+          DependencyProperty.Register(nameof(SoftSlideDuration), typeof(double), typeof(SlidingContentControl), new PropertyMetadata(0.5));
+
         static SlidingContentControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SlidingContentControl), new FrameworkPropertyMetadata(typeof(SlidingContentControl)));
         }
-        #endregion
 
-        #region Public
         public override void OnApplyTemplate()
         {
             this.mainContent = (ContentPresenter)GetTemplateChild("PART_MainContent");
@@ -105,91 +83,93 @@ namespace Digimezzo.WPFControls
 
             base.OnApplyTemplate();
         }
-        #endregion
 
-        #region Protected
         protected override void OnContentChanged(object oldContent, object newContent)
         {
-            try
-            {
-                if (this.paintArea != null && this.mainContent != null)
-                {
-                    this.paintArea.Fill = AnimationUtils.CreateBrushFromVisual(this.mainContent, this.ActualWidth, this.ActualHeight);
-                    this.BeginAnimateContentReplacement();
-                }
-                base.OnContentChanged(oldContent, newContent);
-
-            }
-            catch (Exception)
-            {
-            }
+            this.DoSlideAnimation();
+            base.OnContentChanged(oldContent, newContent);
         }
 
-        protected virtual void BeginAnimateContentReplacement()
+        private void ApplyEffect()
         {
-            // When the first time we show the content, do not apply the effect to prevent side-effects.
-            if (this.isFirstShow)
+            // The first time we show the content, don't apply the effect. This prevents side-effects.
+            if (this.isFirstEffectDisplay)
             {
-                this.isFirstShow = false;
+                this.isFirstEffectDisplay = false;
             }
-            else if(this.FeatheringRadius > 0.0)
+            else if (this.FeatheringRadius > 0.0)
             {
+                // Only apply the effect when FeatheringRadius is specified.
                 this.effect.TexWidth = ActualWidth;
                 this.Effect = effect;
             }
+        }
 
-            var newContentTransform = new TranslateTransform();
-            var oldContentTransform = new TranslateTransform();
-            this.paintArea.RenderTransform = oldContentTransform;
-            this.mainContent.RenderTransform = newContentTransform;
-            this.paintArea.Visibility = Visibility.Visible;
+        private void ClearEffect()
+        {
+            this.Effect = null;
+        }
 
-            switch (this.SlideDirection)
+        private void DoSlideAnimation()
+        {
+            this.ApplyEffect();
+
+            if (this.paintArea != null && this.mainContent != null && this.ActualWidth > 0 &&  this.ActualHeight > 0)
             {
-                case SlideDirection.LeftToRight:
-                    newContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(-this.ActualWidth, 0, this.EasingAmplitude, this.SlideDuration));
-                    oldContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(0, this.ActualWidth, this.EasingAmplitude, this.SlideDuration,
-                        (s, e) =>
-                        {
-                            this.PaintArea.Visibility = Visibility.Hidden;
-                            this.Effect = null;
-                        }));
-                    break;
-                case SlideDirection.RightToLeft:
-                    newContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(this.ActualWidth, 0, this.EasingAmplitude, this.SlideDuration));
-                    oldContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(0, -this.ActualWidth, this.EasingAmplitude, this.SlideDuration,
-                       (s, e) =>
-                       {
-                           this.PaintArea.Visibility = Visibility.Hidden;
-                           this.Effect = null;
-                       }));
-                    break;
-                case SlideDirection.UpToDown:
-                    newContentTransform.BeginAnimation(TranslateTransform.YProperty, AnimationUtils.CreateSlideAnimation(-this.ActualHeight, 0, this.EasingAmplitude, this.SlideDuration));
-                    oldContentTransform.BeginAnimation(TranslateTransform.YProperty, AnimationUtils.CreateSlideAnimation(0, this.ActualHeight, this.EasingAmplitude, this.SlideDuration,
-                        (s, e) =>
-                        {
-                            this.PaintArea.Visibility = Visibility.Hidden;
-                            this.Effect = null;
-                        }));
-                    break;
-                case SlideDirection.DownToUp:
-                    newContentTransform.BeginAnimation(TranslateTransform.YProperty, AnimationUtils.CreateSlideAnimation(this.ActualHeight, 0, this.EasingAmplitude, this.SlideDuration));
-                    oldContentTransform.BeginAnimation(TranslateTransform.YProperty, AnimationUtils.CreateSlideAnimation(0, -this.ActualHeight, this.EasingAmplitude, this.SlideDuration,
-                        (s, e) =>
-                        {
-                            this.PaintArea.Visibility = Visibility.Hidden;
-                            this.Effect = null;
-                        }));
-                    break;
-            }
+                this.paintArea.Fill = AnimationUtils.CreateBrushFromVisual(this.mainContent, this.ActualWidth, this.ActualHeight);
 
-            if (this.FadeOnSlide)
-            {
-                this.mainContent.BeginAnimation(OpacityProperty, AnimationUtils.CreateFadeAnimation(0, 1, this.FadeInDuration));
-                this.paintArea.BeginAnimation(OpacityProperty, AnimationUtils.CreateFadeAnimation(1, 0, this.FadeOutDuration));
+                var newContentTransform = new TranslateTransform();
+                var oldContentTransform = new TranslateTransform();
+                this.paintArea.RenderTransform = oldContentTransform;
+                this.mainContent.RenderTransform = newContentTransform;
+                this.paintArea.Visibility = Visibility.Visible;
+
+                switch (this.SlideDirection)
+                {
+                    case SlideDirection.LeftToRight:
+                        newContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(-this.ActualWidth, 0, this.EasingAmplitude, this.Duration));
+                        oldContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(0, this.ActualWidth, this.EasingAmplitude, this.Duration,
+                            (s, e) =>
+                            {
+                                this.paintArea.Visibility = Visibility.Hidden;
+                                this.ClearEffect();
+                            }));
+                        break;
+                    case SlideDirection.RightToLeft:
+                        newContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(this.ActualWidth, 0, this.EasingAmplitude, this.Duration));
+                        oldContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(0, -this.ActualWidth, this.EasingAmplitude, this.Duration,
+                           (s, e) =>
+                           {
+                               this.paintArea.Visibility = Visibility.Hidden;
+                               this.ClearEffect();
+                           }));
+                        break;
+                    case SlideDirection.UpToDown:
+                        newContentTransform.BeginAnimation(TranslateTransform.YProperty, AnimationUtils.CreateSlideAnimation(-this.ActualHeight, 0, this.EasingAmplitude, this.Duration));
+                        oldContentTransform.BeginAnimation(TranslateTransform.YProperty, AnimationUtils.CreateSlideAnimation(0, this.ActualHeight, this.EasingAmplitude, this.Duration,
+                            (s, e) =>
+                            {
+                                this.paintArea.Visibility = Visibility.Hidden;
+                                this.ClearEffect();
+                            }));
+                        break;
+                    case SlideDirection.DownToUp:
+                        newContentTransform.BeginAnimation(TranslateTransform.YProperty, AnimationUtils.CreateSlideAnimation(this.ActualHeight, 0, this.EasingAmplitude, this.Duration));
+                        oldContentTransform.BeginAnimation(TranslateTransform.YProperty, AnimationUtils.CreateSlideAnimation(0, -this.ActualHeight, this.EasingAmplitude, this.Duration,
+                            (s, e) =>
+                            {
+                                this.paintArea.Visibility = Visibility.Hidden;
+                                this.ClearEffect();
+                            }));
+                        break;
+                }
+
+                if (this.UseSoftSlide)
+                {
+                    this.mainContent.BeginAnimation(OpacityProperty, AnimationUtils.CreateFadeAnimation(0, 1, this.SoftSlideDuration));
+                    this.paintArea.BeginAnimation(OpacityProperty, AnimationUtils.CreateFadeAnimation(1, 0, this.SoftSlideDuration));
+                }
             }
         }
-        #endregion
     }
 }

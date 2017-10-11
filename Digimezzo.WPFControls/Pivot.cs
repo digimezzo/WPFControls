@@ -24,7 +24,8 @@ namespace Digimezzo.WPFControls
         private int previous = -1;
         private int current = -1;
         private FeatheringEffect effect;
-        private bool isFirstShow = true;
+        private bool isFirstEffectDisplay = true;
+        private bool isFirstSelectionChange = true;
 
         public PivotAnimationType AnimationType
         {
@@ -62,23 +63,23 @@ namespace Digimezzo.WPFControls
         public static readonly DependencyProperty HeaderBackgroundProperty =
          DependencyProperty.Register(nameof(HeaderBackground), typeof(Brush), typeof(Pivot), new PropertyMetadata(Brushes.Transparent));
 
-        public double SlideDistance
+        public double FadeDistance
         {
-            get { return Convert.ToDouble(GetValue(SlideDistanceProperty)); }
-            set { SetValue(SlideDistanceProperty, value); }
+            get { return Convert.ToDouble(GetValue(FadeDistanceProperty)); }
+            set { SetValue(FadeDistanceProperty, value); }
         }
 
-        public static readonly DependencyProperty SlideDistanceProperty =
-         DependencyProperty.Register(nameof(SlideDistance), typeof(double), typeof(Pivot), new PropertyMetadata(20.0));
+        public static readonly DependencyProperty FadeDistanceProperty =
+         DependencyProperty.Register(nameof(FadeDistance), typeof(double), typeof(Pivot), new PropertyMetadata(20.0));
 
-        public double SlideDuration
+        public double Duration
         {
-            get { return Convert.ToDouble(GetValue(SlideDurationProperty)); }
-            set { SetValue(SlideDurationProperty, value); }
+            get { return Convert.ToDouble(GetValue(DurationProperty)); }
+            set { SetValue(DurationProperty, value); }
         }
 
-        public static readonly DependencyProperty SlideDurationProperty =
-           DependencyProperty.Register(nameof(SlideDuration), typeof(double), typeof(Pivot), new PropertyMetadata(0.5));
+        public static readonly DependencyProperty DurationProperty =
+           DependencyProperty.Register(nameof(Duration), typeof(double), typeof(Pivot), new PropertyMetadata(0.5));
 
         public double EasingAmplitude
         {
@@ -88,15 +89,6 @@ namespace Digimezzo.WPFControls
 
         public static readonly DependencyProperty EasingAmplitudeProperty =
             DependencyProperty.Register(nameof(EasingAmplitude), typeof(double), typeof(Pivot), new PropertyMetadata(0.0));
-
-        public double FadeDuration
-        {
-            get { return Convert.ToDouble(GetValue(FadeDurationProperty)); }
-            set { SetValue(FadeDurationProperty, value); }
-        }
-
-        public static readonly DependencyProperty FadeDurationProperty =
-           DependencyProperty.Register(nameof(FadeDuration), typeof(double), typeof(Pivot), new PropertyMetadata(0.5));
 
         public double IndicatorHeight
         {
@@ -134,32 +126,23 @@ namespace Digimezzo.WPFControls
         public static DependencyProperty FeatheringRadiusProperty =
             DependencyProperty.Register(nameof(FeatheringRadius), typeof(double), typeof(Pivot), new PropertyMetadata(0.0));
 
-        public double FadeOutDuration
+        public bool UseSoftSlide
         {
-            get { return Convert.ToDouble(GetValue(FadeOutDurationProperty)); }
-            set { SetValue(FadeOutDurationProperty, value); }
+            get { return (bool)GetValue(UseSoftSlideProperty); }
+            set { SetValue(UseSoftSlideProperty, value); }
         }
 
-        public static readonly DependencyProperty FadeOutDurationProperty =
-          DependencyProperty.Register(nameof(FadeOutDuration), typeof(double), typeof(Pivot), new PropertyMetadata(0.3));
+        public static readonly DependencyProperty UseSoftSlideProperty =
+            DependencyProperty.Register(nameof(UseSoftSlide), typeof(bool), typeof(Pivot), new PropertyMetadata(false));
 
-        public double FadeInDuration
+        public double SoftSlideDuration
         {
-            get { return Convert.ToDouble(GetValue(FadeInDurationProperty)); }
-            set { SetValue(FadeInDurationProperty, value); }
+            get { return Convert.ToDouble(GetValue(SoftSlideDurationProperty)); }
+            set { SetValue(SoftSlideDurationProperty, value); }
         }
 
-        public static readonly DependencyProperty FadeInDurationProperty =
-          DependencyProperty.Register(nameof(FadeInDuration), typeof(double), typeof(Pivot), new PropertyMetadata(0.7));
-
-        public bool FadeOnSlide
-        {
-            get { return (bool)GetValue(FadeOnSlideProperty); }
-            set { SetValue(FadeOnSlideProperty, value); }
-        }
-
-        public static readonly DependencyProperty FadeOnSlideProperty = 
-            DependencyProperty.Register(nameof(FadeOnSlide), typeof(bool), typeof(Pivot), new PropertyMetadata(false));
+        public static readonly DependencyProperty SoftSlideDurationProperty =
+          DependencyProperty.Register(nameof(SoftSlideDuration), typeof(double), typeof(Pivot), new PropertyMetadata(0.5));
 
         static Pivot()
         {
@@ -197,16 +180,16 @@ namespace Digimezzo.WPFControls
         private void DoFadeAnimation()
         {
             DoubleAnimation slideAnimation = null;
-            DoubleAnimation opacityAnimation = new DoubleAnimation() { From = 0.0, To = 1.0, Duration = TimeSpan.FromSeconds(this.FadeDuration) };
+            DoubleAnimation opacityAnimation = new DoubleAnimation() { From = 0.0, To = 1.0, Duration = TimeSpan.FromSeconds(this.Duration * 1.5) };
 
             if (previous > current)
             {
-                slideAnimation = new DoubleAnimation() { From = -this.SlideDistance, To = 0.0, Duration = TimeSpan.FromSeconds(this.SlideDuration) };
+                slideAnimation = new DoubleAnimation() { From = -this.FadeDistance, To = 0.0, Duration = TimeSpan.FromSeconds(this.Duration) };
 
             }
             else
             {
-                slideAnimation = new DoubleAnimation() { From = this.SlideDistance, To = 0.0, Duration = TimeSpan.FromSeconds(this.SlideDuration) };
+                slideAnimation = new DoubleAnimation() { From = this.FadeDistance, To = 0.0, Duration = TimeSpan.FromSeconds(this.Duration) };
             }
 
             TranslateTransform translateTransform1 = new TranslateTransform();
@@ -220,20 +203,31 @@ namespace Digimezzo.WPFControls
             previous = current;
         }
 
-        private void DoSlideAnimation()
+        private void ApplyEffect()
         {
-            // When the first time we show the content, do not apply the effect to prevent side-effects.
-            if (this.isFirstShow)
+            // The first time we show the content, don't apply the effect. This prevents side-effects.
+            if (this.isFirstEffectDisplay)
             {
-                this.isFirstShow = false;
+                this.isFirstEffectDisplay = false;
             }
             else if (this.FeatheringRadius > 0.0)
             {
+                // Only apply the effect when FeatheringRadius is specified.
                 this.effect.TexWidth = ActualWidth;
                 this.Effect = effect;
             }
+        }
 
-            if (this.paintArea != null && this.mainContent != null)
+        private void ClearEffect()
+        {
+            this.Effect = null;
+        }
+
+        private void DoSlideAnimation()
+        {
+            this.ApplyEffect();
+
+            if (this.paintArea != null && this.mainContent != null && this.ActualWidth > 0 && this.ActualHeight > 0)
             {
                 this.paintArea.Fill = AnimationUtils.CreateBrushFromVisual(this.mainContent, this.ActualWidth, this.ActualHeight);
 
@@ -245,41 +239,47 @@ namespace Digimezzo.WPFControls
 
                 if (previous > current)
                 {
-                    newContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(-this.ActualWidth, 0, this.EasingAmplitude, this.SlideDuration));
-                    oldContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(0, this.ActualWidth, this.EasingAmplitude, this.SlideDuration, (s, e) =>
+                    newContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(-this.ActualWidth, 0, this.EasingAmplitude, this.Duration));
+                    oldContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(0, this.ActualWidth, this.EasingAmplitude, this.Duration, (s, e) =>
                     {
                         this.paintArea.Visibility = Visibility.Hidden;
-                        this.Effect = null;
+                        this.ClearEffect();
                     }));
 
                 }
                 else
                 {
-                    newContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(this.ActualWidth, 0, this.EasingAmplitude, this.SlideDuration));
-                    oldContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(0, -this.ActualWidth, this.EasingAmplitude, this.SlideDuration, (s, e) =>
+                    newContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(this.ActualWidth, 0, this.EasingAmplitude, this.Duration));
+                    oldContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(0, -this.ActualWidth, this.EasingAmplitude, this.Duration, (s, e) =>
                     {
                         this.paintArea.Visibility = Visibility.Hidden;
-                        this.Effect = null;
+                        this.ClearEffect();
                     }));
                 }
 
                 previous = current;
 
-                if (this.FadeOnSlide)
+                if (this.UseSoftSlide)
                 {
-                    this.mainContent.BeginAnimation(OpacityProperty, AnimationUtils.CreateFadeAnimation(0, 1, this.FadeInDuration));
-                    this.paintArea.BeginAnimation(OpacityProperty, AnimationUtils.CreateFadeAnimation(1, 0, this.FadeOutDuration));
+                    this.mainContent.BeginAnimation(OpacityProperty, AnimationUtils.CreateFadeAnimation(0, 1, this.SoftSlideDuration));
+                    this.paintArea.BeginAnimation(OpacityProperty, AnimationUtils.CreateFadeAnimation(1, 0, this.SoftSlideDuration));
                 }
             }
         }
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // Don't animate the first time the control is displayed
+            if (this.isFirstSelectionChange)
+            {
+                this.isFirstSelectionChange = false;
+                return;
+            }
+
             current = (sender as TabControl).SelectedIndex;
 
             if (previous != current)
             {
-
                 if (this.AnimationType == PivotAnimationType.Fade)
                 {
                     this.DoFadeAnimation();
