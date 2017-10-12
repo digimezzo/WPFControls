@@ -14,7 +14,6 @@ namespace Digimezzo.WPFControls
         private ContentPresenter mainContent;
         private Shape paintArea;
         private FeatheringEffect effect;
-        private bool isFirstEffectDisplay = true;
 
         public SlideDirection SlideDirection
         {
@@ -92,12 +91,7 @@ namespace Digimezzo.WPFControls
 
         private void ApplyEffect()
         {
-            // The first time we show the content, don't apply the effect. This prevents side-effects.
-            if (this.isFirstEffectDisplay)
-            {
-                this.isFirstEffectDisplay = false;
-            }
-            else if (this.FeatheringRadius > 0.0)
+            if (this.FeatheringRadius > 0.0)
             {
                 // Only apply the effect when FeatheringRadius is specified.
                 this.effect.TexWidth = ActualWidth;
@@ -112,8 +106,6 @@ namespace Digimezzo.WPFControls
 
         private void DoSlideAnimation()
         {
-            this.ApplyEffect();
-
             if (this.paintArea != null && this.mainContent != null && this.ActualWidth > 0 &&  this.ActualHeight > 0)
             {
                 this.paintArea.Fill = AnimationUtils.CreateBrushFromVisual(this.mainContent, this.ActualWidth, this.ActualHeight);
@@ -123,6 +115,8 @@ namespace Digimezzo.WPFControls
                 this.paintArea.RenderTransform = oldContentTransform;
                 this.mainContent.RenderTransform = newContentTransform;
                 this.paintArea.Visibility = Visibility.Visible;
+
+                this.ApplyEffect();
 
                 switch (this.SlideDirection)
                 {

@@ -21,11 +21,9 @@ namespace Digimezzo.WPFControls
         private Grid contentPanel;
         private ContentPresenter mainContent;
         private Shape paintArea;
-        private int previous = -1;
-        private int current = -1;
+        private int previous;
+        private int current;
         private FeatheringEffect effect;
-        private bool isFirstEffectDisplay = true;
-        private bool isFirstSelectionChange = true;
 
         public PivotAnimationType AnimationType
         {
@@ -200,17 +198,11 @@ namespace Digimezzo.WPFControls
             fadeStoryboard.Begin(contentPanel);
             translateTransform1.BeginAnimation(TranslateTransform.XProperty, slideAnimation);
             contentPanel.RenderTransform = translateTransform1;
-            previous = current;
         }
 
         private void ApplyEffect()
         {
-            // The first time we show the content, don't apply the effect. This prevents side-effects.
-            if (this.isFirstEffectDisplay)
-            {
-                this.isFirstEffectDisplay = false;
-            }
-            else if (this.FeatheringRadius > 0.0)
+            if (this.FeatheringRadius > 0.0)
             {
                 // Only apply the effect when FeatheringRadius is specified.
                 this.effect.TexWidth = ActualWidth;
@@ -225,8 +217,6 @@ namespace Digimezzo.WPFControls
 
         private void DoSlideAnimation()
         {
-            this.ApplyEffect();
-
             if (this.paintArea != null && this.mainContent != null && this.ActualWidth > 0 && this.ActualHeight > 0)
             {
                 this.paintArea.Fill = AnimationUtils.CreateBrushFromVisual(this.mainContent, this.ActualWidth, this.ActualHeight);
@@ -236,6 +226,8 @@ namespace Digimezzo.WPFControls
                 this.paintArea.RenderTransform = oldContentTransform;
                 this.mainContent.RenderTransform = newContentTransform;
                 this.paintArea.Visibility = Visibility.Visible;
+
+                this.ApplyEffect();
 
                 if (previous > current)
                 {
@@ -257,8 +249,6 @@ namespace Digimezzo.WPFControls
                     }));
                 }
 
-                previous = current;
-
                 if (this.SlideFadeIn)
                 {
                     this.mainContent.BeginAnimation(OpacityProperty, AnimationUtils.CreateFadeAnimation(0, 1, this.SlideFadeInDuration));
@@ -269,13 +259,6 @@ namespace Digimezzo.WPFControls
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Don't animate the first time the control is displayed
-            if (this.isFirstSelectionChange)
-            {
-                this.isFirstSelectionChange = false;
-                return;
-            }
-
             current = (sender as TabControl).SelectedIndex;
 
             if (previous != current)
@@ -288,6 +271,8 @@ namespace Digimezzo.WPFControls
                 {
                     this.DoSlideAnimation();
                 }
+
+                previous = current;
             }
         }
     }
