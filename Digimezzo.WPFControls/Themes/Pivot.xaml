@@ -21,7 +21,7 @@
                             <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
                             <RowDefinition x:Name="RowDefinition1" Height="*"/>
                         </Grid.RowDefinitions>
-                        <StackPanel>
+                        <StackPanel Visibility="{TemplateBinding HeadersVisibility}">
                             <StackPanel x:Name="headerPanel" Orientation="Horizontal" Background="{TemplateBinding HeaderBackground}" Grid.Column="0" IsItemsHost="true" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
                             <Border x:Name="elevation" Height="{TemplateBinding Elevation}" Background="{TemplateBinding ElevationBackground}"/>
                         </StackPanel>
