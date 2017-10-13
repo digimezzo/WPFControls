@@ -313,6 +313,24 @@ namespace Digimezzo.WPFControls
         public static readonly DependencyProperty HeaderTextCaseProperty =
            DependencyProperty.Register(nameof(HeaderTextCase), typeof(PivotItemHeaderTextCase), typeof(PivotItem), new PropertyMetadata(PivotItemHeaderTextCase.Normal));
 
+        public FontWeight HeaderFontWeight
+        {
+            get { return (FontWeight)GetValue(HeaderFontWeightProperty); }
+            set { SetValue(HeaderFontWeightProperty, value); }
+        }
+
+        public static readonly DependencyProperty HeaderFontWeightProperty =
+           DependencyProperty.Register(nameof(HeaderFontWeight), typeof(FontWeight), typeof(PivotItem), new PropertyMetadata(null));
+
+        public FontWeight SelectedHeaderFontWeight
+        {
+            get { return (FontWeight)GetValue(SelectedHeaderFontWeightProperty); }
+            set { SetValue(SelectedHeaderFontWeightProperty, value); }
+        }
+
+        public static readonly DependencyProperty SelectedHeaderFontWeightProperty =
+             DependencyProperty.Register(nameof(SelectedHeaderFontWeight), typeof(FontWeight), typeof(PivotItem), new PropertyMetadata(FontWeights.Normal));
+
         public double HeaderFontSize
         {
             get { return (double)GetValue(HeaderFontSizeProperty); }
@@ -322,23 +340,23 @@ namespace Digimezzo.WPFControls
         public static readonly DependencyProperty HeaderFontSizeProperty =
            DependencyProperty.Register(nameof(HeaderFontSize), typeof(double), typeof(PivotItem), new PropertyMetadata(13.0));
 
-        public Brush SelectedForeground
+        public Brush HeaderForeground
         {
-            get { return (Brush)GetValue(SelectedForegroundProperty); }
-            set { SetValue(SelectedForegroundProperty, value); }
+            get { return (Brush)GetValue(HeaderForegroundProperty); }
+            set { SetValue(HeaderForegroundProperty, value); }
         }
 
-        public static readonly DependencyProperty SelectedForegroundProperty =
-           DependencyProperty.Register(nameof(SelectedForeground), typeof(Brush), typeof(PivotItem), new PropertyMetadata(Brushes.Black));
+        public static readonly DependencyProperty HeaderForegroundProperty =
+           DependencyProperty.Register(nameof(HeaderForeground), typeof(Brush), typeof(PivotItem), new PropertyMetadata(Brushes.Black));
 
-        public FontWeight SelectedFontWeight
+        public Brush SelectedHeaderForeground
         {
-            get { return (FontWeight)GetValue(SelectedFontWeightProperty); }
-            set { SetValue(SelectedFontWeightProperty, value); }
+            get { return (Brush)GetValue(SelectedHeaderForegroundProperty); }
+            set { SetValue(SelectedHeaderForegroundProperty, value); }
         }
 
-        public static readonly DependencyProperty SelectedFontWeightProperty =
-             DependencyProperty.Register(nameof(SelectedFontWeight), typeof(FontWeight), typeof(PivotItem), new PropertyMetadata(FontWeights.Normal));
+        public static readonly DependencyProperty SelectedHeaderForegroundProperty =
+           DependencyProperty.Register(nameof(SelectedHeaderForeground), typeof(Brush), typeof(PivotItem), new PropertyMetadata(Brushes.Black));
 
         static PivotItem()
         {

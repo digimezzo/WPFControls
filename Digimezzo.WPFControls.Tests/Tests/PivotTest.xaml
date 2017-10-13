@@ -9,13 +9,13 @@
     <DockPanel>
         <controls:PageIndicator DockPanel.Dock="Bottom" ItemSize="8" ItemSpacing="4" ItemFill="LightGray" SelectedItemFill="Green" Margin="10" NumberOfItems="3" ActiveItem="{Binding SelectedIndex,ElementName=mypivot}"/>
         <controls:Pivot x:Name="mypivot" IndicatorHeight="2" IndicatorBackground="Red" HeaderBackground="Gray" Elevation="4" ElevationBackground="Blue" DisableTabKey="True" AnimationType="Slide">
-            <controls:PivotItem Header="Item1" Foreground="LightGray" Padding="10,5,10,5" SelectedForeground="Black" HeaderFontSize="24" SelectedFontWeight="Bold">
+            <controls:PivotItem Header="Item1" HeaderForeground="LightGray" Padding="10,5,10,5" SelectedHeaderForeground="Black" HeaderFontSize="24" SelectedHeaderFontWeight="Bold">
                 <TextBlock Foreground="Black">Content 1</TextBlock>
             </controls:PivotItem>
-            <controls:PivotItem Header="Item2" Foreground="LightGray" Padding="10,5,10,5" SelectedForeground="Black" HeaderFontSize="24" SelectedFontWeight="Bold">
+            <controls:PivotItem Header="Item2" HeaderForeground="LightGray" Padding="10,5,10,5" SelectedHeaderForeground="Black" HeaderFontSize="24" SelectedHeaderFontWeight="Bold">
                 <TextBlock Foreground="Black">Content 2</TextBlock>
             </controls:PivotItem>
-            <controls:PivotItem Header="Item3" Foreground="LightGray" Padding="10,5,10,5" SelectedForeground="Black" HeaderFontSize="24" SelectedFontWeight="Bold">
+            <controls:PivotItem Header="Item3" HeaderForeground="LightGray" Padding="10,5,10,5" SelectedHeaderForeground="Black" HeaderFontSize="24" SelectedHeaderFontWeight="Bold">
                 <TextBlock Foreground="Black">Content 3</TextBlock>
             </controls:PivotItem>
         </controls:Pivot>
