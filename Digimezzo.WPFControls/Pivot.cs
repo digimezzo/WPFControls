@@ -32,14 +32,23 @@ namespace Digimezzo.WPFControls
         private int current;
         private FeatheringEffect effect;
 
-        public Visibility HeadersVisibility
+        public Thickness HeaderMargin
         {
-            get { return (Visibility)GetValue(HeadersVisibilityProperty); }
-            set { SetValue(HeadersVisibilityProperty, value); }
+            get { return (Thickness)GetValue(HeaderMarginProperty); }
+            set { SetValue(HeaderMarginProperty, value); }
         }
 
-        public static readonly DependencyProperty HeadersVisibilityProperty =
-           DependencyProperty.Register(nameof(HeadersVisibility), typeof(Visibility), typeof(Pivot), new PropertyMetadata(Visibility.Visible));
+        public static readonly DependencyProperty HeaderMarginProperty =
+           DependencyProperty.Register(nameof(HeaderMargin), typeof(Thickness), typeof(Pivot), new PropertyMetadata(null));
+
+        public Visibility HeaderVisibility
+        {
+            get { return (Visibility)GetValue(HeaderVisibilityProperty); }
+            set { SetValue(HeaderVisibilityProperty, value); }
+        }
+
+        public static readonly DependencyProperty HeaderVisibilityProperty =
+           DependencyProperty.Register(nameof(HeaderVisibility), typeof(Visibility), typeof(Pivot), new PropertyMetadata(Visibility.Visible));
 
         public PivotAnimationType AnimationType
         {
