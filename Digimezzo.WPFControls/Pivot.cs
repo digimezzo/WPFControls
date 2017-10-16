@@ -32,6 +32,15 @@ namespace Digimezzo.WPFControls
         private int current;
         private FeatheringEffect effect;
 
+        public Object CommonContent
+        {
+            get { return (Object)GetValue(CommonContentProperty); }
+            set { SetValue(CommonContentProperty, value); }
+        }
+
+        public static readonly DependencyProperty CommonContentProperty =
+           DependencyProperty.Register(nameof(CommonContent), typeof(Object), typeof(Pivot), new PropertyMetadata(null));
+
         public Thickness HeaderMargin
         {
             get { return (Thickness)GetValue(HeaderMarginProperty); }
