@@ -293,6 +293,11 @@ namespace Digimezzo.WPFControls
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (!ReferenceEquals(e.OriginalSource, this))
+            {
+                return;
+            }
+
             current = (sender as TabControl).SelectedIndex;
 
             if (previous != current)
