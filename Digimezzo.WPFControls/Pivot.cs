@@ -189,28 +189,27 @@ namespace Digimezzo.WPFControls
             this.mainContent = (ContentPresenter)GetTemplateChild("PART_SelectedContentHost");
             this.paintArea = (Shape)GetTemplateChild("PART_PaintArea");
             this.effect = new FeatheringEffect() { FeatheringRadius = this.FeatheringRadius };
-
-            if (this.contentPanel != null)
-            {
-                this.SelectionChanged += Pivot_SelectionChanged;
-            }
+        }
+        protected override void OnPreviewKeyDown(KeyEventArgs e)
+        {
+            base.OnPreviewKeyDown(e);
 
             if (this.DisableTabKey)
             {
-                this.PreviewKeyDown += Pivot_PreviewKeyDown;
-            }
-        }
-
-        private void Pivot_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (e.Key == Key.Tab)
-            {
-                e.Handled = true;
+                if (e.Key == Key.Tab)
+                {
+                    e.Handled = true;
+                }
             }
         }
 
         private void DoFadeAnimation()
         {
+            if(this.contentPanel == null)
+            {
+                return;
+            }
+
             DoubleAnimation slideAnimation = null;
             DoubleAnimation opacityAnimation = new DoubleAnimation() { From = 0.0, To = 1.0, Duration = TimeSpan.FromSeconds(this.Duration * 1.5) };
 
@@ -291,14 +290,16 @@ namespace Digimezzo.WPFControls
             }
         }
 
-        private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        protected override void OnSelectionChanged(SelectionChangedEventArgs e)
         {
+            base.OnSelectionChanged(e);
+
             if (!ReferenceEquals(e.OriginalSource, this))
             {
                 return;
             }
 
-            current = (sender as TabControl).SelectedIndex;
+            current = this.SelectedIndex;
 
             if (previous != current)
             {
@@ -384,11 +385,11 @@ namespace Digimezzo.WPFControls
             switch (HeaderTextCase)
             {
                 case PivotItemHeaderTextCase.UpperCase:
-                    if(this.Header is string)
+                    if (this.Header is string)
                     {
                         this.Header = this.Header.ToString().ToUpper();
                     }
-                    
+
                     break;
                 case PivotItemHeaderTextCase.LowerCase:
                     if (this.Header is string)
