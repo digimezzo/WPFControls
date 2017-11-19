@@ -14,7 +14,7 @@
                 <Path 
                   x:Name="Arrow"
                   Grid.Column="1"     
-                  Fill="{TemplateBinding Foreground}"
+                  Fill="{Binding Foreground,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}}"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
                   Data="M 0 0 L 4 4 L 8 0 Z"/>
