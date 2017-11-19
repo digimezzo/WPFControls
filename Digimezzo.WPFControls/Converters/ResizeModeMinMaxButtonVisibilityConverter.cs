@@ -30,9 +30,9 @@ namespace Digimezzo.WPFControls.Converters
                         }
                         return Visibility.Collapsed;
                     case ResizeMode.CanResize:
-                        break;
+                        return (windowPropValue ? Visibility.Visible : Visibility.Collapsed);
                     case ResizeMode.CanResizeWithGrip:
-                        break;
+                        return (windowPropValue ? Visibility.Visible : Visibility.Collapsed);
                     default:
                         return (windowPropValue ? Visibility.Visible : Visibility.Collapsed);
                 }
