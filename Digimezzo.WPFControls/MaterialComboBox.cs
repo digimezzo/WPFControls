@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
@@ -139,7 +140,7 @@ namespace Digimezzo.WPFControls
         {
             base.OnDropDownOpened(e);
             this.AnimateInputLine(true);
-            this.SetInputLabelForeground(true);
+            //this.SetInputLabelForeground(true);
         }
 
         protected override void OnLostFocus(RoutedEventArgs e)
