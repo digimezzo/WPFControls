@@ -65,9 +65,15 @@ namespace Digimezzo.WPFControls
             this.inputLineUnfocused.Opacity = this.opacity;
             this.inputLabel.Text = this.Label;
             this.inputLabel.Opacity = this.opacity;
-
+            this.inputLabel.MouseDown += InputLabel_MouseDown;
             this.panel.Margin = this.IsFloating ? new Thickness(0, this.GetSmallFontSize() + this.GetMargin(), 0, 0) : new Thickness(0);
             this.dropDownBorder.Background = this.Background == null ? Brushes.White : this.Background;
+        }
+
+        private void InputLabel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            // Workaround: InputLabel seems to block mouse click which prevents the drop down to open
+            this.IsDropDownOpen = true;
         }
 
         private double GetSmallFontSize()
