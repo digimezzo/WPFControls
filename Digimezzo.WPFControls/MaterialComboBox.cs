@@ -73,7 +73,7 @@ namespace Digimezzo.WPFControls
         private void InputLabel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             // Workaround: InputLabel seems to block mouse click which prevents the drop down to open
-            this.IsDropDownOpen = true;
+            this.IsDropDownOpen = !this.IsDropDownOpen;
         }
 
         private double GetSmallFontSize()
