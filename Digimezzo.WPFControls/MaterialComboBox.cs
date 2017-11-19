@@ -146,7 +146,6 @@ namespace Digimezzo.WPFControls
         {
             base.OnDropDownOpened(e);
             this.AnimateInputLine(true);
-            //this.SetInputLabelForeground(true);
         }
 
         protected override void OnLostFocus(RoutedEventArgs e)
