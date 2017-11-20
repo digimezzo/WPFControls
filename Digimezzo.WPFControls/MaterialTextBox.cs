@@ -25,6 +25,15 @@ namespace Digimezzo.WPFControls
         public static readonly DependencyProperty IsFloatingProperty =
             DependencyProperty.Register(nameof(IsFloating), typeof(bool), typeof(MaterialTextBox), new PropertyMetadata(false));
 
+        public bool UseLightCursor
+        {
+            get { return (bool)GetValue(UseLightCursorProperty); }
+            set { SetValue(UseLightCursorProperty, value); }
+        }
+
+        public static readonly DependencyProperty UseLightCursorProperty =
+            DependencyProperty.Register(nameof(UseLightCursor), typeof(bool), typeof(MaterialTextBox), new PropertyMetadata(false));
+
         public string Label
         {
             get { return (string)GetValue(LabelProperty); }
@@ -32,7 +41,17 @@ namespace Digimezzo.WPFControls
         }
 
         public static readonly DependencyProperty LabelProperty =
-            DependencyProperty.Register(nameof(Label), typeof(string), typeof(MaterialTextBox), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register(nameof(Label), typeof(string), typeof(MaterialTextBox), new PropertyMetadata(null, new PropertyChangedCallback(OnLabelPropertyChanged)));
+
+        private static void OnLabelPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            MaterialTextBox box = d as MaterialTextBox;
+
+            if (box != null && box.inputLabel != null)
+            {
+                box.inputLabel.Text = box.Label;
+            }
+        }
 
         public Brush Accent
         {
@@ -61,6 +80,15 @@ namespace Digimezzo.WPFControls
             this.inputLineUnfocused.Opacity = this.opacity;
 
             this.panel.Margin = this.IsFloating ? new Thickness(0, this.GetSmallFontSize() + this.GetMargin(), 0, 0) : new Thickness(0);
+
+            // This workaround changes the color of the cursor
+            if (this.UseLightCursor)
+            {
+                this.Background = new SolidColorBrush(Colors.Black); 
+            }
+            else {
+                this.Background = new SolidColorBrush(Colors.White);
+            }
         }
 
         protected override void OnTextChanged(TextChangedEventArgs e)
@@ -69,7 +97,7 @@ namespace Digimezzo.WPFControls
 
             if (this.IsFloating)
             {
-                this.AnimateInputLabel(this.Text.Length > 0);
+                this.AnimateInputLabel(isFocused | this.Text.Length > 0);
             }
             else
             {
@@ -82,16 +110,27 @@ namespace Digimezzo.WPFControls
             base.OnIsKeyboardFocusedChanged(e);
             bool isFocused = (bool)e.NewValue;
             this.AnimateInputLine(isFocused);
-            this.SetInputLabelForeground(isFocused & this.Text.Length > 0);
+            this.SetInputLabelForeground(isFocused);
+            this.AnimateInputLabel(isFocused | !isFocused & this.Text.Length > 0);
         }
 
         private void SetInputLabelText(bool mustClear)
         {
+            if (this.inputLabel == null)
+            {
+                return;
+            }
+
             this.inputLabel.Text = mustClear ? string.Empty : this.Label;
         }
 
         private void SetInputLabelForeground(bool mustFocus)
         {
+            if (this.inputLabel == null)
+            {
+                return;
+            }
+
             this.inputLabel.Foreground = mustFocus ? this.Accent : this.Foreground;
             this.inputLabel.Opacity = mustFocus ? 1.0 : this.opacity;
         }
@@ -108,9 +147,12 @@ namespace Digimezzo.WPFControls
 
         private void AnimateInputLabel(bool mustFloat)
         {
-            var duration = new TimeSpan(0, 0, 0, 0, 200);
+            if(this.inputLabel == null)
+            {
+                return;
+            }
 
-            this.SetInputLabelForeground(mustFloat);
+            var duration = new TimeSpan(0, 0, 0, 0, 200);
 
             double smallFontSize = 0;
             double margin = 2;
@@ -139,6 +181,11 @@ namespace Digimezzo.WPFControls
 
         private void AnimateInputLine(bool mustFocus)
         {
+            if (this.inputLine == null)
+            {
+                return;
+            }
+
             this.isFocused = mustFocus;
 
             var duration = new TimeSpan(0, 0, 0, 0, 200);

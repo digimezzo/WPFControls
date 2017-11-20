@@ -36,7 +36,17 @@ namespace Digimezzo.WPFControls
         }
 
         public static readonly DependencyProperty LabelProperty =
-            DependencyProperty.Register(nameof(Label), typeof(string), typeof(MaterialComboBox), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register(nameof(Label), typeof(string), typeof(MaterialComboBox), new PropertyMetadata(null, new PropertyChangedCallback(OnLabelPropertyChanged)));
+
+        private static void OnLabelPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            MaterialComboBox box = d as MaterialComboBox;
+
+            if (box != null && box.inputLabel != null)
+            {
+              box.inputLabel.Text = box.Label;
+            }
+        }
 
         public Brush Accent
         {
@@ -88,6 +98,11 @@ namespace Digimezzo.WPFControls
 
         private void SetInputLabelForeground(bool mustFocus)
         {
+            if(this.inputLabel == null)
+            {
+                return;
+            }
+
             this.inputLabel.Foreground = mustFocus ? this.Accent : this.Foreground;
             this.inputLabel.Opacity = mustFocus ? 1.0 : this.opacity;
         }
@@ -108,11 +123,21 @@ namespace Digimezzo.WPFControls
 
         private void SetInputLabelText(bool mustClear)
         {
+            if (this.inputLabel == null)
+            {
+                return;
+            }
+
             this.inputLabel.Text = mustClear ? string.Empty : this.Label;
         }
 
         private void AnimateInputLabel(bool mustFloat)
         {
+            if (this.inputLabel == null)
+            {
+                return;
+            }
+
             var duration = new TimeSpan(0, 0, 0, 0, 200);
 
             this.SetInputLabelForeground(mustFloat);
@@ -146,6 +171,8 @@ namespace Digimezzo.WPFControls
         {
             base.OnDropDownOpened(e);
             this.AnimateInputLine(true);
+            this.SetInputLabelForeground(true);
+            this.AnimateInputLabel(true);
         }
 
         protected override void OnLostFocus(RoutedEventArgs e)
@@ -161,6 +188,11 @@ namespace Digimezzo.WPFControls
 
         private void AnimateInputLine(bool mustFocus)
         {
+            if (this.inputLine == null)
+            {
+                return;
+            }
+
             this.isFocused = mustFocus;
 
             var duration = new TimeSpan(0, 0, 0, 0, 200);
