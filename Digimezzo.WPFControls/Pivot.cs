@@ -319,15 +319,6 @@ namespace Digimezzo.WPFControls
 
     public class PivotItem : TabItem
     {
-        public PivotItemHeaderTextCase HeaderTextCase
-        {
-            get { return (PivotItemHeaderTextCase)GetValue(HeaderTextCaseProperty); }
-            set { SetValue(HeaderTextCaseProperty, value); }
-        }
-
-        public static readonly DependencyProperty HeaderTextCaseProperty =
-           DependencyProperty.Register(nameof(HeaderTextCase), typeof(PivotItemHeaderTextCase), typeof(PivotItem), new PropertyMetadata(PivotItemHeaderTextCase.Normal));
-
         public FontWeight HeaderFontWeight
         {
             get { return (FontWeight)GetValue(HeaderFontWeightProperty); }
@@ -376,31 +367,6 @@ namespace Digimezzo.WPFControls
         static PivotItem()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(PivotItem), new FrameworkPropertyMetadata(typeof(PivotItem)));
-        }
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-            switch (HeaderTextCase)
-            {
-                case PivotItemHeaderTextCase.UpperCase:
-                    if (this.Header is string)
-                    {
-                        this.Header = this.Header.ToString().ToUpper();
-                    }
-
-                    break;
-                case PivotItemHeaderTextCase.LowerCase:
-                    if (this.Header is string)
-                    {
-                        this.Header = this.Header.ToString().ToLower();
-                    }
-                    break;
-                case PivotItemHeaderTextCase.Normal:
-                default:
-                    break;
-            }
         }
     }
 }
