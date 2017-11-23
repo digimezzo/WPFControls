@@ -131,6 +131,114 @@ namespace Digimezzo.WPFControls.Base
         public static readonly DependencyProperty CloseToolTipProperty = 
             DependencyProperty.Register(nameof(CloseToolTip), typeof(string), typeof(BorderlessWindowBase), new PropertyMetadata("Close"));
 
+        public Brush MinMaxBackground
+        {
+            get { return (Brush)GetValue(MinMaxBackgroundProperty); }
+            set { SetValue(MinMaxBackgroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty MinMaxBackgroundProperty =
+            DependencyProperty.Register(nameof(MinMaxBackground), typeof(Brush), typeof(BorderlessWindowBase), new PropertyMetadata(Brushes.Transparent));
+
+        public Brush MinMaxHoveredBackground
+        {
+            get { return (Brush)GetValue(MinMaxHoveredBackgroundProperty); }
+            set { SetValue(MinMaxHoveredBackgroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty MinMaxHoveredBackgroundProperty =
+            DependencyProperty.Register(nameof(MinMaxHoveredBackground), typeof(Brush), typeof(BorderlessWindowBase), new PropertyMetadata((SolidColorBrush)(new BrushConverter().ConvertFrom("#3665B3"))));
+
+        public Brush MinMaxPressedBackground
+        {
+            get { return (Brush)GetValue(MinMaxPressedBackgroundProperty); }
+            set { SetValue(MinMaxPressedBackgroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty MinMaxPressedBackgroundProperty =
+            DependencyProperty.Register(nameof(MinMaxPressedBackground), typeof(Brush), typeof(BorderlessWindowBase), new PropertyMetadata((SolidColorBrush)(new BrushConverter().ConvertFrom("#3D6099"))));
+
+        public Brush CloseBackground
+        {
+            get { return (Brush)GetValue(CloseBackgroundProperty); }
+            set { SetValue(CloseBackgroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty CloseBackgroundProperty =
+            DependencyProperty.Register(nameof(CloseBackground), typeof(Brush), typeof(BorderlessWindowBase), new PropertyMetadata((SolidColorBrush)(new BrushConverter().ConvertFrom("#C75050"))));
+
+        public Brush CloseHoveredBackground
+        {
+            get { return (Brush)GetValue(CloseHoveredBackgroundProperty); }
+            set { SetValue(CloseHoveredBackgroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty CloseHoveredBackgroundProperty =
+            DependencyProperty.Register(nameof(CloseHoveredBackground), typeof(Brush), typeof(BorderlessWindowBase), new PropertyMetadata((SolidColorBrush)(new BrushConverter().ConvertFrom("#E04343"))));
+
+        public Brush ClosePressedBackground
+        {
+            get { return (Brush)GetValue(ClosePressedBackgroundProperty); }
+            set { SetValue(ClosePressedBackgroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty ClosePressedBackgroundProperty =
+            DependencyProperty.Register(nameof(ClosePressedBackground), typeof(Brush), typeof(BorderlessWindowBase), new PropertyMetadata((SolidColorBrush)(new BrushConverter().ConvertFrom("#993D3D"))));
+
+        public Brush MinMaxForeground
+        {
+            get { return (Brush)GetValue(MinMaxForegroundProperty); }
+            set { SetValue(MinMaxForegroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty MinMaxForegroundProperty =
+            DependencyProperty.Register(nameof(MinMaxForeground), typeof(Brush), typeof(BorderlessWindowBase), new PropertyMetadata((SolidColorBrush)(new BrushConverter().ConvertFrom("#282828"))));
+
+        public Brush MinMaxHoveredForeground
+        {
+            get { return (Brush)GetValue(MinMaxHoveredForegroundProperty); }
+            set { SetValue(MinMaxHoveredForegroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty MinMaxHoveredForegroundProperty =
+            DependencyProperty.Register(nameof(MinMaxHoveredForeground), typeof(Brush), typeof(BorderlessWindowBase), new PropertyMetadata(Brushes.White));
+
+        public Brush MinMaxPressedForeground
+        {
+            get { return (Brush)GetValue(MinMaxPressedForegroundProperty); }
+            set { SetValue(MinMaxPressedForegroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty MinMaxPressedForegroundProperty =
+            DependencyProperty.Register(nameof(MinMaxPressedForeground), typeof(Brush), typeof(BorderlessWindowBase), new PropertyMetadata(Brushes.White));
+
+        public Brush CloseForeground
+        {
+            get { return (Brush)GetValue(CloseForegroundProperty); }
+            set { SetValue(CloseForegroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty CloseForegroundProperty =
+            DependencyProperty.Register(nameof(CloseForeground), typeof(Brush), typeof(BorderlessWindowBase), new PropertyMetadata(Brushes.White));
+
+        public Brush CloseHoveredForeground
+        {
+            get { return (Brush)GetValue(CloseHoveredForegroundProperty); }
+            set { SetValue(CloseHoveredForegroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty CloseHoveredForegroundProperty =
+            DependencyProperty.Register(nameof(CloseHoveredForeground), typeof(Brush), typeof(BorderlessWindowBase), new PropertyMetadata(Brushes.White));
+
+        public Brush ClosePressedForeground
+        {
+            get { return (Brush)GetValue(ClosePressedForegroundProperty); }
+            set { SetValue(ClosePressedForegroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty ClosePressedForegroundProperty =
+            DependencyProperty.Register(nameof(ClosePressedForeground), typeof(Brush), typeof(BorderlessWindowBase), new PropertyMetadata(Brushes.White));
+
         public bool ShowWindowControls
         {
             get { return Convert.ToBoolean(GetValue(ShowWindowControlsProperty)); }
