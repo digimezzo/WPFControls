@@ -2,7 +2,7 @@
 
 namespace Digimezzo.WPFControls.Base
 {
-    public class BindableBase : INotifyPropertyChanged
+    public class PropertyChangedBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -55,7 +55,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\BindableBase.cs" />
+    <Compile Include="Base\PropertyChangedBase.cs" />
     <Compile Include="Base\Constants.cs" />
     <Compile Include="Base\SliderBase.cs" />
     <Compile Include="Converters\AddValueConverter.cs" />

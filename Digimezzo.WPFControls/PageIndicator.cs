@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace Digimezzo.WPFControls
 {
-    public class PageIndicatorItem : BindableBase
+    public class PageIndicatorItem : PropertyChangedBase
     {
         private bool isActive;
 
