@@ -15,22 +15,25 @@ namespace Digimezzo.WPFControls
     [TemplateVisualState(Name = "Active", GroupName = "ActiveStates")]
     public class ProgressRing : Control
     {
-        #region Variables
         private List<Action> deferredActions = new List<Action>();
-        #endregion
-
-        #region Properties
+        
         public double MaxSideLength
         {
             get { return (double)GetValue(MaxSideLengthProperty); }
             private set { SetValue(MaxSideLengthProperty, value); }
         }
-
+       
+        public static readonly DependencyProperty MaxSideLengthProperty =
+            DependencyProperty.Register(nameof(MaxSideLength), typeof(double), typeof(ProgressRing), new PropertyMetadata(default(double)));
+       
         public double EllipseDiameter
         {
             get { return (double)GetValue(EllipseDiameterProperty); }
             private set { SetValue(EllipseDiameterProperty, value); }
         }
+
+        public static readonly DependencyProperty EllipseDiameterProperty =
+           DependencyProperty.Register(nameof(EllipseDiameter), typeof(double), typeof(ProgressRing), new PropertyMetadata(default(double)));
 
         public double EllipseDiameterScale
         {
@@ -38,11 +41,17 @@ namespace Digimezzo.WPFControls
             set { SetValue(EllipseDiameterScaleProperty, value); }
         }
 
+        public static readonly DependencyProperty EllipseDiameterScaleProperty =
+            DependencyProperty.Register(nameof(EllipseDiameterScale), typeof(double), typeof(ProgressRing), new PropertyMetadata(1D));
+
         public Thickness EllipseOffset
         {
             get { return (Thickness)GetValue(EllipseOffsetProperty); }
             private set { SetValue(EllipseOffsetProperty, value); }
         }
+
+        public static readonly DependencyProperty EllipseOffsetProperty =
+         DependencyProperty.Register(nameof(EllipseOffset), typeof(Thickness), typeof(ProgressRing), new PropertyMetadata(default(Thickness)));
 
         public double BindableWidth
         {
@@ -50,30 +59,27 @@ namespace Digimezzo.WPFControls
             private set { SetValue(BindableWidthProperty, value); }
         }
 
+        public static readonly DependencyProperty BindableWidthProperty =
+          DependencyProperty.Register(nameof(BindableWidth), typeof(double), typeof(ProgressRing), new PropertyMetadata(default(double), BindableWidthCallback));
+
         public bool IsActive
         {
             get { return (bool)GetValue(IsActiveProperty); }
             set { SetValue(IsActiveProperty, value); }
         }
 
+        public static readonly DependencyProperty IsActiveProperty =
+          DependencyProperty.Register(nameof(IsActive), typeof(bool), typeof(ProgressRing), new PropertyMetadata(true, IsActiveChanged));
+
         public bool IsLarge
         {
             get { return (bool)GetValue(IsLargeProperty); }
             set { SetValue(IsLargeProperty, value); }
         }
-        #endregion
 
-        #region Dependency Properties
-        public static readonly DependencyProperty BindableWidthProperty = DependencyProperty.Register("BindableWidth", typeof(double), typeof(ProgressRing), new PropertyMetadata(default(double), BindableWidthCallback));
-        public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register("IsActive", typeof(bool), typeof(ProgressRing), new PropertyMetadata(true, IsActiveChanged));
-        public static readonly DependencyProperty IsLargeProperty = DependencyProperty.Register("IsLarge", typeof(bool), typeof(ProgressRing), new PropertyMetadata(true, IsLargeChangedCallback));
-        public static readonly DependencyProperty MaxSideLengthProperty = DependencyProperty.Register("MaxSideLength", typeof(double), typeof(ProgressRing), new PropertyMetadata(default(double)));
-        public static readonly DependencyProperty EllipseDiameterProperty = DependencyProperty.Register("EllipseDiameter", typeof(double), typeof(ProgressRing), new PropertyMetadata(default(double)));
-        public static readonly DependencyProperty EllipseOffsetProperty = DependencyProperty.Register("EllipseOffset", typeof(Thickness), typeof(ProgressRing), new PropertyMetadata(default(Thickness)));
-        public static readonly DependencyProperty EllipseDiameterScaleProperty = DependencyProperty.Register("EllipseDiameterScale", typeof(double), typeof(ProgressRing), new PropertyMetadata(1D));
-        #endregion
+        public static readonly DependencyProperty IsLargeProperty =
+          DependencyProperty.Register(nameof(IsLarge), typeof(bool), typeof(ProgressRing), new PropertyMetadata(true, IsLargeChangedCallback));
 
-        #region Construction
         static ProgressRing()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ProgressRing), new FrameworkPropertyMetadata(typeof(ProgressRing)));
@@ -103,9 +109,7 @@ namespace Digimezzo.WPFControls
         {
             this.SizeChanged += OnSizeChanged;
         }
-        #endregion
-
-        #region Overrides
+  
         public override void OnApplyTemplate()
         {
             // Make sure the states get updated
@@ -123,9 +127,7 @@ namespace Digimezzo.WPFControls
 
             this.deferredActions = null;
         }
-        #endregion
-
-        #region Callbacks
+   
         private static void BindableWidthCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var ring = dependencyObject as ProgressRing;
@@ -157,9 +159,7 @@ namespace Digimezzo.WPFControls
 
             ring.UpdateLargeState();
         }
-        #endregion
-
-        #region Private
+  
         private void SetMaxSideLength(double width)
         {
             MaxSideLength = width <= 20 ? 20 : width;
@@ -220,9 +220,7 @@ namespace Digimezzo.WPFControls
                 action();
             }
         }
-        #endregion
 
-        #region Event Handlers
         private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
         {
             BindableWidth = ActualWidth;
@@ -235,6 +233,5 @@ namespace Digimezzo.WPFControls
 
             ring.UpdateActiveState();
         }
-        #endregion 
     }
 }

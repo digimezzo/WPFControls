@@ -10,25 +10,20 @@ namespace Digimezzo.WPFControls
 {
     public class Ripple : ContentControl
     {
-        #region Variables
         Ellipse ellipse;
-        #endregion
 
-        #region Dependency Properties
         public static readonly DependencyProperty RippleBackgroundProperty =
-            DependencyProperty.Register("RippleBackground", typeof(Brush), typeof(Ripple), new PropertyMetadata(Brushes.White));
+            DependencyProperty.Register(nameof(RippleBackground), typeof(Brush), typeof(Ripple), new PropertyMetadata(Brushes.White));
 
         public static readonly DependencyProperty DurationMillisecondsProperty =
-           DependencyProperty.Register("DurationMilliseconds", typeof(int), typeof(Ripple), new PropertyMetadata(500));
+           DependencyProperty.Register(nameof(DurationMilliseconds), typeof(int), typeof(Ripple), new PropertyMetadata(500));
 
         public static readonly DependencyProperty StartAtPointerProperty =
-            DependencyProperty.Register("StartAtPointer", typeof(bool), typeof(Ripple), new PropertyMetadata(true));
+            DependencyProperty.Register(nameof(StartAtPointer), typeof(bool), typeof(Ripple), new PropertyMetadata(true));
 
         public static readonly DependencyProperty ScaleProperty =
-           DependencyProperty.Register("Scale", typeof(double), typeof(Ripple), new PropertyMetadata(2.0));
-        #endregion
+           DependencyProperty.Register(nameof(Scale), typeof(double), typeof(Ripple), new PropertyMetadata(2.0));
 
-        #region Properties
         public Brush RippleBackground
         {
             get { return (Brush)GetValue(RippleBackgroundProperty); }
@@ -52,16 +47,12 @@ namespace Digimezzo.WPFControls
             get { return (double)GetValue(ScaleProperty); }
             set { SetValue(ScaleProperty, value); }
         }
-        #endregion
 
-        #region Construction
         static Ripple()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Ripple), new FrameworkPropertyMetadata(typeof(Ripple)));
         }
-        #endregion
 
-        #region Overrides
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -110,6 +101,5 @@ namespace Digimezzo.WPFControls
             base.OnPreviewMouseLeftButtonDown(e);
             this.DoRippple();
         }
-        #endregion
     }
 }

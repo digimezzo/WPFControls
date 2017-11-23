@@ -12,7 +12,6 @@ namespace Digimezzo.WPFControls
 {
     public class VirtualizingWrapPanel : VirtualizingPanel, IScrollInfo
     {
-        #region Variables
         private TranslateTransform trans = new TranslateTransform();
         private ScrollViewer owner;
         private bool canHScroll = false;
@@ -22,9 +21,7 @@ namespace Digimezzo.WPFControls
         private Point offset;
         private DoubleAnimation transAnimation;
         private IEasingFunction easingFunction;
-        #endregion
 
-        #region Construction
         public VirtualizingWrapPanel()
         {
             // For use in the IScrollInfo implementation
@@ -38,9 +35,7 @@ namespace Digimezzo.WPFControls
                 FillBehavior = FillBehavior.Stop
             };
         }
-        #endregion
-
-        #region Properties and Dependency Properties
+       
         public int ScrollOffset
         {
             get { return Convert.ToInt32(GetValue(ScrollOffsetProperty)); }
@@ -48,7 +43,7 @@ namespace Digimezzo.WPFControls
         }
 
         public static readonly DependencyProperty ScrollOffsetProperty = 
-            DependencyProperty.RegisterAttached("ScrollOffset", typeof(int), typeof(VirtualizingWrapPanel), new PropertyMetadata(0));
+            DependencyProperty.RegisterAttached(nameof(ScrollOffset), typeof(int), typeof(VirtualizingWrapPanel), new PropertyMetadata(0));
 
         public double ChildWidth
         {
@@ -57,7 +52,7 @@ namespace Digimezzo.WPFControls
         }
 
         public static readonly DependencyProperty ChildWidthProperty = 
-            DependencyProperty.RegisterAttached("ChildWidth", typeof(double), typeof(VirtualizingWrapPanel), new FrameworkPropertyMetadata(200.0, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+            DependencyProperty.RegisterAttached(nameof(ChildWidth), typeof(double), typeof(VirtualizingWrapPanel), new FrameworkPropertyMetadata(200.0, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
         public double ChildHeight
         {
@@ -66,7 +61,7 @@ namespace Digimezzo.WPFControls
         }
 
         public static readonly DependencyProperty ChildHeightProperty = 
-            DependencyProperty.RegisterAttached("ChildHeight", typeof(double), typeof(VirtualizingWrapPanel), new FrameworkPropertyMetadata(200.0, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+            DependencyProperty.RegisterAttached(nameof(ChildHeight), typeof(double), typeof(VirtualizingWrapPanel), new FrameworkPropertyMetadata(200.0, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
         public WrapPanelAlignment HorizontalContentAlignment
         {
@@ -75,10 +70,8 @@ namespace Digimezzo.WPFControls
         }
 
         public static readonly DependencyProperty HorizontalContentAlignmentProperty =
-            DependencyProperty.RegisterAttached("HorizontalContentAlignment", typeof(WrapPanelAlignment), typeof(VirtualizingWrapPanel), new FrameworkPropertyMetadata(WrapPanelAlignment.Left, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
-        #endregion
-
-        #region Overrides
+            DependencyProperty.RegisterAttached(nameof(HorizontalContentAlignment), typeof(WrapPanelAlignment), typeof(VirtualizingWrapPanel), new FrameworkPropertyMetadata(WrapPanelAlignment.Left, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+      
         /// <summary>
         /// Measure the children
         /// </summary>
@@ -219,9 +212,7 @@ namespace Digimezzo.WPFControls
             int row = index / childrenPerRow;
             SetVerticalOffset(row * ChildHeight);
         }
-        #endregion
-
-        #region Private
+     
         /// <summary>
         /// Revirtualize items that are no longer visible
         /// </summary>
@@ -251,9 +242,7 @@ namespace Digimezzo.WPFControls
                 }
             }
         }
-        #endregion
-
-        #region Layout specific code
+      
         // I've isolated the layout specific code to this region. If you want to do something other than tiling, this is
         // where you'll make your changes
 
@@ -378,9 +367,7 @@ namespace Digimezzo.WPFControls
 
             return itemCount;
         }
-        #endregion
-
-        #region IScrollInfo implementation
+      
         // See Ben Constable's series of posts at http://blogs.msdn.com/bencon/
         private void UpdateScrollInfo(Size availableSize)
         {
@@ -570,6 +557,5 @@ namespace Digimezzo.WPFControls
                 this.owner.InvalidateScrollInfo();
             }
         }
-        #endregion
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Digimezzo.WPFControls.Native;
 using System;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,23 +13,24 @@ namespace Digimezzo.WPFControls.Base
 {
     public abstract class BorderlessWindowBase : Window
     {
-        #region Variables
         protected Button minimizeButton;
-        protected Button maximizeButton;
+        protected Button maximizeButton;    
         protected Button closeButton;
         protected Border windowBorder;
         protected ContentPresenter windowCommands;
         protected WindowState previousWindowState; // Holds the previous WindowState
         protected Thickness previousBorderThickness; // Holds the previous BorderThickness
         private WindowChrome windowChrome;
-        #endregion
+        private bool oldTopMost;
 
-        #region Properties
         public double TitleBarHeight
         {
             get { return Convert.ToDouble(GetValue(TitleBarHeightProperty)); }
             set { SetValue(TitleBarHeightProperty, value); }
         }
+
+        public static readonly DependencyProperty TitleBarHeightProperty = 
+            DependencyProperty.Register(nameof(TitleBarHeight), typeof(double), typeof(BorderlessWindowBase), new PropertyMetadata(24.0));
 
         public bool IsMovable
         {
@@ -36,11 +38,17 @@ namespace Digimezzo.WPFControls.Base
             set { SetValue(IsMovableProperty, value); }
         }
 
+        public static readonly DependencyProperty IsMovableProperty = 
+            DependencyProperty.Register(nameof(IsMovable), typeof(bool), typeof(BorderlessWindowBase), new PropertyMetadata(true));
+
         public bool IsOverlayVisible
         {
             get { return Convert.ToBoolean(GetValue(IsOverlayVisibleProperty)); }
             set { SetValue(IsOverlayVisibleProperty, value); }
         }
+
+        public static readonly DependencyProperty IsOverlayVisibleProperty = 
+            DependencyProperty.Register(nameof(IsOverlayVisible), typeof(bool), typeof(BorderlessWindowBase), new PropertyMetadata(false));
 
         public Brush OverlayBackground
         {
@@ -48,11 +56,17 @@ namespace Digimezzo.WPFControls.Base
             set { SetValue(OverlayBackgroundProperty, value); }
         }
 
+        public static readonly DependencyProperty OverlayBackgroundProperty = 
+            DependencyProperty.Register(nameof(OverlayBackground), typeof(Brush), typeof(BorderlessWindowBase), new PropertyMetadata(null));
+
         public object WindowCommands
         {
             get { return (object)GetValue(WindowCommandsProperty); }
             set { SetValue(WindowCommandsProperty, value); }
         }
+
+        public static readonly DependencyProperty WindowCommandsProperty =
+           DependencyProperty.Register(nameof(WindowCommands), typeof(object), typeof(BorderlessWindowBase), new PropertyMetadata(null));
 
         public bool ShowMinButton
         {
@@ -60,11 +74,17 @@ namespace Digimezzo.WPFControls.Base
             set { SetValue(ShowMinButtonProperty, value); }
         }
 
+        public static readonly DependencyProperty ShowMinButtonProperty = 
+            DependencyProperty.Register(nameof(ShowMinButton), typeof(bool), typeof(BorderlessWindowBase), new PropertyMetadata(true));
+
         public bool ShowMaxRestoreButton
         {
             get { return Convert.ToBoolean(GetValue(ShowMaxRestoreButtonProperty)); }
             set { SetValue(ShowMaxRestoreButtonProperty, value); }
         }
+
+        public static readonly DependencyProperty ShowMaxRestoreButtonProperty = 
+            DependencyProperty.Register(nameof(ShowMaxRestoreButton), typeof(bool), typeof(BorderlessWindowBase), new PropertyMetadata(true));
 
         public bool ShowCloseButton
         {
@@ -72,11 +92,17 @@ namespace Digimezzo.WPFControls.Base
             set { SetValue(ShowCloseButtonProperty, value); }
         }
 
+        public static readonly DependencyProperty ShowCloseButtonProperty = 
+            DependencyProperty.Register(nameof(ShowCloseButton), typeof(bool), typeof(BorderlessWindowBase), new PropertyMetadata(true));
+
         public string MinimizeToolTip
         {
             get { return Convert.ToString(GetValue(MinimizeToolTipProperty)); }
             set { SetValue(MinimizeToolTipProperty, value); }
         }
+
+        public static readonly DependencyProperty MinimizeToolTipProperty = 
+            DependencyProperty.Register(nameof(MinimizeToolTip), typeof(string), typeof(BorderlessWindowBase), new PropertyMetadata("Minimize"));
 
         public string MaximizeToolTip
         {
@@ -84,11 +110,17 @@ namespace Digimezzo.WPFControls.Base
             set { SetValue(MaximizeToolTipProperty, value); }
         }
 
+        public static readonly DependencyProperty MaximizeToolTipProperty = 
+            DependencyProperty.Register(nameof(MaximizeToolTip), typeof(string), typeof(BorderlessWindowBase), new PropertyMetadata("Maximize"));
+
         public string RestoreToolTip
         {
             get { return Convert.ToString(GetValue(RestoreToolTipProperty)); }
             set { SetValue(RestoreToolTipProperty, value); }
         }
+
+        public static readonly DependencyProperty RestoreToolTipProperty = 
+            DependencyProperty.Register(nameof(RestoreToolTip), typeof(string), typeof(BorderlessWindowBase), new PropertyMetadata("Restore"));
 
         public string CloseToolTip
         {
@@ -96,30 +128,18 @@ namespace Digimezzo.WPFControls.Base
             set { SetValue(CloseToolTipProperty, value); }
         }
 
+        public static readonly DependencyProperty CloseToolTipProperty = 
+            DependencyProperty.Register(nameof(CloseToolTip), typeof(string), typeof(BorderlessWindowBase), new PropertyMetadata("Close"));
+
         public bool ShowWindowControls
         {
             get { return Convert.ToBoolean(GetValue(ShowWindowControlsProperty)); }
             set { SetValue(ShowWindowControlsProperty, value); }
         }
-        #endregion
 
-        #region Dependency Properties
-        public static readonly DependencyProperty TitleBarHeightProperty = DependencyProperty.Register("TitleBarHeight", typeof(double), typeof(BorderlessWindowBase), new PropertyMetadata(24.0));
-        public static readonly DependencyProperty IsMovableProperty = DependencyProperty.Register("IsMovable", typeof(bool), typeof(BorderlessWindowBase), new PropertyMetadata(true));
-        public static readonly DependencyProperty IsOverlayVisibleProperty = DependencyProperty.Register("IsOverlayVisible", typeof(bool), typeof(BorderlessWindowBase), new PropertyMetadata(false));
-        public static readonly DependencyProperty OverlayBackgroundProperty = DependencyProperty.Register("OverlayBackground", typeof(Brush), typeof(BorderlessWindowBase), new PropertyMetadata(null));
-        public static readonly DependencyProperty ShowMinButtonProperty = DependencyProperty.Register("ShowMinButton", typeof(bool), typeof(BorderlessWindowBase), new PropertyMetadata(true));
-        public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register("ShowMaxRestoreButton", typeof(bool), typeof(BorderlessWindowBase), new PropertyMetadata(true));
-        public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register("ShowCloseButton", typeof(bool), typeof(BorderlessWindowBase), new PropertyMetadata(true));
-        public static readonly DependencyProperty MinimizeToolTipProperty = DependencyProperty.Register("MinimizeToolTip", typeof(string), typeof(BorderlessWindowBase), new PropertyMetadata("Minimize", MinimizeToolTipChangedCallback));
-        public static readonly DependencyProperty MaximizeToolTipProperty = DependencyProperty.Register("MaximizeToolTip", typeof(string), typeof(BorderlessWindowBase), new PropertyMetadata("Maximize", MaximizeToolTipChangedCallback));
-        public static readonly DependencyProperty RestoreToolTipProperty = DependencyProperty.Register("RestoreToolTip", typeof(string), typeof(BorderlessWindowBase), new PropertyMetadata("Restore", RestoreToolTipChangedCallback));
-        public static readonly DependencyProperty CloseToolTipProperty = DependencyProperty.Register("CloseToolTip", typeof(string), typeof(BorderlessWindowBase), new PropertyMetadata("Close", CloseToolTipChangedCallback));
-        public static readonly DependencyProperty WindowCommandsProperty = DependencyProperty.Register("WindowCommands", typeof(object), typeof(BorderlessWindowBase), new PropertyMetadata(null));
-        public static readonly DependencyProperty ShowWindowControlsProperty = DependencyProperty.Register("ShowWindowControls", typeof(bool), typeof(BorderlessWindowBase), new PropertyMetadata(true));
-        #endregion
+        public static readonly DependencyProperty ShowWindowControlsProperty = 
+            DependencyProperty.Register(nameof(ShowWindowControls), typeof(bool), typeof(BorderlessWindowBase), new PropertyMetadata(true));
 
-        #region Overrides
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -156,9 +176,7 @@ namespace Digimezzo.WPFControls.Base
 
             this.InitializeWindow();
         }
-        #endregion
 
-        #region Public
         protected void InitializeWindow()
         {
             // Create the WindowChrome
@@ -260,9 +278,6 @@ namespace Digimezzo.WPFControls.Base
             }
         }
 
-        #endregion
-
-        #region Private
         private static ABEdge GetEdge(RECT rc)
         {
             ABEdge uEdge;
@@ -276,9 +291,7 @@ namespace Digimezzo.WPFControls.Base
                 uEdge = ABEdge.ABE_RIGHT;
             return uEdge;
         }
-        #endregion
 
-        #region Event Handlers
         protected void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {
             SystemCommands.MinimizeWindow(this);
@@ -341,45 +354,39 @@ namespace Digimezzo.WPFControls.Base
                 }
             }
         }
-        #endregion
 
-        #region Callbacks
-        private static void MinimizeToolTipChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            BorderlessWindowBase win = (BorderlessWindowBase)d;
-            win.MinimizeToolTipChanged(win, new EventArgs());
-        }
-
-        private static void MaximizeToolTipChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            BorderlessWindowBase win = (BorderlessWindowBase)d;
-            win.MaximizeToolTipChanged(win, new EventArgs());
-        }
-
-        private static void RestoreToolTipChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            BorderlessWindowBase win = (BorderlessWindowBase)d;
-            win.RestoreToolTipChanged(win, new EventArgs());
-        }
-
-        private static void CloseToolTipChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            BorderlessWindowBase win = (BorderlessWindowBase)d;
-            win.CloseToolTipChanged(win, new EventArgs());
-        }
-        #endregion
-
-        #region Events
-        public event EventHandler MinimizeToolTipChanged = delegate { };
-        public event EventHandler MaximizeToolTipChanged = delegate { };
-        public event EventHandler RestoreToolTipChanged = delegate { };
-        public event EventHandler CloseToolTipChanged = delegate { };
         public event EventHandler Restored = delegate { };
 
         public void OnRestored()
         {
                 this.Restored(this, new EventArgs());
         }
-        #endregion
+
+        public void ForceActivate()
+        {
+            // Prevent calling Activate() before Show() was called. Otherwise Activate() fails 
+            // with an exception: "Cannot call DragMove or Activate before a Window is shown".
+            if (!this.IsLoaded)
+            {
+                return;
+            }
+
+            this.oldTopMost = this.Topmost;
+
+            if (this.WindowState == WindowState.Minimized)
+            {
+                this.WindowState = WindowState.Normal;
+            }
+
+            this.Activate();
+            this.Topmost = true;
+            this.Deactivate();
+        }
+
+        private async void Deactivate()
+        {
+            await Task.Delay(500);
+            Application.Current.Dispatcher.Invoke(() => this.Topmost = this.oldTopMost);
+        }
     }
 }

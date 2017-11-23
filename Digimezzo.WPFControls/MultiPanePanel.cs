@@ -8,7 +8,6 @@ namespace Digimezzo.WPFControls
 {
     public class MultiPanePanel : Control
     {
-        #region Variables
         private Border leftPane;
         private Border middlePane;
         private Border rightPane;
@@ -23,14 +22,15 @@ namespace Digimezzo.WPFControls
         private bool isSeparatorRightMouseButtonDown;
 
         private Timer resizeContentTimer = new Timer();
-        #endregion
 
-        #region Properties
         public bool IsRightPaneCollapsed
         {
             get { return Convert.ToBoolean(GetValue(IsRightPaneCollapsedProperty)); }
             set { SetValue(IsRightPaneCollapsedProperty, value); }
         }
+
+        public static readonly DependencyProperty IsRightPaneCollapsedProperty = 
+            DependencyProperty.Register(nameof(IsRightPaneCollapsed), typeof(bool), typeof(MultiPanePanel), new PropertyMetadata(false));
 
         public bool CanResize
         {
@@ -38,11 +38,17 @@ namespace Digimezzo.WPFControls
             set { SetValue(CanResizeProperty, value); }
         }
 
+        public static readonly DependencyProperty CanResizeProperty =
+            DependencyProperty.Register(nameof(CanResize), typeof(bool), typeof(MultiPanePanel), new PropertyMetadata(true));
+
         public int SeparatorMarginTop
         {
             get { return Convert.ToInt32(GetValue(SeparatorMarginTopProperty)); }
             set { SetValue(SeparatorMarginTopProperty, value); }
         }
+
+        public static readonly DependencyProperty SeparatorMarginTopProperty =
+           DependencyProperty.Register(nameof(SeparatorMarginTop), typeof(int), typeof(MultiPanePanel), new PropertyMetadata(0));
 
         public int SeparatorMarginBottom
         {
@@ -50,17 +56,26 @@ namespace Digimezzo.WPFControls
             set { SetValue(SeparatorMarginBottomProperty, value); }
         }
 
+        public static readonly DependencyProperty SeparatorMarginBottomProperty =
+            DependencyProperty.Register(nameof(SeparatorMarginBottom), typeof(int), typeof(MultiPanePanel), new PropertyMetadata(0));
+
         public int ContentResizeDelay
         {
-            get { return Convert.ToInt32(GetValue(ResizeContentDelayProperty)); }
-            set { SetValue(ResizeContentDelayProperty, value); }
+            get { return Convert.ToInt32(GetValue(ContentResizeDelayProperty)); }
+            set { SetValue(ContentResizeDelayProperty, value); }
         }
 
+        public static readonly DependencyProperty ContentResizeDelayProperty =
+           DependencyProperty.Register(nameof(ContentResizeDelay), typeof(int), typeof(MultiPanePanel), new PropertyMetadata(0));
+        
         public double ResizeGripWidth
         {
             get { return Convert.ToDouble(GetValue(ResizeGripWidthProperty)); }
             set { SetValue(ResizeGripWidthProperty, value); }
         }
+
+        public static readonly DependencyProperty ResizeGripWidthProperty =
+            DependencyProperty.Register(nameof(ResizeGripWidth), typeof(object), typeof(MultiPanePanel), new PropertyMetadata(5.0));
 
         public double LeftPaneWidthPercent
         {
@@ -68,11 +83,17 @@ namespace Digimezzo.WPFControls
             set { SetValue(LeftPaneWidthPercentProperty, value); }
         }
 
+        public static readonly DependencyProperty LeftPaneWidthPercentProperty =
+            DependencyProperty.Register(nameof(LeftPaneWidthPercent), typeof(object), typeof(MultiPanePanel), new PropertyMetadata(33.0));
+
         public double LeftPaneMinimumWidth
         {
             get { return Convert.ToDouble(GetValue(LeftPaneMinimumWidthProperty)); }
             set { SetValue(LeftPaneMinimumWidthProperty, value); }
         }
+
+        public static readonly DependencyProperty LeftPaneMinimumWidthProperty =
+            DependencyProperty.Register(nameof(LeftPaneMinimumWidth), typeof(object), typeof(MultiPanePanel), new PropertyMetadata(0.0));
 
         public double RightPaneWidthPercent
         {
@@ -80,11 +101,17 @@ namespace Digimezzo.WPFControls
             set { SetValue(RightPaneWidthPercentProperty, value); }
         }
 
+        public static readonly DependencyProperty RightPaneWidthPercentProperty =
+           DependencyProperty.Register(nameof(RightPaneWidthPercent), typeof(object), typeof(MultiPanePanel), new PropertyMetadata(33.0));
+
         public double RightPaneMinimumWidth
         {
             get { return Convert.ToDouble(GetValue(RightPaneMinimumWidthProperty)); }
             set { SetValue(RightPaneMinimumWidthProperty, value); }
         }
+
+        public static readonly DependencyProperty RightPaneMinimumWidthProperty =
+           DependencyProperty.Register(nameof(RightPaneMinimumWidth), typeof(object), typeof(MultiPanePanel), new PropertyMetadata(0.0));
 
         public double MiddlePaneMinimumWidth
         {
@@ -92,11 +119,17 @@ namespace Digimezzo.WPFControls
             set { SetValue(MiddlePaneMinimumWidthProperty, value); }
         }
 
+        public static readonly DependencyProperty MiddlePaneMinimumWidthProperty =
+        DependencyProperty.Register(nameof(MiddlePaneMinimumWidth), typeof(object), typeof(MultiPanePanel), new PropertyMetadata(0.0));
+
         public object LeftPaneContent
         {
             get { return (object)GetValue(LeftPaneContentProperty); }
             set { SetValue(LeftPaneContentProperty, value); }
         }
+
+        public static readonly DependencyProperty LeftPaneContentProperty =
+           DependencyProperty.Register(nameof(LeftPaneContent), typeof(object), typeof(MultiPanePanel), new PropertyMetadata(null));
 
         public object MiddlePaneContent
         {
@@ -104,38 +137,23 @@ namespace Digimezzo.WPFControls
             set { SetValue(MiddlePaneContentProperty, value); }
         }
 
+        public static readonly DependencyProperty MiddlePaneContentProperty =
+           DependencyProperty.Register(nameof(MiddlePaneContent), typeof(object), typeof(MultiPanePanel), new PropertyMetadata(null));
+
         public object RightPaneContent
         {
             get { return (object)GetValue(RightPaneContentProperty); }
             set { SetValue(RightPaneContentProperty, value); }
         }
-        #endregion
 
-        #region Dependency Properties
-        public static readonly DependencyProperty IsRightPaneCollapsedProperty = DependencyProperty.Register("IsRightPaneCollapsed", typeof(bool), typeof(MultiPanePanel), new PropertyMetadata(false));
-        public static readonly DependencyProperty CanResizeProperty = DependencyProperty.Register("CanResize", typeof(bool), typeof(MultiPanePanel), new PropertyMetadata(true));
-        public static readonly DependencyProperty SeparatorMarginTopProperty = DependencyProperty.Register("SeparatorMarginTop", typeof(int), typeof(MultiPanePanel), new PropertyMetadata(0));
-        public static readonly DependencyProperty SeparatorMarginBottomProperty = DependencyProperty.Register("SeparatorMarginBottom", typeof(int), typeof(MultiPanePanel), new PropertyMetadata(0));
-        public static readonly DependencyProperty ResizeContentDelayProperty = DependencyProperty.Register("ResizeContentDelay", typeof(int), typeof(MultiPanePanel), new PropertyMetadata(0));
-        public static readonly DependencyProperty ResizeGripWidthProperty = DependencyProperty.Register("ResizeGripWidth", typeof(object), typeof(MultiPanePanel), new PropertyMetadata(5.0));
-        public static readonly DependencyProperty LeftPaneContentProperty = DependencyProperty.Register("LeftPaneContent", typeof(object), typeof(MultiPanePanel), new PropertyMetadata(null));
-        public static readonly DependencyProperty MiddlePaneContentProperty = DependencyProperty.Register("MiddlePaneContent", typeof(object), typeof(MultiPanePanel), new PropertyMetadata(null));
-        public static readonly DependencyProperty RightPaneContentProperty = DependencyProperty.Register("RightPaneContent", typeof(object), typeof(MultiPanePanel), new PropertyMetadata(null));
-        public static readonly DependencyProperty LeftPaneWidthPercentProperty = DependencyProperty.Register("LeftPaneWidthPercent", typeof(object), typeof(MultiPanePanel), new PropertyMetadata(33.0));
-        public static readonly DependencyProperty LeftPaneMinimumWidthProperty = DependencyProperty.Register("LeftPaneMinimumWidth", typeof(object), typeof(MultiPanePanel), new PropertyMetadata(0.0));
-        public static readonly DependencyProperty RightPaneWidthPercentProperty = DependencyProperty.Register("RightPaneWidthPercent", typeof(object), typeof(MultiPanePanel), new PropertyMetadata(33.0));
-        public static readonly DependencyProperty RightPaneMinimumWidthProperty = DependencyProperty.Register("RightPaneMinimumWidth", typeof(object), typeof(MultiPanePanel), new PropertyMetadata(0.0));
-        public static readonly DependencyProperty MiddlePaneMinimumWidthProperty = DependencyProperty.Register("MiddlePaneMinimumWidth", typeof(object), typeof(MultiPanePanel), new PropertyMetadata(0.0));
-        #endregion
-
-        #region Construction
+        public static readonly DependencyProperty RightPaneContentProperty =
+           DependencyProperty.Register(nameof(RightPaneContent), typeof(object), typeof(MultiPanePanel), new PropertyMetadata(null));
+      
         static MultiPanePanel()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MultiPanePanel), new FrameworkPropertyMetadata(typeof(MultiPanePanel)));
         }
-        #endregion
 
-        #region Overrides
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -182,9 +200,7 @@ namespace Digimezzo.WPFControls
             }
             this.resizeContentTimer.Elapsed += this.ResizeContentTimer_Elapsed;
         }
-        #endregion
 
-        #region Private
         private double GetTotalWidth()
         {
             return !this.IsRightPaneCollapsed ? this.ActualWidth - this.ResizeGripWidth * 2 : this.ActualWidth - this.ResizeGripWidth;
@@ -240,9 +256,7 @@ namespace Digimezzo.WPFControls
             this.middlePaneContent.Width = this.middlePane.ActualWidth;
             if (!this.IsRightPaneCollapsed) this.rightPaneContent.Width = this.rightPane.ActualWidth;
         }
-        #endregion
 
-        #region MultiPanePanel Event Handlers
         private void MultiPanePanel_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             this.ApplyPercentages();
@@ -296,9 +310,7 @@ namespace Digimezzo.WPFControls
             this.isSeparatorLeftMouseButtonDown = false;
             this.isSeparatorRightMouseButtonDown = false;
         }
-        #endregion
-
-        #region SeparatorLeft Event Handlers
+   
         private void PART_SeparatorLeft_MouseEnter(object sender, MouseEventArgs e)
         {
             if (this.CanResize) { this.separatorLeft.Cursor = Cursors.SizeWE; }
@@ -313,9 +325,7 @@ namespace Digimezzo.WPFControls
         {
             this.isSeparatorLeftMouseButtonDown = true;
         }
-        #endregion
 
-        #region SeparatorRight Event Handlers
         private void PART_SeparatorRight_MouseEnter(object sender, MouseEventArgs e)
         {
             if (this.CanResize && !this.IsRightPaneCollapsed) { this.separatorRight.Cursor = Cursors.SizeWE; }
@@ -330,6 +340,5 @@ namespace Digimezzo.WPFControls
         {
             if (!this.IsRightPaneCollapsed) this.isSeparatorRightMouseButtonDown = true;
         }
-        #endregion
     }
 }

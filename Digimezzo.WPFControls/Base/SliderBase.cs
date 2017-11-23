@@ -10,21 +10,21 @@ namespace Digimezzo.WPFControls.Base
 {
     public abstract class SliderBase : Control
     {
-        #region Variables
         protected Canvas sliderCanvas;
         protected Rectangle sliderTrack;
         protected Rectangle sliderBar;
         protected Button sliderButton;
         protected bool isCalculating;
         protected bool isDragging;
-        #endregion
 
-        #region Properties
         public bool ChangeValueWhileDragging
         {
             get { return Convert.ToBoolean(GetValue(ChangeValueWhileDraggingProperty)); }
             set { SetValue(ChangeValueWhileDraggingProperty, value); }
         }
+
+        public static readonly DependencyProperty ChangeValueWhileDraggingProperty = 
+            DependencyProperty.Register(nameof(ChangeValueWhileDragging), typeof(bool), typeof(SliderBase), new PropertyMetadata(false));
 
         public double Minimum
         {
@@ -32,17 +32,26 @@ namespace Digimezzo.WPFControls.Base
             set { SetValue(MinimumProperty, value); }
         }
 
+        public static readonly DependencyProperty MinimumProperty = 
+            DependencyProperty.Register(nameof(Minimum), typeof(double), typeof(SliderBase), new PropertyMetadata(0.0, IsMinMaxChangedCallback));
+
         public double Maximum
         {
             get { return Convert.ToDouble(GetValue(MaximumProperty)); }
             set { SetValue(MaximumProperty, value); }
         }
 
+        public static readonly DependencyProperty MaximumProperty = 
+            DependencyProperty.Register(nameof(Maximum), typeof(double), typeof(SliderBase), new PropertyMetadata(100.0, IsMinMaxChangedCallback));
+
         public double Value
         {
             get { return Convert.ToDouble(GetValue(ValueProperty)); }
             set { SetValue(ValueProperty, value); }
         }
+
+        public static readonly DependencyProperty ValueProperty = 
+            DependencyProperty.Register(nameof(Value), typeof(double), typeof(SliderBase), new PropertyMetadata(0.0, IsValueChangedCallback));
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public double Position
@@ -51,11 +60,17 @@ namespace Digimezzo.WPFControls.Base
             set { SetValue(PositionProperty, value); }
         }
 
+        public static readonly DependencyProperty PositionProperty =
+            DependencyProperty.Register(nameof(Position), typeof(double), typeof(SliderBase), new PropertyMetadata(0.0));
+
         public Brush TrackBackground
         {
             get { return (Brush)GetValue(TrackBackgroundProperty); }
             set { SetValue(TrackBackgroundProperty, value); }
         }
+
+        public static readonly DependencyProperty TrackBackgroundProperty = 
+            DependencyProperty.Register(nameof(TrackBackground), typeof(Brush), typeof(SliderBase), new PropertyMetadata(null));
 
         public Brush BarBackground
         {
@@ -63,34 +78,25 @@ namespace Digimezzo.WPFControls.Base
             set { SetValue(BarBackgroundProperty, value); }
         }
 
+        public static readonly DependencyProperty BarBackgroundProperty = 
+            DependencyProperty.Register(nameof(BarBackground), typeof(Brush), typeof(SliderBase), new PropertyMetadata(null));
+
         public Brush ButtonBackground
         {
             get { return (Brush)GetValue(ButtonBackgroundProperty); }
             set { SetValue(ButtonBackgroundProperty, value); }
         }
-        #endregion
 
-        #region Dependency Properties
-        public static readonly DependencyProperty ChangeValueWhileDraggingProperty = DependencyProperty.Register("ChangeValueWhileDragging", typeof(bool), typeof(SliderBase), new PropertyMetadata(false));
-        public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register("Minimum", typeof(double), typeof(SliderBase), new PropertyMetadata(0.0, IsMinMaxChangedCallback));
-        public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register("Maximum", typeof(double), typeof(SliderBase), new PropertyMetadata(100.0, IsMinMaxChangedCallback));
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double), typeof(SliderBase), new PropertyMetadata(0.0, IsValueChangedCallback));
-        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(double), typeof(SliderBase), new PropertyMetadata(0.0));
-        public static readonly DependencyProperty TrackBackgroundProperty = DependencyProperty.Register("TrackBackground", typeof(Brush), typeof(SliderBase), new PropertyMetadata(null));
-        public static readonly DependencyProperty BarBackgroundProperty = DependencyProperty.Register("BarBackground", typeof(Brush), typeof(SliderBase), new PropertyMetadata(null));
-        public static readonly DependencyProperty ButtonBackgroundProperty = DependencyProperty.Register("ButtonBackground", typeof(Brush), typeof(SliderBase), new PropertyMetadata(null));
-        #endregion
+        public static readonly DependencyProperty ButtonBackgroundProperty = 
+            DependencyProperty.Register(nameof(ButtonBackground), typeof(Brush), typeof(SliderBase), new PropertyMetadata(null));
 
-        #region Events
         public event EventHandler ValueChanged = delegate { };
 
         protected void OnValueChanged()
         {
             this.ValueChanged(this, null);
         }
-        #endregion
 
-        #region Overrides
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -115,15 +121,11 @@ namespace Digimezzo.WPFControls.Base
                 this.sliderCanvas.PreviewMouseUp += SliderCanvas_PreviewMouseUp;
             }
         }
-        #endregion
 
-        #region Abstract
         protected abstract void UpdatePosition();
         protected abstract void CalculatePosition();
         protected abstract void CalculateValue();
-        #endregion
 
-        #region Event Handlers
         private void LoadedHandler(object sender, RoutedEventArgs e)
         {
             this.CalculatePosition();
@@ -166,9 +168,7 @@ namespace Digimezzo.WPFControls.Base
                 this.CalculateValue();
             }
         }
-        #endregion
 
-        #region Callbacks
         private static void IsMinMaxChangedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             SliderBase slider = sender as SliderBase;
@@ -181,6 +181,5 @@ namespace Digimezzo.WPFControls.Base
             slider.CalculatePosition();
             slider.OnValueChanged();
         }
-        #endregion
     }
 }

@@ -6,15 +6,11 @@ namespace Digimezzo.WPFControls
 {
     public class HorizontalWindows8Slider : SliderBase
     {
-
-        #region Construction
         static HorizontalWindows8Slider()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(HorizontalWindows8Slider), new FrameworkPropertyMetadata(typeof(HorizontalWindows8Slider)));
         }
-        #endregion
 
-        #region Overrides
         protected override void UpdatePosition()
         {
             if (this.sliderCanvas == null) return;
@@ -74,19 +70,16 @@ namespace Digimezzo.WPFControls
             }
 
         }
-        #endregion
     }
 
     public class VerticalWindows8Slider : SliderBase
     {
-        #region Construction
+
         static VerticalWindows8Slider()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(VerticalWindows8Slider), new FrameworkPropertyMetadata(typeof(VerticalWindows8Slider)));
         }
-        #endregion
 
-        #region Overrides
         protected override void UpdatePosition()
         {
             if (this.sliderCanvas == null) return;
@@ -146,6 +139,5 @@ namespace Digimezzo.WPFControls
                 this.isCalculating = false;
             }
         }
-        #endregion
     }
 }

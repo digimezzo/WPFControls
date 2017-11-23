@@ -7,12 +7,14 @@ namespace Digimezzo.WPFControls
 {
     public class Windows10ToggleSwitch : CheckBox
     {
-        #region Properties
         public Brush Accent
         {
             get { return (Brush)GetValue(AccentProperty); }
             set { SetValue(AccentProperty, value); }
         }
+
+        public static readonly DependencyProperty AccentProperty =
+            DependencyProperty.Register(nameof(Accent), typeof(Brush), typeof(Windows10ToggleSwitch), new PropertyMetadata(new SolidColorBrush(Colors.Blue)));
 
         public string OnLabel
         {
@@ -20,24 +22,21 @@ namespace Digimezzo.WPFControls
             set { SetValue(OnLabelProperty, value); }
         }
 
+        public static readonly DependencyProperty OnLabelProperty =
+           DependencyProperty.Register(nameof(OnLabel), typeof(string), typeof(Windows10ToggleSwitch), new PropertyMetadata("On"));
+
         public string OffLabel
         {
             get { return Convert.ToString(GetValue(OffLabelProperty)); }
             set { SetValue(OffLabelProperty, value); }
         }
-        #endregion
 
-        #region Dependency Properties
-        public static readonly DependencyProperty AccentProperty = DependencyProperty.Register("Accent", typeof(Brush), typeof(Windows10ToggleSwitch), new PropertyMetadata(new SolidColorBrush(Colors.Blue)));
-        public static readonly DependencyProperty OnLabelProperty = DependencyProperty.Register("OnLabel", typeof(string), typeof(Windows10ToggleSwitch), new PropertyMetadata("On"));
-        public static readonly DependencyProperty OffLabelProperty = DependencyProperty.Register("OffLabel", typeof(string), typeof(Windows10ToggleSwitch), new PropertyMetadata("Off"));
-        #endregion
-
-        #region Construction
+        public static readonly DependencyProperty OffLabelProperty = 
+            DependencyProperty.Register(nameof(OffLabel), typeof(string), typeof(Windows10ToggleSwitch), new PropertyMetadata("Off"));
+    
         static Windows10ToggleSwitch()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Windows10ToggleSwitch), new FrameworkPropertyMetadata(typeof(Windows10ToggleSwitch)));
         }
-        #endregion
     }
 }

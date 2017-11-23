@@ -8,52 +8,50 @@ namespace Digimezzo.WPFControls
 {
     public class ToggleSwitch : CheckBox
     {
-        #region Variables
         private Label onLabel;
         private Label offLabel;
-        #endregion
-
-        #region Properties
+     
         public Brush SwitchBackground
         {
             get { return (Brush)GetValue(SwitchBackgroundProperty); }
             set { SetValue(SwitchBackgroundProperty, value); }
         }
 
+        public static readonly DependencyProperty SwitchBackgroundProperty =
+          DependencyProperty.Register(nameof(SwitchBackground), typeof(Brush), typeof(ToggleSwitch), new PropertyMetadata(new SolidColorBrush(Colors.Blue)));
+   
         public Brush ThumbBackground
         {
             get { return (Brush)GetValue(ThumbBackgroundProperty); }
             set { SetValue(ThumbBackgroundProperty, value); }
         }
 
+        public static readonly DependencyProperty ThumbBackgroundProperty =
+           DependencyProperty.Register(nameof(ThumbBackground), typeof(Brush), typeof(ToggleSwitch), new PropertyMetadata(new SolidColorBrush(Colors.Black)));
+       
         public string OnLabel
         {
             get { return Convert.ToString(GetValue(OnLabelProperty)); }
             set { SetValue(OnLabelProperty, value); }
         }
 
+        public static readonly DependencyProperty OnLabelProperty =
+           DependencyProperty.Register(nameof(OnLabel), typeof(string), typeof(ToggleSwitch), new PropertyMetadata("On"));
+        
         public string OffLabel
         {
             get { return Convert.ToString(GetValue(OffLabelProperty)); }
             set { SetValue(OffLabelProperty, value); }
         }
-        #endregion
 
-        #region Dependency Properties
-        public static readonly DependencyProperty SwitchBackgroundProperty = DependencyProperty.Register("SwitchBackground", typeof(Brush), typeof(ToggleSwitch), new PropertyMetadata(new SolidColorBrush(Colors.Blue)));
-        public static readonly DependencyProperty ThumbBackgroundProperty = DependencyProperty.Register("ThumbBackground", typeof(Brush), typeof(ToggleSwitch), new PropertyMetadata(new SolidColorBrush(Colors.Black)));
-        public static readonly DependencyProperty OnLabelProperty = DependencyProperty.Register("OnLabel", typeof(string), typeof(ToggleSwitch), new PropertyMetadata("On"));
-        public static readonly DependencyProperty OffLabelProperty = DependencyProperty.Register("OffLabel", typeof(string), typeof(ToggleSwitch), new PropertyMetadata("Off"));
-        #endregion
+        public static readonly DependencyProperty OffLabelProperty =
+            DependencyProperty.Register(nameof(OffLabel), typeof(string), typeof(ToggleSwitch), new PropertyMetadata("Off"));
 
-        #region Construction
         static ToggleSwitch()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ToggleSwitch), new FrameworkPropertyMetadata(typeof(ToggleSwitch)));
         }
-        #endregion
-
-        #region Overrides
+  
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -71,13 +69,10 @@ namespace Digimezzo.WPFControls
                 this.offLabel.MouseDown += ToggleSwitch_MouseDown;
             }
         }
-        #endregion
-
-        #region Event Handlers
+   
         private void ToggleSwitch_MouseDown(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
         }
-        #endregion
     }
 }

@@ -13,21 +13,15 @@ namespace Digimezzo.WPFControls
     /// <remarks></remarks>
     public class MultiSelectListBox : ListBox
     {
-        #region Overrides
         protected override DependencyObject GetContainerForItemOverride()
         {
             return new MultiSelectListBoxItem();
         }
-        #endregion
 
-        #region ListBoxItem
         public class MultiSelectListBoxItem : ListBoxItem
         {
-            #region Variables
             private bool deferSelection = false;
-            #endregion
 
-            #region Overrides
             protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
             {
 
@@ -66,8 +60,6 @@ namespace Digimezzo.WPFControls
                 this.deferSelection = false;
                 base.OnMouseLeave(e);
             }
-            #endregion
         }
-        #endregion
     }
 }

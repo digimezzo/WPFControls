@@ -7,17 +7,17 @@ namespace Digimezzo.WPFControls
 {
     public class SplitView : Control
     {
-        #region Variables
         private ContentPresenter pane;
         private ContentPresenter content;
-        #endregion
 
-        #region Properties
         public object Pane
         {
             get { return (object)GetValue(PaneProperty); }
             set { SetValue(PaneProperty, value); }
         }
+
+        public static readonly DependencyProperty PaneProperty =
+           DependencyProperty.Register(nameof(Pane), typeof(object), typeof(SplitView), new PropertyMetadata(null));
 
         public object Content
         {
@@ -25,31 +25,30 @@ namespace Digimezzo.WPFControls
             set { SetValue(ContentProperty, value); }
         }
 
+        public static readonly DependencyProperty ContentProperty =
+          DependencyProperty.Register(nameof(Content), typeof(object), typeof(SplitView), new PropertyMetadata(null));
+
         public bool IsPaneOpen
         {
             get { return (bool)GetValue(IsPaneOpenProperty); }
             set { SetValue(IsPaneOpenProperty, value); }
         }
 
+        public static readonly DependencyProperty IsPaneOpenProperty =
+            DependencyProperty.Register(nameof(IsPaneOpen), typeof(bool), typeof(SplitView), new PropertyMetadata(false, OnIsPaneOpenChanged));
+       
+
         public double OpenPaneLength
         {
             get { return (double)GetValue(OpenPaneLengthProperty); }
             set { SetValue(OpenPaneLengthProperty, value); }
         }
-        #endregion
 
-        #region Dependency Properties
-        public static readonly DependencyProperty IsPaneOpenProperty = DependencyProperty.Register("IsPaneOpen", typeof(bool), typeof(SplitView), new PropertyMetadata(false, OnIsPaneOpenChanged));
-        public static readonly DependencyProperty PaneProperty = DependencyProperty.Register("Pane", typeof(object), typeof(SplitView), new PropertyMetadata(null));
-        public static readonly DependencyProperty ContentProperty = DependencyProperty.Register("Content", typeof(object), typeof(SplitView), new PropertyMetadata(null));
-        public static readonly DependencyProperty OpenPaneLengthProperty = DependencyProperty.Register("OpenPaneLength", typeof(double), typeof(SplitView), new PropertyMetadata(200.0));
-        #endregion
+        public static readonly DependencyProperty OpenPaneLengthProperty =
+          DependencyProperty.Register(nameof(OpenPaneLength), typeof(double), typeof(SplitView), new PropertyMetadata(200.0));
 
-        #region Events
         public event EventHandler PaneClosed = delegate { };
-        #endregion
-
-        #region Event handlers
+   
         private static void OnIsPaneOpenChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             SplitView splitView = o as SplitView;
@@ -64,16 +63,12 @@ namespace Digimezzo.WPFControls
                 splitView.ClosePane();
             }
         }
-        #endregion
-
-        #region Construction
+    
         static SplitView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SplitView), new FrameworkPropertyMetadata(typeof(SplitView)));
         }
-        #endregion
-
-        #region Overrides
+      
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -96,9 +91,7 @@ namespace Digimezzo.WPFControls
         {
             this.IsPaneOpen = false;
         }
-        #endregion
 
-        #region Private
         private void OpenPane()
         {
             if (this.pane != null)
@@ -129,6 +122,5 @@ namespace Digimezzo.WPFControls
 
             this.PaneClosed(this, new EventArgs());
         }
-        #endregion
     }
 }
