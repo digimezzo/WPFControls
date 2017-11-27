@@ -9,6 +9,7 @@ namespace Digimezzo.WPFControls
     public class MaterialTextBox : TextBox
     {
         private TextBlock inputLabel;
+        private TextBlock errorLabel;
         private bool previousIsFloating;
         private Border inputLine;
         private Border inputLineUnfocused;
@@ -62,6 +63,33 @@ namespace Digimezzo.WPFControls
         public static readonly DependencyProperty AccentProperty =
             DependencyProperty.Register(nameof(Accent), typeof(Brush), typeof(MaterialTextBox), new PropertyMetadata(Brushes.Red));
 
+        public bool ShowError
+        {
+            get { return (bool)GetValue(ShowErrorProperty); }
+            set { SetValue(ShowErrorProperty, value); }
+        }
+
+        public static readonly DependencyProperty ShowErrorProperty =
+            DependencyProperty.Register(nameof(ShowError), typeof(bool), typeof(MaterialTextBox), new PropertyMetadata(false));
+
+        public Brush ErrorForeground
+        {
+            get { return (Brush)GetValue(ErrorForegroundProperty); }
+            set { SetValue(ErrorForegroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty ErrorForegroundProperty =
+            DependencyProperty.Register(nameof(ErrorForeground), typeof(Brush), typeof(MaterialTextBox), new PropertyMetadata(Brushes.Red));
+
+        public string ErrorText
+        {
+            get { return (string)GetValue(ErrorTextProperty); }
+            set { SetValue(ErrorTextProperty, value); }
+        }
+
+        public static readonly DependencyProperty ErrorTextProperty =
+            DependencyProperty.Register(nameof(ErrorText), typeof(string), typeof(MaterialTextBox), new PropertyMetadata(null));
+
         static MaterialTextBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MaterialTextBox), new FrameworkPropertyMetadata(typeof(MaterialTextBox)));
@@ -72,12 +100,16 @@ namespace Digimezzo.WPFControls
             base.OnApplyTemplate();
 
             this.inputLabel = (TextBlock)GetTemplateChild("PART_InputLabel");
+            this.errorLabel = (TextBlock)GetTemplateChild("PART_ErrorLabel");
             this.inputLine = (Border)GetTemplateChild("PART_InputLine");
             this.inputLineUnfocused = (Border)GetTemplateChild("PART_InputLineUnfocused");
             this.panel = (StackPanel)GetTemplateChild("PART_Panel");
             this.inputLabel.Text = this.Label;
             this.inputLabel.Opacity = this.opacity;
             this.inputLineUnfocused.Opacity = this.opacity;
+
+            this.errorLabel.FontSize = this.GetSmallFontSize();
+            this.errorLabel.Margin = this.ShowError ? new Thickness(0, this.GetMargin(), 0, 0) : new Thickness(0);
 
             this.panel.Margin = this.IsFloating ? new Thickness(0, this.GetSmallFontSize() + this.GetMargin(), 0, 0) : new Thickness(0);
 
