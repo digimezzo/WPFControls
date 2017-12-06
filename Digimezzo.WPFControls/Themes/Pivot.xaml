@@ -25,7 +25,7 @@
                         <StackPanel Visibility="{TemplateBinding HeaderVisibility}">
                             <StackPanel x:Name="headerPanel" Orientation="Horizontal" Margin="{TemplateBinding HeaderMargin}"
                                         Background="{TemplateBinding HeaderBackground}" Grid.Column="0" Grid.Row="0" IsItemsHost="true" 
-                                        KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
+                                        KeyboardNavigation.TabIndex="1"/>
                             <Border x:Name="elevation" Height="{TemplateBinding Elevation}" Background="{TemplateBinding ElevationBackground}"/>
                         </StackPanel>
                         <ContentControl x:Name="commonContentPanel" Grid.Column="0" Grid.Row="1" Content="{TemplateBinding CommonContent}"/>

@@ -12,15 +12,9 @@ namespace Digimezzo.WPFControls
 {
     public enum PivotAnimationType
     {
-        Fade = 1,
-        Slide = 2
-    }
-
-    public enum PivotItemHeaderTextCase
-    {
-        Normal = 1,
-        UpperCase = 2,
-        LowerCase = 3
+        FadeHorizontal = 1,
+        SlideHorizonal = 2,
+        SlideVertical = 3
     }
 
     public class Pivot : TabControl
@@ -61,12 +55,12 @@ namespace Digimezzo.WPFControls
 
         public PivotAnimationType AnimationType
         {
-            get { return (PivotAnimationType)GetValue(animationTypeProperty); }
-            set { SetValue(animationTypeProperty, value); }
+            get { return (PivotAnimationType)GetValue(AnimationTypeProperty); }
+            set { SetValue(AnimationTypeProperty, value); }
         }
 
-        public static readonly DependencyProperty animationTypeProperty =
-            DependencyProperty.Register(nameof(AnimationType), typeof(PivotAnimationType), typeof(Pivot), new PropertyMetadata(PivotAnimationType.Fade));
+        public static readonly DependencyProperty AnimationTypeProperty =
+            DependencyProperty.Register(nameof(AnimationType), typeof(PivotAnimationType), typeof(Pivot), new PropertyMetadata(PivotAnimationType.FadeHorizontal));
 
         public double Elevation
         {
@@ -205,7 +199,7 @@ namespace Digimezzo.WPFControls
 
         private void DoFadeAnimation()
         {
-            if(this.contentPanel == null)
+            if (this.contentPanel == null)
             {
                 return;
             }
@@ -262,10 +256,21 @@ namespace Digimezzo.WPFControls
 
                 this.ApplyEffect();
 
+                // Assume horizontal animation
+                DependencyProperty dp = TranslateTransform.XProperty;
+                double animationDistance = this.ActualWidth;
+
+                // Check if we need vertical animation
+                if (this.AnimationType.Equals(PivotAnimationType.SlideVertical))
+                {
+                    dp = TranslateTransform.YProperty;
+                    animationDistance = this.ActualHeight;
+                }
+
                 if (previous > current)
                 {
-                    newContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(-this.ActualWidth, 0, this.EasingAmplitude, this.Duration));
-                    oldContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(0, this.ActualWidth, this.EasingAmplitude, this.Duration, (s, e) =>
+                    newContentTransform.BeginAnimation(dp, AnimationUtils.CreateSlideAnimation(-animationDistance, 0, this.EasingAmplitude, this.Duration));
+                    oldContentTransform.BeginAnimation(dp, AnimationUtils.CreateSlideAnimation(0, animationDistance, this.EasingAmplitude, this.Duration, (s, e) =>
                     {
                         this.paintArea.Visibility = Visibility.Hidden;
                         this.ClearEffect();
@@ -274,8 +279,8 @@ namespace Digimezzo.WPFControls
                 }
                 else
                 {
-                    newContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(this.ActualWidth, 0, this.EasingAmplitude, this.Duration));
-                    oldContentTransform.BeginAnimation(TranslateTransform.XProperty, AnimationUtils.CreateSlideAnimation(0, -this.ActualWidth, this.EasingAmplitude, this.Duration, (s, e) =>
+                    newContentTransform.BeginAnimation(dp, AnimationUtils.CreateSlideAnimation(animationDistance, 0, this.EasingAmplitude, this.Duration));
+                    oldContentTransform.BeginAnimation(dp, AnimationUtils.CreateSlideAnimation(0, -animationDistance, this.EasingAmplitude, this.Duration, (s, e) =>
                     {
                         this.paintArea.Visibility = Visibility.Hidden;
                         this.ClearEffect();
@@ -303,11 +308,12 @@ namespace Digimezzo.WPFControls
 
             if (previous != current)
             {
-                if (this.AnimationType == PivotAnimationType.Fade)
+                if (this.AnimationType.Equals(PivotAnimationType.FadeHorizontal))
                 {
                     this.DoFadeAnimation();
                 }
-                else if (this.AnimationType == PivotAnimationType.Slide)
+                else if (this.AnimationType.Equals(PivotAnimationType.SlideHorizonal) || 
+                    this.AnimationType.Equals(PivotAnimationType.SlideVertical))
                 {
                     this.DoSlideAnimation();
                 }
