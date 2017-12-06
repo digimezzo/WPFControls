@@ -13,7 +13,7 @@ namespace Digimezzo.WPFControls
     public enum PivotAnimationType
     {
         FadeHorizontal = 1,
-        SlideHorizonal = 2,
+        SlideHorizontal = 2,
         SlideVertical = 3
     }
 
@@ -312,7 +312,7 @@ namespace Digimezzo.WPFControls
                 {
                     this.DoFadeAnimation();
                 }
-                else if (this.AnimationType.Equals(PivotAnimationType.SlideHorizonal) || 
+                else if (this.AnimationType.Equals(PivotAnimationType.SlideHorizontal) || 
                     this.AnimationType.Equals(PivotAnimationType.SlideVertical))
                 {
                     this.DoSlideAnimation();
