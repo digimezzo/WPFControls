@@ -36,4 +36,20 @@ namespace Digimezzo.WPFControls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MaterialFlatButton), new FrameworkPropertyMetadata(typeof(MaterialFlatButton)));
         }
     }
+
+    public class MaterialFloatingActionButton : MaterialButtonBase
+    {
+        static MaterialFloatingActionButton()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(MaterialFloatingActionButton), new FrameworkPropertyMetadata(typeof(MaterialFloatingActionButton)));
+        }
+    }
+
+    public class MaterialMiniFloatingActionButton : MaterialButtonBase
+    {
+        static MaterialMiniFloatingActionButton()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(MaterialMiniFloatingActionButton), new FrameworkPropertyMetadata(typeof(MaterialMiniFloatingActionButton)));
+        }
+    }
 }
