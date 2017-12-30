@@ -12,7 +12,7 @@
                 <ControlTemplate TargetType="{x:Type local:MaterialRaisedButton}">
                     <Grid x:Name="grid">
                         <Border x:Name="myshadowborder" CornerRadius="2" Height="36" MinWidth="88" Panel.ZIndex="0" 
-                                Background="White" Margin="1" BorderThickness="0" VerticalAlignment="Center">
+                                Background="{TemplateBinding Accent}" VerticalAlignment="Center">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="5" ShadowDepth="4" Color="Black" Opacity="0.3"/>
                             </Border.Effect>
@@ -24,7 +24,9 @@
                         <Label x:Name="myContent" Content="{TemplateBinding Content, Converter={StaticResource StringToUpperConverter}}" 
                                FontWeight="SemiBold" FontSize="14" Foreground="White" Panel.ZIndex="3" Background="Transparent" 
                                Padding="16,0,16,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        <local:Ripple Panel.ZIndex="4" RippleBackground="White" Opacity="0.5">
+                        <local:Ripple Panel.ZIndex="4" RippleBackground="White" Opacity="0.5"
+                                      Width="{Binding Width, ElementName=myborder}"
+                                      Height="{Binding Height, ElementName=myborder}">
                             <local:Ripple.OpacityMask>
                                 <VisualBrush Visual="{Binding ElementName=myborder}" />
                             </local:Ripple.OpacityMask>
@@ -56,7 +58,9 @@
                         <Label x:Name="myContent" Content="{TemplateBinding Content, Converter={StaticResource StringToUpperConverter}}" 
                                FontWeight="SemiBold" FontSize="14" Foreground="{TemplateBinding Accent}" Panel.ZIndex="1" Background="Transparent" 
                                Padding="16,0,16,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        <local:Ripple Panel.ZIndex="2" RippleBackground="Black" Opacity="0.4">
+                        <local:Ripple Panel.ZIndex="2" RippleBackground="Black" Opacity="0.4"
+                                      Width="{Binding Width, ElementName=myblackborder}"
+                                      Height="{Binding Height, ElementName=myblackborder}">
                             <local:Ripple.OpacityMask>
                                 <VisualBrush Visual="{Binding ElementName=myblackborder}" />
                             </local:Ripple.OpacityMask>
@@ -81,21 +85,26 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:MaterialFloatingActionButton}">
                     <Grid x:Name="grid">
-                        <Border x:Name="myshadowborder" CornerRadius="28" Width="56" Height="56" Panel.ZIndex="0" 
-                                Background="White" Margin="1" BorderThickness="0">
+                        <Border x:Name="myshadowborder" Panel.ZIndex="0" Width="56" Height="56" 
+                                CornerRadius="28" Background="{TemplateBinding Accent}"
+                                VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="5" ShadowDepth="4" Color="Black" Opacity="0.3"/>
                             </Border.Effect>
                         </Border>
                         <Border x:Name="myborder" Panel.ZIndex="1" Width="56" Height="56" 
-                                CornerRadius="28" Background="{TemplateBinding Accent}"/>
+                                CornerRadius="28" Background="{TemplateBinding Accent}"
+                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <Border x:Name="myblackborder" CornerRadius="28" Width="56" Height="56" Panel.ZIndex="2" 
-                                Background="Black" Opacity="0" BorderThickness="0"/>
+                                Background="Black" Opacity="0" BorderThickness="0"
+                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <ContentControl x:Name="myContent" Panel.ZIndex="3"
                                Content="{TemplateBinding Content}" Background="Transparent"
                                VerticalAlignment="Center" HorizontalAlignment="Center" 
                                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        <local:Ripple Panel.ZIndex="4" RippleBackground="White" Opacity="0.5">
+                        <local:Ripple Panel.ZIndex="4" RippleBackground="White" Opacity="0.5"
+                                      Width="{Binding Width, ElementName=myborder}"
+                                      Height="{Binding Height, ElementName=myborder}">
                             <local:Ripple.OpacityMask>
                                 <VisualBrush Visual="{Binding ElementName=myborder}" />
                             </local:Ripple.OpacityMask>
@@ -121,21 +130,26 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:MaterialMiniFloatingActionButton}">
                     <Grid x:Name="grid">
-                        <Border x:Name="myshadowborder" CornerRadius="20" Width="40" Height="40" Panel.ZIndex="0" 
-                                Background="White" Margin="1" BorderThickness="0">
+                        <Border x:Name="myshadowborder" Panel.ZIndex="0" Width="40" Height="40" 
+                                CornerRadius="20" Background="{TemplateBinding Accent}"
+                                VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="5" ShadowDepth="4" Color="Black" Opacity="0.3"/>
                             </Border.Effect>
                         </Border>
                         <Border x:Name="myborder" Panel.ZIndex="1" Width="40" Height="40" 
-                                CornerRadius="28" Background="{TemplateBinding Accent}"/>
+                                CornerRadius="20" Background="{TemplateBinding Accent}"
+                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <Border x:Name="myblackborder" CornerRadius="20" Width="40" Height="40" Panel.ZIndex="2" 
-                                Background="Black" Opacity="0" BorderThickness="0"/>
+                                Background="Black" Opacity="0" BorderThickness="0"
+                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         <ContentControl x:Name="myContent" Panel.ZIndex="3"
                                Content="{TemplateBinding Content}" Background="Transparent"
                                VerticalAlignment="Center" HorizontalAlignment="Center" 
                                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        <local:Ripple Panel.ZIndex="4" RippleBackground="White" Opacity="0.5">
+                        <local:Ripple Panel.ZIndex="4" RippleBackground="White" Opacity="0.5"
+                                      Width="{Binding Width, ElementName=myborder}"
+                                      Height="{Binding Height, ElementName=myborder}">
                             <local:Ripple.OpacityMask>
                                 <VisualBrush Visual="{Binding ElementName=myborder}" />
                             </local:Ripple.OpacityMask>
