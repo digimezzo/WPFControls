@@ -113,6 +113,8 @@ namespace Digimezzo.WPFControls
 
             this.panel.Margin = this.IsFloating ? new Thickness(0, this.GetSmallFontSize() + this.GetMargin(), 0, 0) : new Thickness(0);
 
+            this.SelectionBrush = this.Accent; // Binding SelectionBrush in the xaml template doesn't work, so we set it here.
+
             // This workaround changes the color of the cursor
             if (this.UseLightCursor)
             {
