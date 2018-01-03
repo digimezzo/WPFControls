@@ -14,12 +14,12 @@
             <controls:MaterialTextBox Margin="10" Label="Write something" Accent="#E91E63"/>
             <controls:MaterialTextBox Margin="10" Label="Write something" IsFloating="True" Accent="#4CAF50"/>
             <controls:MaterialTextBox Margin="10" Label="Write something" IsFloating="True" Accent="#4CAF50" FontSize="18"/>
-            <controls:MaterialComboBox Margin="10" Background="#F0F0F0" >
+            <controls:MaterialComboBox Margin="10" Background="#F0F0F0">
                 <TextBlock Text="One"/>
                 <TextBlock Text="Two"/>
                 <TextBlock Text="Three"/>
             </controls:MaterialComboBox>
-            <controls:MaterialComboBox Margin="10" IsFloating="true" Label="Choose...">
+            <controls:MaterialComboBox Margin="10" IsFloating="true" Label="Choose..." IsEditable="True">
                 <TextBlock Text="One"/>
                 <TextBlock Text="Two"/>
                 <TextBlock Text="Three"/>

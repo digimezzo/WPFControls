@@ -101,7 +101,7 @@
                                 SelectionBrush="{TemplateBinding Accent}"
                                 HorizontalAlignment="Left" 
                                 VerticalAlignment="Center" 
-                                Margin="0,6,23,0"
+                                Margin="-2,7,23,2"
                                 Focusable="True" 
                                 Background="Transparent"
                                 Visibility="Hidden"
@@ -153,7 +153,7 @@
                         </Trigger>
                         <Trigger Property="IsEditable" Value="true">
                             <Setter Property="IsTabStop" Value="false"/>
-                            <Setter TargetName="PART_EditableTextBox" Property="Visibility"    Value="Visible"/>
+                            <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
