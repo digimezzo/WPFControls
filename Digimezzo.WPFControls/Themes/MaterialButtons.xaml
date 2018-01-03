@@ -26,7 +26,15 @@
                                Padding="16,0,16,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                         <Border x:Name="PART_Ripple" CornerRadius="2" Height="36" MinWidth="88" Panel.ZIndex="3" 
                                 Background="Transparent" BorderThickness="0" VerticalAlignment="Center">
-                            <local:Ripple  RippleBackground="White" Opacity="0.5"/>
+                            <local:Ripple RippleBackground="White" Opacity="0.5">
+                                <local:Ripple.OpacityMask>
+                                    <VisualBrush>
+                                        <VisualBrush.Visual>
+                                            <Border Height="36" MinWidth="88" CornerRadius="2" Background="Black"/>
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </local:Ripple.OpacityMask>
+                            </local:Ripple>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -60,7 +68,15 @@
                                Padding="16,0,16,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                         <Border x:Name="PART_Ripple" CornerRadius="2" Height="36" MinWidth="88" Panel.ZIndex="2" 
                                 Background="Transparent" BorderThickness="0" VerticalAlignment="Center">
-                            <local:Ripple RippleBackground="Black" Opacity="0.2"/>
+                            <local:Ripple RippleBackground="Black" Opacity="0.2">
+                                <local:Ripple.OpacityMask>
+                                    <VisualBrush>
+                                        <VisualBrush.Visual>
+                                            <Border Height="36" MinWidth="88" CornerRadius="2" Background="Black"/>
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </local:Ripple.OpacityMask>
+                            </local:Ripple>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -101,7 +117,15 @@
                                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                         <Border x:Name="PART_Ripple" Width="56" Height="56" CornerRadius="28" Panel.ZIndex="3" 
                                 Background="Transparent" BorderThickness="0" VerticalAlignment="Center">
-                            <local:Ripple  RippleBackground="White" Opacity="0.5"/>
+                            <local:Ripple RippleBackground="White" Opacity="0.5">
+                                <local:Ripple.OpacityMask>
+                                    <VisualBrush>
+                                        <VisualBrush.Visual>
+                                            <Border Width="56" Height="56" CornerRadius="28" Background="Black"/>
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </local:Ripple.OpacityMask>
+                            </local:Ripple>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -147,7 +171,15 @@
                                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                         <Border x:Name="PART_Ripple" Width="40" Height="40" CornerRadius="20" Panel.ZIndex="3" 
                                 Background="Transparent" BorderThickness="0" VerticalAlignment="Center">
-                            <local:Ripple  RippleBackground="White" Opacity="0.5"/>
+                            <local:Ripple RippleBackground="White" Opacity="0.5">
+                                <local:Ripple.OpacityMask>
+                                    <VisualBrush>
+                                        <VisualBrush.Visual>
+                                            <Border Width="40" Height="40" CornerRadius="20" Background="Black"/>
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </local:Ripple.OpacityMask>
+                            </local:Ripple>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
