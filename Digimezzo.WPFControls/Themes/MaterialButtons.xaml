@@ -11,34 +11,35 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:MaterialRaisedButton}">
                     <Grid x:Name="grid">
-                        <Border x:Name="myshadowborder" CornerRadius="2" Height="36" MinWidth="88" Panel.ZIndex="0" 
-                                Background="{TemplateBinding Accent}" VerticalAlignment="Center">
+                        <Border x:Name="PART_Enabled" CornerRadius="2" Height="36" MinWidth="88" Panel.ZIndex="0" 
+                                Background="{TemplateBinding Accent}" BorderThickness="0" VerticalAlignment="Center">
                             <Border.Effect>
-                                <DropShadowEffect BlurRadius="5" ShadowDepth="4" Color="Black" Opacity="0.3"/>
+                                <DropShadowEffect x:Name="shadow" BlurRadius="6" ShadowDepth="2" Color="Black" Opacity="0.5"/>
                             </Border.Effect>
                         </Border>
-                        <Border x:Name="myborder" CornerRadius="2" Height="36" MinWidth="88" Panel.ZIndex="1" 
+                        <Border x:Name="PART_Disabled" CornerRadius="2" Height="36" MinWidth="88" Panel.ZIndex="0" 
                                 Background="{TemplateBinding Accent}" BorderThickness="0" VerticalAlignment="Center"/>
-                        <Border x:Name="myblackborder" CornerRadius="2" Height="36" MinWidth="88" Panel.ZIndex="2" 
+                        <Border x:Name="PART_Overlay" CornerRadius="2" Height="36" MinWidth="88" Panel.ZIndex="1" 
                                 Background="Black" Opacity="0" BorderThickness="0" VerticalAlignment="Center"/>
-                        <Label x:Name="myContent" Content="{TemplateBinding Content, Converter={StaticResource StringToUpperConverter}}" 
-                               FontWeight="SemiBold" FontSize="14" Foreground="White" Panel.ZIndex="3" Background="Transparent" 
+                        <Label x:Name="PART_Content" Content="{TemplateBinding Content, Converter={StaticResource StringToUpperConverter}}" 
+                               FontWeight="SemiBold" FontSize="14" Foreground="{TemplateBinding Foreground}" Panel.ZIndex="2" Background="Transparent" 
                                Padding="16,0,16,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        <local:Ripple Panel.ZIndex="4" RippleBackground="White" Opacity="0.5"
-                                      Width="{Binding Width, ElementName=myborder}"
-                                      Height="{Binding Height, ElementName=myborder}">
-                            <local:Ripple.OpacityMask>
-                                <VisualBrush Visual="{Binding ElementName=myborder}" />
-                            </local:Ripple.OpacityMask>
-                        </local:Ripple>
+                        <Border x:Name="PART_Ripple" CornerRadius="2" Height="36" MinWidth="88" Panel.ZIndex="3" 
+                                Background="Transparent" BorderThickness="0" VerticalAlignment="Center">
+                            <local:Ripple  RippleBackground="White" Opacity="0.5"/>
+                        </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="myblackborder" Property="Opacity" Value="0.15"/>
+                            <Setter TargetName="PART_Overlay" Property="Opacity" Value="0.15"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="myshadowborder" Property="Opacity" Value="0"/>
-                            <Setter TargetName="myborder" Property="Opacity" Value="0.5"/>
+                            <Setter TargetName="PART_Enabled" Property="Opacity" Value="0.0"/>
+                            <Setter TargetName="PART_Disabled" Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter TargetName="PART_Enabled" Property="Opacity" Value="1.0"/>
+                            <Setter TargetName="PART_Disabled" Property="Opacity" Value="0.0"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -52,23 +53,19 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:MaterialFlatButton}">
                     <Grid x:Name="grid">
-
-                        <Border x:Name="myblackborder" CornerRadius="2" Height="36" MinWidth="88" Panel.ZIndex="0" 
+                        <Border x:Name="PART_Overlay" CornerRadius="2" Height="36" MinWidth="88" Panel.ZIndex="0" 
                                 Background="Black" Opacity="0" BorderThickness="0" VerticalAlignment="Center"/>
-                        <Label x:Name="myContent" Content="{TemplateBinding Content, Converter={StaticResource StringToUpperConverter}}" 
-                               FontWeight="SemiBold" FontSize="14" Foreground="{TemplateBinding Accent}" Panel.ZIndex="1" Background="Transparent" 
+                        <Label x:Name="PART_Content" Content="{TemplateBinding Content, Converter={StaticResource StringToUpperConverter}}" 
+                               FontWeight="SemiBold" FontSize="14" Foreground="{TemplateBinding Foreground}" Panel.ZIndex="1" Background="Transparent" 
                                Padding="16,0,16,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        <local:Ripple Panel.ZIndex="2" RippleBackground="Black" Opacity="0.4"
-                                      Width="{Binding Width, ElementName=myblackborder}"
-                                      Height="{Binding Height, ElementName=myblackborder}">
-                            <local:Ripple.OpacityMask>
-                                <VisualBrush Visual="{Binding ElementName=myblackborder}" />
-                            </local:Ripple.OpacityMask>
-                        </local:Ripple>
+                        <Border x:Name="PART_Ripple" CornerRadius="2" Height="36" MinWidth="88" Panel.ZIndex="2" 
+                                Background="Transparent" BorderThickness="0" VerticalAlignment="Center">
+                            <local:Ripple RippleBackground="Black" Opacity="0.2"/>
+                        </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="myblackborder" Property="Opacity" Value="0.12"/>
+                            <Setter TargetName="PART_Overlay" Property="Opacity" Value="0.15"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.5"/>
@@ -85,38 +82,39 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:MaterialFloatingActionButton}">
                     <Grid x:Name="grid">
-                        <Border x:Name="myshadowborder" Panel.ZIndex="0" Width="56" Height="56" 
+                        <Border x:Name="PART_Enabled" Panel.ZIndex="0" Width="56" Height="56" 
                                 CornerRadius="28" Background="{TemplateBinding Accent}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Border.Effect>
-                                <DropShadowEffect BlurRadius="5" ShadowDepth="4" Color="Black" Opacity="0.3"/>
+                                <DropShadowEffect BlurRadius="8" ShadowDepth="2" Color="Black" Opacity="0.5"/>
                             </Border.Effect>
                         </Border>
-                        <Border x:Name="myborder" Panel.ZIndex="1" Width="56" Height="56" 
+                        <Border x:Name="PART_Disabled" Panel.ZIndex="0" Width="56" Height="56" 
                                 CornerRadius="28" Background="{TemplateBinding Accent}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <Border x:Name="myblackborder" CornerRadius="28" Width="56" Height="56" Panel.ZIndex="2" 
+                        <Border x:Name="PART_Overlay" CornerRadius="28" Width="56" Height="56" Panel.ZIndex="1" 
                                 Background="Black" Opacity="0" BorderThickness="0"
                                 VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <ContentControl x:Name="myContent" Panel.ZIndex="3"
+                        <ContentControl x:Name="PART_Content" Panel.ZIndex="2"
                                Content="{TemplateBinding Content}" Background="Transparent"
                                VerticalAlignment="Center" HorizontalAlignment="Center" 
                                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        <local:Ripple Panel.ZIndex="4" RippleBackground="White" Opacity="0.5"
-                                      Width="{Binding Width, ElementName=myborder}"
-                                      Height="{Binding Height, ElementName=myborder}">
-                            <local:Ripple.OpacityMask>
-                                <VisualBrush Visual="{Binding ElementName=myborder}" />
-                            </local:Ripple.OpacityMask>
-                        </local:Ripple>
+                        <Border x:Name="PART_Ripple" Width="56" Height="56" CornerRadius="28" Panel.ZIndex="3" 
+                                Background="Transparent" BorderThickness="0" VerticalAlignment="Center">
+                            <local:Ripple  RippleBackground="White" Opacity="0.5"/>
+                        </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="myblackborder" Property="Opacity" Value="0.15"/>
+                            <Setter TargetName="PART_Overlay" Property="Opacity" Value="0.15"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="myshadowborder" Property="Opacity" Value="0"/>
-                            <Setter TargetName="myborder" Property="Opacity" Value="0.5"/>
+                            <Setter TargetName="PART_Enabled" Property="Opacity" Value="0.0"/>
+                            <Setter TargetName="PART_Disabled" Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter TargetName="PART_Enabled" Property="Opacity" Value="1.0"/>
+                            <Setter TargetName="PART_Disabled" Property="Opacity" Value="0.0"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -130,38 +128,39 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:MaterialMiniFloatingActionButton}">
                     <Grid x:Name="grid">
-                        <Border x:Name="myshadowborder" Panel.ZIndex="0" Width="40" Height="40" 
+                        <Border x:Name="PART_Enabled" Panel.ZIndex="0" Width="40" Height="40" 
                                 CornerRadius="20" Background="{TemplateBinding Accent}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Border.Effect>
-                                <DropShadowEffect BlurRadius="5" ShadowDepth="4" Color="Black" Opacity="0.3"/>
+                                <DropShadowEffect BlurRadius="8" ShadowDepth="2" Color="Black" Opacity="0.5"/>
                             </Border.Effect>
                         </Border>
-                        <Border x:Name="myborder" Panel.ZIndex="1" Width="40" Height="40" 
+                        <Border x:Name="PART_Disabled" Panel.ZIndex="0" Width="40" Height="40" 
                                 CornerRadius="20" Background="{TemplateBinding Accent}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <Border x:Name="myblackborder" CornerRadius="20" Width="40" Height="40" Panel.ZIndex="2" 
+                        <Border x:Name="PART_Overlay" CornerRadius="20" Width="40" Height="40" Panel.ZIndex="1" 
                                 Background="Black" Opacity="0" BorderThickness="0"
                                 VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <ContentControl x:Name="myContent" Panel.ZIndex="3"
+                        <ContentControl x:Name="PART_Content" Panel.ZIndex="2"
                                Content="{TemplateBinding Content}" Background="Transparent"
                                VerticalAlignment="Center" HorizontalAlignment="Center" 
                                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        <local:Ripple Panel.ZIndex="4" RippleBackground="White" Opacity="0.5"
-                                      Width="{Binding Width, ElementName=myborder}"
-                                      Height="{Binding Height, ElementName=myborder}">
-                            <local:Ripple.OpacityMask>
-                                <VisualBrush Visual="{Binding ElementName=myborder}" />
-                            </local:Ripple.OpacityMask>
-                        </local:Ripple>
+                        <Border x:Name="PART_Ripple" Width="40" Height="40" CornerRadius="20" Panel.ZIndex="3" 
+                                Background="Transparent" BorderThickness="0" VerticalAlignment="Center">
+                            <local:Ripple  RippleBackground="White" Opacity="0.5"/>
+                        </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="myblackborder" Property="Opacity" Value="0.15"/>
+                            <Setter TargetName="PART_Overlay" Property="Opacity" Value="0.15"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="myshadowborder" Property="Opacity" Value="0"/>
-                            <Setter TargetName="myborder" Property="Opacity" Value="0.5"/>
+                            <Setter TargetName="PART_Enabled" Property="Opacity" Value="0.0"/>
+                            <Setter TargetName="PART_Disabled" Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter TargetName="PART_Enabled" Property="Opacity" Value="1.0"/>
+                            <Setter TargetName="PART_Disabled" Property="Opacity" Value="0.0"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

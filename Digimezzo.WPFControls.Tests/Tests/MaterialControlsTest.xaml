@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls"
         mc:Ignorable="d"
-        Title="MaterialControlsTest" Height="600" Width="300">
+        Title="MaterialControlsTest" Height="600" Width="400">
 
     <StackPanel Orientation="Horizontal" Margin="20">
         <StackPanel>
-            <controls:MaterialRaisedButton Margin="10" Content="Test" HorizontalAlignment="Center" Accent="#2196F3"/>
-            <controls:MaterialFlatButton Margin="10" Content="Test" HorizontalAlignment="Center" Accent="#2196F3"/>
+            <controls:MaterialRaisedButton Margin="10" Content="Test" HorizontalAlignment="Center" Accent="#2196F3" Foreground="White"/>
+            <controls:MaterialFlatButton Margin="10" Content="Test" HorizontalAlignment="Center" Foreground="#2196F3"/>
             <controls:MaterialTextBox Margin="10" Label="Write something" Accent="#E91E63"/>
             <controls:MaterialTextBox Margin="10" Label="Write something" IsFloating="True" Accent="#4CAF50"/>
             <controls:MaterialTextBox Margin="10" Label="Write something" IsFloating="True" Accent="#4CAF50" FontSize="18"/>
@@ -26,11 +26,18 @@
             </controls:MaterialComboBox>
         </StackPanel>
         <StackPanel>
+            <controls:MaterialRaisedButton Margin="10" Content="Test" HorizontalAlignment="Center" Accent="#FFFFFF" Foreground="#2196F3"/>
             <controls:MaterialFloatingActionButton Accent="#2196F3" Margin="10">
                 <TextBlock FontSize="24" Foreground="White" Text="+" Margin="0,0,1,1"/>
             </controls:MaterialFloatingActionButton>
+            <controls:MaterialFloatingActionButton Accent="White" Margin="10">
+                <TextBlock FontSize="24" Foreground="#2196F3" Text="+" Margin="0,0,1,1"/>
+            </controls:MaterialFloatingActionButton>
             <controls:MaterialMiniFloatingActionButton Accent="#2196F3" Margin="10">
                 <TextBlock FontSize="24" Foreground="White" Text="+" Margin="0,0,1,1"/>
+            </controls:MaterialMiniFloatingActionButton>
+            <controls:MaterialMiniFloatingActionButton Accent="White" Margin="10">
+                <TextBlock FontSize="24" Foreground="#2196F3" Text="+" Margin="0,0,1,1"/>
             </controls:MaterialMiniFloatingActionButton>
         </StackPanel>
     </StackPanel>
