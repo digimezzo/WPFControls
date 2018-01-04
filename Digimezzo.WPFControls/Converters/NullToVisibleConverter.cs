@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace Digimezzo.WPFControls.Converters
 {
-    public class InvertingNullToCollapsedConverter : IValueConverter
+    public class NullToVisibleConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
