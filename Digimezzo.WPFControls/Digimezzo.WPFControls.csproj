@@ -72,6 +72,7 @@
     <Compile Include="Enums\SlideDirection.cs" />
     <Compile Include="Enums\WrapPanelAlignment.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="MaterialToggleSwitch.cs" />
     <Compile Include="Utils\UriUtils.cs" />
     <Compile Include="Utils\VisualTreeUtils.cs" />
     <Compile Include="LabelToLower.cs" />
@@ -155,6 +156,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\MaterialTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\MaterialToggleSwitch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

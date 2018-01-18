@@ -39,6 +39,7 @@
             <controls:MaterialMiniFloatingActionButton Accent="White" Margin="10">
                 <TextBlock FontSize="24" Foreground="#2196F3" Text="+" Margin="0,0,1,1"/>
             </controls:MaterialMiniFloatingActionButton>
+            <controls:MaterialToggleSwitch Margin="10" Accent="#2196F3"/>
         </StackPanel>
     </StackPanel>
 </Window>
