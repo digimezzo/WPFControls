@@ -18,15 +18,6 @@ namespace Digimezzo.WPFControls
         public static readonly DependencyProperty AccentProperty =
             DependencyProperty.Register(nameof(Accent), typeof(Brush), typeof(MaterialToggleSwitch), new PropertyMetadata(new SolidColorBrush(Colors.Blue)));
 
-        public bool UseDarkTheme
-        {
-            get { return (bool)GetValue(UseDarkThemeProperty); }
-            set { SetValue(UseDarkThemeProperty, value); }
-        }
-
-        public static readonly DependencyProperty UseDarkThemeProperty =
-            DependencyProperty.Register(nameof(UseDarkTheme), typeof(bool), typeof(MaterialToggleSwitch), new PropertyMetadata(false));
-
         static MaterialToggleSwitch()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MaterialToggleSwitch), new FrameworkPropertyMetadata(typeof(MaterialToggleSwitch)));
@@ -37,7 +28,11 @@ namespace Digimezzo.WPFControls
             base.OnApplyTemplate();
 
             this.ripple = (Ripple)GetTemplateChild("PART_Ripple");
-            this.Background = this.UseDarkTheme ? new SolidColorBrush(Colors.White) : new SolidColorBrush(Colors.Black);
+
+            if(this.Background == null)
+            {
+                this.Background = new SolidColorBrush(Colors.Black);
+            }
         }
 
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)

@@ -67,7 +67,7 @@
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            <local:Ripple x:Name="PART_Ripple" RippleBackground="Black" Opacity="0.2" 
+                            <local:Ripple x:Name="PART_Ripple" RippleBackground="{Binding Path=Background,RelativeSource={RelativeSource TemplatedParent}}" Opacity="0.2" 
                                           StartAtPointer="False" DoRippleOnMouseClick="False"/>
                         </Border>
                     </Canvas>
