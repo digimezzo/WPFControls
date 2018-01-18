@@ -1,11 +1,14 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Digimezzo.WPFControls
 {
     public class MaterialToggleSwitch : CheckBox
     {
+        private Ripple ripple;
+
         public Brush Accent
         {
             get { return (Brush)GetValue(AccentProperty); }
@@ -32,7 +35,15 @@ namespace Digimezzo.WPFControls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+
+            this.ripple = (Ripple)GetTemplateChild("PART_Ripple");
             this.Background = this.UseDarkTheme ? new SolidColorBrush(Colors.White) : new SolidColorBrush(Colors.Black);
+        }
+
+        protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnPreviewMouseLeftButtonDown(e);
+            this.ripple.DoRippple();
         }
     }
 }

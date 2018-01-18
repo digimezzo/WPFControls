@@ -1,8 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:Digimezzo.WPFControls"
-    xmlns:converters="clr-namespace:Digimezzo.WPFControls.Converters"
-    xmlns:base="clr-namespace:Digimezzo.WPFControls.Base">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Digimezzo.WPFControls"
+                    xmlns:base="clr-namespace:Digimezzo.WPFControls.Base">
 
     <Style TargetType="{x:Type local:MaterialToggleSwitch}">
         <Setter Property="UseLayoutRounding" Value="True"/>
@@ -68,6 +67,8 @@
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
+                            <local:Ripple x:Name="PART_Ripple" RippleBackground="Black" Opacity="0.2" 
+                                          StartAtPointer="False" DoRippleOnMouseClick="False"/>
                         </Border>
                     </Canvas>
                 </ControlTemplate>
