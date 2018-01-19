@@ -101,6 +101,9 @@
                                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                         <Border x:Name="PART_Ripple" Width="56" Height="56" CornerRadius="28" Panel.ZIndex="3" 
                                 Background="Transparent" BorderThickness="0" VerticalAlignment="Center" ClipToBounds="True">
+                            <Border.Clip>
+                                <RectangleGeometry RadiusX="28" RadiusY="28" Rect="0,0,56,56"/>
+                            </Border.Clip>
                             <local:Ripple RippleBackground="White" Opacity="0.5" />
                         </Border>
                     </Grid>
@@ -147,6 +150,9 @@
                                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                         <Border x:Name="PART_Ripple" Width="40" Height="40" CornerRadius="20" Panel.ZIndex="3" 
                                 Background="Transparent" BorderThickness="0" VerticalAlignment="Center" ClipToBounds="True">
+                            <Border.Clip>
+                                <RectangleGeometry RadiusX="20" RadiusY="20" Rect="0,0,40,40"/>
+                            </Border.Clip>
                             <local:Ripple RippleBackground="White" Opacity="0.5"/>
                         </Border>
                     </Grid>
