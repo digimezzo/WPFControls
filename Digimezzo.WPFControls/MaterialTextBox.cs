@@ -6,6 +6,12 @@ using System.Windows.Media.Animation;
 
 namespace Digimezzo.WPFControls
 {
+    public enum ValidationMode{
+        None = 0,
+        Number = 1,
+        Text = 2
+    }
+
     public class MaterialTextBox : TextBox
     {
         private TextBlock inputLabel;
@@ -16,6 +22,15 @@ namespace Digimezzo.WPFControls
         private StackPanel panel;
         private double opacity = 0.55;
         private bool isFocused;
+
+        public ValidationMode ValidationMode
+        {
+            get { return (ValidationMode)GetValue(ValidationModeProperty); }
+            set { SetValue(ValidationModeProperty, value); }
+        }
+
+        public static readonly DependencyProperty ValidationModeProperty =
+            DependencyProperty.Register(nameof(ValidationMode), typeof(ValidationMode), typeof(MaterialTextBox), new PropertyMetadata(ValidationMode.None));
 
         public bool IsFloating
         {
@@ -61,16 +76,7 @@ namespace Digimezzo.WPFControls
         }
 
         public static readonly DependencyProperty AccentProperty =
-            DependencyProperty.Register(nameof(Accent), typeof(Brush), typeof(MaterialTextBox), new PropertyMetadata(Brushes.Red));
-
-        public bool ShowError
-        {
-            get { return (bool)GetValue(ShowErrorProperty); }
-            set { SetValue(ShowErrorProperty, value); }
-        }
-
-        public static readonly DependencyProperty ShowErrorProperty =
-            DependencyProperty.Register(nameof(ShowError), typeof(bool), typeof(MaterialTextBox), new PropertyMetadata(false));
+            DependencyProperty.Register(nameof(Accent), typeof(Brush), typeof(MaterialTextBox), new PropertyMetadata(Brushes.Blue));
 
         public Brush ErrorForeground
         {
@@ -88,7 +94,7 @@ namespace Digimezzo.WPFControls
         }
 
         public static readonly DependencyProperty ErrorTextProperty =
-            DependencyProperty.Register(nameof(ErrorText), typeof(string), typeof(MaterialTextBox), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(ErrorText), typeof(string), typeof(MaterialTextBox), new PropertyMetadata("Invalid"));
 
         static MaterialTextBox()
         {
@@ -109,7 +115,7 @@ namespace Digimezzo.WPFControls
             this.inputLineUnfocused.Opacity = this.opacity;
 
             this.errorLabel.FontSize = this.GetSmallFontSize();
-            this.errorLabel.Margin = this.ShowError ? new Thickness(0, this.GetMargin(), 0, 0) : new Thickness(0);
+            this.errorLabel.Margin = this.ValidationMode.Equals(ValidationMode.None) ? new Thickness(0) : new Thickness(0, this.GetMargin(), 0, 0);
 
             this.panel.Margin = this.IsFloating ? new Thickness(0, this.GetSmallFontSize() + this.GetMargin(), 0, 0) : new Thickness(0);
 
@@ -125,6 +131,58 @@ namespace Digimezzo.WPFControls
             }
         }
 
+        private void Validate()
+        {
+            switch (this.ValidationMode)
+            {
+                case ValidationMode.Number:
+                    this.ValidateNumber();
+                    break;
+                case ValidationMode.Text:
+                    this.ValidateText();
+                    break;
+                case ValidationMode.None:
+                default:
+                    break;
+            }
+        }
+
+        private void ValidateText()
+        {
+            if (string.IsNullOrWhiteSpace(this.Text))
+            {
+                this.errorLabel.Text = this.ErrorText;
+            }
+            else
+            {
+                this.errorLabel.Text = String.Empty;
+            }
+        }
+
+        private void ValidateNumber()
+        {
+            bool isNumberValid = false;
+
+            if (string.IsNullOrEmpty(this.Text))
+            {
+                isNumberValid = false;
+            }
+            else
+            {
+                double number = 0;
+                isNumberValid = double.TryParse(this.Text, out number);
+            }
+
+            if (isNumberValid)
+            {
+                this.errorLabel.Text = String.Empty;
+            }
+            else
+            {
+                this.errorLabel.Text = this.ErrorText;
+            }
+        }
+
         protected override void OnTextChanged(TextChangedEventArgs e)
         {
             base.OnTextChanged(e);
@@ -137,6 +195,8 @@ namespace Digimezzo.WPFControls
             {
                 this.SetInputLabelText(this.Text.Length > 0);
             }
+
+            this.Validate();
         }
 
         protected override void OnIsKeyboardFocusedChanged(DependencyPropertyChangedEventArgs e)

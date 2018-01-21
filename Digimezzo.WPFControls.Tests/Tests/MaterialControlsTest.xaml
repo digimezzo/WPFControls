@@ -13,7 +13,10 @@
             <controls:MaterialFlatButton Margin="10" Content="Test" HorizontalAlignment="Center" Foreground="#2196F3"/>
             <controls:MaterialTextBox Margin="10" Label="Write something" Accent="#E91E63"/>
             <controls:MaterialTextBox Margin="10" Label="Write something" IsFloating="True" Accent="#4CAF50"/>
-            <controls:MaterialTextBox Margin="10" Label="Write something" IsFloating="True" Accent="#4CAF50" FontSize="18"/>
+            <controls:MaterialTextBox Margin="10" Label="Write text" IsFloating="True" Accent="#4CAF50" FontSize="18" 
+                                      ValidationMode="Text" ErrorText="Text is empty"/>
+            <controls:MaterialTextBox Margin="10" Label="Write a number" IsFloating="True" Accent="#4CAF50" FontSize="18" 
+                                      ValidationMode="Number" ErrorText="Invalid number"/>
             <controls:MaterialComboBox Margin="10" Background="#F0F0F0">
                 <TextBlock Text="One"/>
                 <TextBlock Text="Two"/>

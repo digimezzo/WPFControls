@@ -19,7 +19,7 @@
                             <Border x:Name="PART_InputLineUnfocused" Panel.ZIndex="0" Height="1" SnapsToDevicePixels="True" Background="{TemplateBinding Foreground}"/>
                             <Border x:Name="PART_InputLine" Panel.ZIndex="1" Height="2" Width="0" Background="{TemplateBinding Accent}"/>
                         </Grid>
-                        <TextBlock x:Name="PART_ErrorLabel" Foreground="{TemplateBinding ErrorForeground}" Text="{TemplateBinding ErrorText}"
+                        <TextBlock x:Name="PART_ErrorLabel" Foreground="{TemplateBinding ErrorForeground}" 
                                    Visibility="{Binding ShowError, Converter={StaticResource BooleanToCollapsedConverter}}"/>
                     </StackPanel>
                 </ControlTemplate>
