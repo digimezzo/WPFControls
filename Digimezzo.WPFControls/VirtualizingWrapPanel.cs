@@ -85,6 +85,13 @@ namespace Digimezzo.WPFControls
             int firstVisibleItemIndex = 0;
             int lastVisibleItemIndex = 0;
             GetVisibleRange(ref firstVisibleItemIndex, ref lastVisibleItemIndex);
+
+            // Getting the visible range failed. Stop here.
+            if (firstVisibleItemIndex == 0 && lastVisibleItemIndex == 0)
+            {
+                return new Size(0, 0);
+            }
+
             // We need to access InternalChildren before the generator to work around a bug
             UIElementCollection children = this.InternalChildren;
             IItemContainerGenerator generator = this.ItemContainerGenerator;
