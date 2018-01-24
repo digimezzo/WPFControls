@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -19,6 +20,8 @@ namespace Digimezzo.WPFControls
         private double opacity = 0.55;
         private bool isFocused;
         private Border dropDownBorder;
+
+        public TextBlock InputLabel => this.inputLabel;
 
         public bool IsFloating
         {

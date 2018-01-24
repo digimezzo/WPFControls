@@ -9,6 +9,7 @@
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/LabelToUpper.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/MaterialButtons.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/MaterialComboBox.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/MaterialDateBox.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/MaterialTextBox.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/MaterialToggleSwitch.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/MultiPanePanel.xaml" />

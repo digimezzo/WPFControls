@@ -9,7 +9,8 @@ namespace Digimezzo.WPFControls
     public enum ValidationMode{
         None = 0,
         Number = 1,
-        Text = 2
+        Text = 2,
+        Date = 3
     }
 
     public class MaterialTextBox : TextBox
@@ -22,6 +23,16 @@ namespace Digimezzo.WPFControls
         private StackPanel panel;
         private double opacity = 0.55;
         private bool isFocused;
+
+        public bool IsValid
+        {
+            get { return (bool)GetValue(IsValidProperty); }
+            set { SetValue(IsValidProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsValidProperty =
+           DependencyProperty.Register(nameof(IsValid), typeof(bool), typeof(MaterialTextBox), new PropertyMetadata(true));
+
 
         public ValidationMode ValidationMode
         {
@@ -115,7 +126,7 @@ namespace Digimezzo.WPFControls
             this.inputLineUnfocused.Opacity = this.opacity;
 
             this.errorLabel.FontSize = this.GetSmallFontSize();
-            this.errorLabel.Margin = this.ValidationMode.Equals(ValidationMode.None) ? new Thickness(0) : new Thickness(0, this.GetMargin(), 0, 0);
+            this.errorLabel.Margin = this.ValidationMode.Equals(ValidationMode.None) || this.ValidationMode.Equals(ValidationMode.Date) ? new Thickness(0) : new Thickness(0, this.GetMargin(), 0, 0);
 
             this.panel.Margin = this.IsFloating ? new Thickness(0, this.GetSmallFontSize() + this.GetMargin(), 0, 0) : new Thickness(0);
 
@@ -141,6 +152,7 @@ namespace Digimezzo.WPFControls
                 case ValidationMode.Text:
                     this.ValidateText();
                     break;
+                case ValidationMode.Date:
                 case ValidationMode.None:
                 default:
                     break;
@@ -152,10 +164,12 @@ namespace Digimezzo.WPFControls
             if (string.IsNullOrWhiteSpace(this.Text))
             {
                 this.errorLabel.Text = this.ErrorText;
+                this.IsValid = false;
             }
             else
             {
                 this.errorLabel.Text = String.Empty;
+                this.IsValid = true;
             }
         }
 
@@ -176,10 +190,12 @@ namespace Digimezzo.WPFControls
             if (isNumberValid)
             {
                 this.errorLabel.Text = String.Empty;
+                this.IsValid = true;
             }
             else
             {
                 this.errorLabel.Text = this.ErrorText;
+                this.IsValid = false;
             }
         }
 
@@ -205,7 +221,11 @@ namespace Digimezzo.WPFControls
             bool isFocused = (bool)e.NewValue;
             this.AnimateInputLine(isFocused);
             this.SetInputLabelForeground(isFocused);
-            this.AnimateInputLabel(isFocused | !isFocused & this.Text.Length > 0);
+
+            if (this.IsFloating)
+            {
+                this.AnimateInputLabel(isFocused | !isFocused & this.Text.Length > 0);
+            }
         }
 
         private void SetInputLabelText(bool mustClear)

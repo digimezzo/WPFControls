@@ -5,17 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls"
         mc:Ignorable="d"
-        Title="MaterialControlsTest" Height="600" Width="400">
+        Title="MaterialControlsTest" Height="600" Width="740">
 
     <StackPanel Orientation="Horizontal" Margin="20">
-        <StackPanel>
+        <StackPanel Width="350">
             <controls:MaterialRaisedButton Margin="10" Content="Test" HorizontalAlignment="Center" Accent="#2196F3" Foreground="White"/>
             <controls:MaterialFlatButton Margin="10" Content="Test" HorizontalAlignment="Center" Foreground="#2196F3"/>
-            <controls:MaterialTextBox Margin="10" Label="Write something" Accent="#E91E63"/>
-            <controls:MaterialTextBox Margin="10" Label="Write something" IsFloating="True" Accent="#4CAF50"/>
-            <controls:MaterialTextBox Margin="10" Label="Write text" IsFloating="True" Accent="#4CAF50" FontSize="18" 
+            <controls:MaterialTextBox Margin="10" Label="No floating label" Accent="#E91E63"/>
+            <controls:MaterialTextBox Margin="10" Label="Floating label" IsFloating="True" Accent="#4CAF50"/>
+            <controls:MaterialTextBox Margin="10" Label="Text validation" IsFloating="True" Accent="#4CAF50" FontSize="18" 
                                       ValidationMode="Text" ErrorText="Text is empty"/>
-            <controls:MaterialTextBox Margin="10" Label="Write a number" IsFloating="True" Accent="#4CAF50" FontSize="18" 
+            <controls:MaterialTextBox Margin="10" Label="Number validation" IsFloating="True" Accent="#4CAF50" FontSize="18" 
                                       ValidationMode="Number" ErrorText="Invalid number"/>
             <controls:MaterialComboBox Margin="10" Background="#F0F0F0">
                 <TextBlock Text="One"/>
@@ -28,7 +28,7 @@
                 <TextBlock Text="Three"/>
             </controls:MaterialComboBox>
         </StackPanel>
-        <StackPanel>
+        <StackPanel Width="350">
             <controls:MaterialRaisedButton Margin="10" Content="Test" HorizontalAlignment="Center" Accent="#FFFFFF" Foreground="#2196F3"/>
             <controls:MaterialFloatingActionButton Accent="#2196F3" Margin="10">
                 <TextBlock FontSize="24" Foreground="White" Text="+" Margin="0,0,1,1"/>
@@ -43,6 +43,8 @@
                 <TextBlock FontSize="24" Foreground="#2196F3" Text="+" Margin="0,0,1,1"/>
             </controls:MaterialMiniFloatingActionButton>
             <controls:MaterialToggleSwitch Margin="10" Accent="#2196F3"/>
+            <controls:MaterialDateBox Margin="10" Accent="#2196F3" Width="300" ValidationMode="Date" 
+                                      LabelYear="Year*" LabelMonth="Month*" LabelDay="Day*"/>
         </StackPanel>
     </StackPanel>
 </Window>
