@@ -140,6 +140,18 @@ namespace Digimezzo.WPFControls
             else {
                 this.Background = new SolidColorBrush(Colors.White);
             }
+
+            // Initial state of the input label
+            if (this.IsFloating)
+            {
+                this.AnimateInputLabel(isFocused | this.Text.Length > 0);
+            }
+            else
+            {
+                this.SetInputLabelText(this.Text.Length > 0);
+            }
+
+            this.Validate();
         }
 
         private void Validate()

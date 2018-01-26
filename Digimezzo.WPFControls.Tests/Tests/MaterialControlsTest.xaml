@@ -12,7 +12,7 @@
             <controls:MaterialRaisedButton Margin="10" Content="Test" HorizontalAlignment="Center" Accent="#2196F3" Foreground="White"/>
             <controls:MaterialFlatButton Margin="10" Content="Test" HorizontalAlignment="Center" Foreground="#2196F3"/>
             <controls:MaterialTextBox Margin="10" Label="No floating label" Accent="#E91E63"/>
-            <controls:MaterialTextBox Margin="10" Label="Floating label" IsFloating="True" Accent="#4CAF50"/>
+            <controls:MaterialTextBox Margin="10" Label="Floating label" IsFloating="True" Accent="#4CAF50" Text="Sample text"/>
             <controls:MaterialTextBox Margin="10" Label="Text validation" IsFloating="True" Accent="#4CAF50" FontSize="18" 
                                       ValidationMode="Text" ErrorText="Text is empty"/>
             <controls:MaterialTextBox Margin="10" Label="Number validation" IsFloating="True" Accent="#4CAF50" FontSize="18" 
