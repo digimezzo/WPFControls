@@ -27,7 +27,7 @@ namespace Digimezzo.WPFControls
             // For use in the IScrollInfo implementation
             this.RenderTransform = this.trans;
 
-            this.easingFunction = new SineEase() {EasingMode = EasingMode.EaseOut};
+            this.easingFunction = new SineEase() { EasingMode = EasingMode.EaseOut };
             this.transAnimation = new DoubleAnimation()
             {
                 Duration = Base.Constants.SmoothScrollingDuration,
@@ -35,14 +35,14 @@ namespace Digimezzo.WPFControls
                 FillBehavior = FillBehavior.Stop
             };
         }
-       
+
         public int ScrollOffset
         {
             get { return Convert.ToInt32(GetValue(ScrollOffsetProperty)); }
             set { SetValue(ScrollOffsetProperty, value); }
         }
 
-        public static readonly DependencyProperty ScrollOffsetProperty = 
+        public static readonly DependencyProperty ScrollOffsetProperty =
             DependencyProperty.RegisterAttached(nameof(ScrollOffset), typeof(int), typeof(VirtualizingWrapPanel), new PropertyMetadata(0));
 
         public double ChildWidth
@@ -51,7 +51,7 @@ namespace Digimezzo.WPFControls
             set { SetValue(ChildWidthProperty, value); }
         }
 
-        public static readonly DependencyProperty ChildWidthProperty = 
+        public static readonly DependencyProperty ChildWidthProperty =
             DependencyProperty.RegisterAttached(nameof(ChildWidth), typeof(double), typeof(VirtualizingWrapPanel), new FrameworkPropertyMetadata(200.0, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
         public double ChildHeight
@@ -60,7 +60,7 @@ namespace Digimezzo.WPFControls
             set { SetValue(ChildHeightProperty, value); }
         }
 
-        public static readonly DependencyProperty ChildHeightProperty = 
+        public static readonly DependencyProperty ChildHeightProperty =
             DependencyProperty.RegisterAttached(nameof(ChildHeight), typeof(double), typeof(VirtualizingWrapPanel), new FrameworkPropertyMetadata(200.0, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 
         public WrapPanelAlignment HorizontalContentAlignment
@@ -71,7 +71,7 @@ namespace Digimezzo.WPFControls
 
         public static readonly DependencyProperty HorizontalContentAlignmentProperty =
             DependencyProperty.RegisterAttached(nameof(HorizontalContentAlignment), typeof(WrapPanelAlignment), typeof(VirtualizingWrapPanel), new FrameworkPropertyMetadata(WrapPanelAlignment.Left, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
-      
+
         /// <summary>
         /// Measure the children
         /// </summary>
@@ -79,68 +79,73 @@ namespace Digimezzo.WPFControls
         /// <returns>Size desired</returns>
         protected override Size MeasureOverride(Size availableSize)
         {
-            this.UpdateScrollInfo(availableSize);
-
-            // Figure out range that's visible based on layout algorithm
-            int firstVisibleItemIndex = 0;
-            int lastVisibleItemIndex = 0;
-            GetVisibleRange(ref firstVisibleItemIndex, ref lastVisibleItemIndex);
-
-            // Getting the visible range failed. Stop here.
-            if (firstVisibleItemIndex == 0 && lastVisibleItemIndex == 0)
+            try
             {
-                return new Size(0, 0);
-            }
+                this.UpdateScrollInfo(availableSize);
 
-            // We need to access InternalChildren before the generator to work around a bug
-            UIElementCollection children = this.InternalChildren;
-            IItemContainerGenerator generator = this.ItemContainerGenerator;
+                // Figure out range that's visible based on layout algorithm
+                int firstVisibleItemIndex = 0;
+                int lastVisibleItemIndex = 0;
+                GetVisibleRange(ref firstVisibleItemIndex, ref lastVisibleItemIndex);
 
-            // Get the generator position of the first visible data item
-            GeneratorPosition startPos = generator.GeneratorPositionFromIndex(firstVisibleItemIndex);
+                // We need to access InternalChildren before the generator to work around a bug
+                UIElementCollection children = this.InternalChildren;
+                IItemContainerGenerator generator = this.ItemContainerGenerator;
 
-            // Get index where we'd insert the child for this position. If the item is realized
-            // (position.Offset == 0), it's just position.Index, otherwise we have to add one to
-            // insert after the corresponding child
-            int childIndex = (startPos.Offset == 0) ? startPos.Index : startPos.Index + 1;
+                // Get the generator position of the first visible data item
+                GeneratorPosition startPos = generator.GeneratorPositionFromIndex(firstVisibleItemIndex);
 
-            using (generator.StartAt(startPos, GeneratorDirection.Forward, true))
-            {
-                int itemIndex = firstVisibleItemIndex;
-                while (itemIndex <= lastVisibleItemIndex)
+                // Get index where we'd insert the child for this position. If the item is realized
+                // (position.Offset == 0), it's just position.Index, otherwise we have to add one to
+                // insert after the corresponding child
+                int childIndex = (startPos.Offset == 0) ? startPos.Index : startPos.Index + 1;
+
+                using (generator.StartAt(startPos, GeneratorDirection.Forward, true))
                 {
-                    bool newlyRealized = false;
-
-                    // Get or create the child
-                    UIElement child = generator.GenerateNext(out newlyRealized) as UIElement;
-                    if (newlyRealized)
+                    int itemIndex = firstVisibleItemIndex;
+                    while (itemIndex <= lastVisibleItemIndex)
                     {
-                        // Figure out if we need to insert the child at the end or somewhere in the middle
-                        if (childIndex >= children.Count)
+                        bool newlyRealized = false;
+
+                        // Get or create the child
+                        UIElement child = generator.GenerateNext(out newlyRealized) as UIElement;
+                        if (newlyRealized)
                         {
-                            base.AddInternalChild(child);
+                            // Figure out if we need to insert the child at the end or somewhere in the middle
+                            if (childIndex >= children.Count)
+                            {
+                                base.AddInternalChild(child);
+                            }
+                            else
+                            {
+                                base.InsertInternalChild(childIndex, child);
+                            }
+                            generator.PrepareItemContainer(child);
                         }
                         else
                         {
-                            base.InsertInternalChild(childIndex, child);
+                            // The child has already been created, let's be sure it's in the right spot
+                            Debug.Assert(child.Equals(children[childIndex]), "Wrong child was generated");
                         }
-                        generator.PrepareItemContainer(child);
-                    }
-                    else
-                    {
-                        // The child has already been created, let's be sure it's in the right spot
-                        Debug.Assert(child.Equals(children[childIndex]), "Wrong child was generated");
-                    }
 
-                    // Measurements will depend on layout algorithm
-                    child.Measure(GetChildSize());
-                    itemIndex += 1;
-                    childIndex += 1;
+                        // Measurements will depend on layout algorithm
+                        child.Measure(GetChildSize());
+                        itemIndex += 1;
+                        childIndex += 1;
+                    }
                 }
-            }
 
-            // Note: this could be deferred to idle time for efficiency
-            CleanUpItems(firstVisibleItemIndex, lastVisibleItemIndex);
+                // Note: this could be deferred to idle time for efficiency
+                CleanUpItems(firstVisibleItemIndex, lastVisibleItemIndex);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                // No idea if we can ignore this
+            }
+            catch (NullReferenceException)
+            {
+                // No idea if we can ignore this
+            }
 
             // Guard against possible infinity if exiting measure early
             return new Size(double.IsInfinity(availableSize.Width) ? 0 : availableSize.Width, double.IsInfinity(availableSize.Height) ? 0 : availableSize.Height);
@@ -219,7 +224,7 @@ namespace Digimezzo.WPFControls
             int row = index / childrenPerRow;
             SetVerticalOffset(row * ChildHeight);
         }
-     
+
         /// <summary>
         /// Revirtualize items that are no longer visible
         /// </summary>
@@ -249,7 +254,7 @@ namespace Digimezzo.WPFControls
                 }
             }
         }
-      
+
         // I've isolated the layout specific code to this region. If you want to do something other than tiling, this is
         // where you'll make your changes
 
@@ -374,7 +379,7 @@ namespace Digimezzo.WPFControls
 
             return itemCount;
         }
-      
+
         // See Ben Constable's series of posts at http://blogs.msdn.com/bencon/
         private void UpdateScrollInfo(Size availableSize)
         {
