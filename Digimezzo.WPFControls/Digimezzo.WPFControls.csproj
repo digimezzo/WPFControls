@@ -69,6 +69,7 @@
     <Compile Include="Converters\InvertingBooleanConverter.cs" />
     <Compile Include="Converters\NullToVisibleConverter.cs" />
     <Compile Include="Converters\NullToCollapsedConverter.cs" />
+    <Compile Include="Converters\ColorPickerNumberConverter.cs" />
     <Compile Include="Converters\ResizeModeMinMaxButtonVisibilityConverter.cs" />
     <Compile Include="Converters\SolidColorBrushToColorConverter.cs" />
     <Compile Include="Converters\StringToLowerConverter.cs" />

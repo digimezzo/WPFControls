@@ -5,6 +5,40 @@
                     xmlns:converters="clr-namespace:Digimezzo.WPFControls.Converters">
 
   <converters:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter" />
+  <converters:ColorPickerNumberConverter x:Key="NumberRatioToIntConverter"/>
+
+  <Style x:Key="MetroTextBox" TargetType="{x:Type TextBox}">
+    <Setter Property="Background" Value="#DFDFDF" />
+    <Setter Property="Foreground" Value= "Black" />
+    <Setter Property="SelectionBrush" Value="#44FFFFFF" />
+    <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="SnapsToDevicePixels" Value="True"/>
+    <Setter Property="ContextMenu">
+      <Setter.Value>
+        <ContextMenu>
+          <MenuItem Command="ApplicationCommands.Cut"/>
+          <MenuItem Command="ApplicationCommands.Copy"/>
+          <MenuItem Command="ApplicationCommands.Paste"/>
+        </ContextMenu>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type TextBoxBase}">
+          <Border BorderThickness="{TemplateBinding BorderThickness}" 
+                  BorderBrush="{TemplateBinding BorderBrush}" 
+                  Background="{TemplateBinding Background}">
+            <ScrollViewer x:Name="PART_ContentHost" 
+                          Height="24" 
+                          Background="{TemplateBinding Background}" 
+                          Foreground="{TemplateBinding Foreground}" 
+                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
 
   <Style x:Key="ColorPickerRepeatButtonStyle" TargetType="{x:Type RepeatButton}">
     <Setter Property="IsTabStop" Value="false" />
@@ -145,6 +179,54 @@
                 </Style>
               </Slider.Style>
             </Slider>
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+              </Grid.ColumnDefinitions>
+              <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+                <TextBox Style="{StaticResource MetroTextBox}"
+                         Width="30"
+                         Text="{Binding Path=Hue,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource TemplatedParent},Converter={StaticResource NumberRatioToIntConverter},ConverterParameter=360}"/>
+                <TextBlock Text="H"/>
+              </StackPanel>
+              <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
+                <TextBox Style="{StaticResource MetroTextBox}"
+                         Width="30"
+                         Text="{Binding Path=Saturation,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource TemplatedParent},Converter={StaticResource NumberRatioToIntConverter},ConverterParameter=100}"/>
+                <TextBlock Text="S"/>
+              </StackPanel>
+              <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal">
+                <TextBox Style="{StaticResource MetroTextBox}"
+                         Width="30"
+                         Text="{Binding Path=Value,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource TemplatedParent},Converter={StaticResource NumberRatioToIntConverter},ConverterParameter=100}"/>
+                <TextBlock Text="V"/>
+              </StackPanel>
+              <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                <TextBox Style="{StaticResource MetroTextBox}"
+                         Width="30"
+                         Text="{Binding Path=Red,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource TemplatedParent}}"/>
+                <TextBlock Text="R"/>
+              </StackPanel>
+              <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                <TextBox Style="{StaticResource MetroTextBox}"
+                         Width="30"
+                         Text="{Binding Path=Green,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource TemplatedParent}}"/>
+                <TextBlock Text="G"/>
+              </StackPanel>
+              <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                <TextBox Style="{StaticResource MetroTextBox}"
+                         Width="30"
+                         Text="{Binding Path=Blue,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource TemplatedParent}}"/>
+                <TextBlock Text="B"/>
+              </StackPanel>
+            </Grid>
           </StackPanel>
         </ControlTemplate>
       </Setter.Value>
