@@ -23,6 +23,7 @@ namespace Digimezzo.WPFControls.Tests
     {
         public MainWindow()
         {
+            new ColorPickerTest().ShowDialog();
             InitializeComponent();
         }
 

@@ -1,0 +1,14 @@
+﻿<Window x:Class="Digimezzo.WPFControls.Tests.Tests.ColorPickerTest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Digimezzo.WPFControls.Tests.Tests"
+        xmlns:controls="clr-namespace:Digimezzo.WPFControls;assembly=Digimezzo.WPFControls"
+        xmlns:effects="clr-namespace:Digimezzo.WPFControls.Effects;assembly=Digimezzo.WPFControls"
+        mc:Ignorable="d"
+        Title="ColorPickerTest" Height="600" Width="600">
+  <Grid>
+    <controls:ColorPicker SelectedColor="#FFFF32C4"/>
+  </Grid>
+</Window>

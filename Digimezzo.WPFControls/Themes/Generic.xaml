@@ -24,5 +24,6 @@
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Windows8Slider.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Windows10Slider.xaml" />
         <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/Windows10ToggleSwitch.xaml" />
+        <ResourceDictionary Source="/Digimezzo.WPFControls;component/Themes/ColorPicker.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

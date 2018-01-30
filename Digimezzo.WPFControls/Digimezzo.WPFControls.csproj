@@ -41,6 +41,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -58,9 +61,11 @@
     <Compile Include="Base\PropertyChangedBase.cs" />
     <Compile Include="Base\Constants.cs" />
     <Compile Include="Base\SliderBase.cs" />
+    <Compile Include="ColorPicker.cs" />
     <Compile Include="Converters\AddValueConverter.cs" />
     <Compile Include="Converters\BooleanToCollapsedConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\ColorToBrushConverter.cs" />
     <Compile Include="Converters\InvertingBooleanConverter.cs" />
     <Compile Include="Converters\NullToVisibleConverter.cs" />
     <Compile Include="Converters\NullToCollapsedConverter.cs" />
@@ -69,6 +74,7 @@
     <Compile Include="Converters\StringToLowerConverter.cs" />
     <Compile Include="Converters\StringToUpperConverter.cs" />
     <Compile Include="Effects\FeatheringEffect.cs" />
+    <Compile Include="Effects\HsvWheelEffect.cs" />
     <Compile Include="Enums\SlideDirection.cs" />
     <Compile Include="Enums\WrapPanelAlignment.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
@@ -126,6 +132,8 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <Resource Include="Effects\FeatheringEffect.ps" />
+    <Resource Include="Effects\HsvWheelEffect.ps" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -136,6 +144,10 @@
     <Resource Include="Licenses\MahApps.Metro.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Themes\ColorPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -227,6 +239,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Effects\FeatheringEffect.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Effects\HsvWheelEffect.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Licenses\Gu.Wpf.Geometry.txt" />
+    <Resource Include="Licenses\PropertyTools.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
