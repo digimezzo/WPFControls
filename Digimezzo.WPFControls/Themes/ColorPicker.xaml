@@ -2,10 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Digimezzo.WPFControls"
                     xmlns:effects="clr-namespace:Digimezzo.WPFControls.Effects"
-                    xmlns:converters="clr-namespace:Digimezzo.WPFControls.Converters">
+                    xmlns:converters="clr-namespace:Digimezzo.WPFControls.Converters"
+                    xmlns:validations="clr-namespace:Digimezzo.WPFControls.ValidationRules">
 
   <converters:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter" />
-  <converters:ColorPickerNumberConverter x:Key="NumberRatioToIntConverter"/>
 
   <Style x:Key="MetroTextBox" TargetType="{x:Type TextBox}">
     <Setter Property="Background" Value="#DFDFDF" />
@@ -125,7 +125,7 @@
                   <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                   <Setter Property="Template">
                     <Setter.Value>
-                      <ControlTemplate>
+                      <ControlTemplate TargetType="{x:Type Slider}">
                         <Grid>
                           <Grid.RowDefinitions>
                             <RowDefinition Height="8*" />
@@ -153,7 +153,7 @@
                                            Command="{x:Static Slider.IncreaseLarge}" />
                             </Track.IncreaseRepeatButton>
                             <Track.Thumb>
-                              <Thumb x:Name="Thumb">
+                              <Thumb x:Name="PART_ValueSliderThumb">
                                 <Thumb.Style>
                                   <Style TargetType="{x:Type Thumb}">
                                     <Setter Property="Template">
@@ -192,38 +192,104 @@
               </Grid.ColumnDefinitions>
               <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
                 <TextBox Style="{StaticResource MetroTextBox}"
-                         Width="30"
-                         Text="{Binding Path=Hue,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource TemplatedParent},Converter={StaticResource NumberRatioToIntConverter},ConverterParameter=360}"/>
+                         Width="30">
+                  <TextBox.Text>
+                    <Binding Path="Hue"
+                             UpdateSourceTrigger="PropertyChanged"
+                             RelativeSource="{RelativeSource TemplatedParent}"
+                             ConverterParameter="360">
+                      <Binding.Converter>
+                        <converters:ColorPickerNumberConverter/>
+                      </Binding.Converter>
+                      <Binding.ValidationRules>
+                        <validations:IntValidation Maximum="360"/>
+                      </Binding.ValidationRules>
+                    </Binding>
+                  </TextBox.Text>
+                </TextBox>
                 <TextBlock Text="H"/>
               </StackPanel>
               <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
                 <TextBox Style="{StaticResource MetroTextBox}"
-                         Width="30"
-                         Text="{Binding Path=Saturation,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource TemplatedParent},Converter={StaticResource NumberRatioToIntConverter},ConverterParameter=100}"/>
+                         Width="30">
+                  <TextBox.Text>
+                    <Binding Path="Saturation"
+                             UpdateSourceTrigger="PropertyChanged"
+                             RelativeSource="{RelativeSource TemplatedParent}"
+                             ConverterParameter="100">
+                      <Binding.Converter>
+                        <converters:ColorPickerNumberConverter/>
+                      </Binding.Converter>
+                      <Binding.ValidationRules>
+                        <validations:IntValidation Maximum="100"/>
+                      </Binding.ValidationRules>
+                    </Binding>
+                  </TextBox.Text>
+                </TextBox>
                 <TextBlock Text="S"/>
               </StackPanel>
               <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal">
                 <TextBox Style="{StaticResource MetroTextBox}"
-                         Width="30"
-                         Text="{Binding Path=Value,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource TemplatedParent},Converter={StaticResource NumberRatioToIntConverter},ConverterParameter=100}"/>
+                         Width="30">
+                  <TextBox.Text>
+                    <Binding Path="Value"
+                             UpdateSourceTrigger="PropertyChanged"
+                             RelativeSource="{RelativeSource TemplatedParent}"
+                             ConverterParameter="100">
+                      <Binding.Converter>
+                        <converters:ColorPickerNumberConverter/>
+                      </Binding.Converter>
+                      <Binding.ValidationRules>
+                        <validations:IntValidation Maximum="100"/>
+                      </Binding.ValidationRules>
+                    </Binding>
+                  </TextBox.Text>
+                </TextBox>
                 <TextBlock Text="V"/>
               </StackPanel>
               <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
                 <TextBox Style="{StaticResource MetroTextBox}"
-                         Width="30"
-                         Text="{Binding Path=Red,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource TemplatedParent}}"/>
+                         Width="30">
+                  <TextBox.Text>
+                    <Binding Path="Red"
+                             UpdateSourceTrigger="PropertyChanged"
+                             RelativeSource="{RelativeSource TemplatedParent}">
+                      <Binding.ValidationRules>
+                        <validations:IntValidation Maximum="255"/>
+                      </Binding.ValidationRules>
+                    </Binding>
+                  </TextBox.Text>
+                </TextBox>
                 <TextBlock Text="R"/>
               </StackPanel>
               <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
                 <TextBox Style="{StaticResource MetroTextBox}"
-                         Width="30"
-                         Text="{Binding Path=Green,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource TemplatedParent}}"/>
+                         Width="30">
+                  <TextBox.Text>
+                    <Binding Path="Green"
+                             UpdateSourceTrigger="PropertyChanged"
+                             RelativeSource="{RelativeSource TemplatedParent}">
+                      <Binding.ValidationRules>
+                        <validations:IntValidation Maximum="255"/>
+                      </Binding.ValidationRules>
+                    </Binding>
+                  </TextBox.Text>
+                </TextBox>
                 <TextBlock Text="G"/>
               </StackPanel>
               <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
                 <TextBox Style="{StaticResource MetroTextBox}"
-                         Width="30"
-                         Text="{Binding Path=Blue,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource TemplatedParent}}"/>
+                         Width="30">
+                  <TextBox.Text>
+                    <Binding Path="Blue"
+                             UpdateSourceTrigger="PropertyChanged"
+                             RelativeSource="{RelativeSource TemplatedParent}">
+                      <Binding.ValidationRules>
+                        <validations:IntValidation Maximum="255"/>
+                      </Binding.ValidationRules>
+                    </Binding>
+                  </TextBox.Text>
+                </TextBox>
                 <TextBlock Text="B"/>
               </StackPanel>
             </Grid>

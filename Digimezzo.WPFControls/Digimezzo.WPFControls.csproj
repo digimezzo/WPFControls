@@ -100,6 +100,7 @@
     <Compile Include="SharedAssemblyInfo.cs" />
     <Compile Include="SplitView.cs" />
     <Compile Include="Utils\AnimationUtils.cs" />
+    <Compile Include="ValidationRules\IntValidation.cs" />
     <Compile Include="VirtualizingWrapPanel.cs" />
     <Compile Include="Windows8Slider.cs" />
     <Compile Include="MultiPanePanel.cs" />
@@ -143,6 +144,8 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Licenses\MahApps.Metro.txt" />
+    <Resource Include="Licenses\Gu.Wpf.Geometry.txt" />
+    <Resource Include="Licenses\PropertyTools.txt" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\ColorPicker.xaml">
@@ -243,10 +246,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Effects\HsvWheelEffect.fx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Licenses\Gu.Wpf.Geometry.txt" />
-    <Resource Include="Licenses\PropertyTools.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

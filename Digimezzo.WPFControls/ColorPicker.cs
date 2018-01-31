@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Digimezzo.WPFControls.Utils;
 
 namespace Digimezzo.WPFControls
 {
@@ -21,10 +22,12 @@ namespace Digimezzo.WPFControls
     {
         #region Variables
 
-        private static Color DefaultColor = Colors.White;
+        private static readonly Color DefaultColor = Colors.White;
         private const double Radius = 150;
         private const double Radius2 = Radius * Radius;
 
+        private bool withinColorChange = false;
+        private bool withinComponentChange = false;
         private bool isMouseDown = false;
         private Canvas pCanvas;
         private Ellipse pEllipse;
@@ -58,15 +61,15 @@ namespace Digimezzo.WPFControls
 
         public static readonly DependencyProperty RedProperty =
             DependencyProperty.Register(nameof(Red), typeof(int), typeof(ColorPicker),
-                new PropertyMetadata(0, RgbComponentChangedCallback));
+                new PropertyMetadata(0, ComponentChangedCallback));
 
         public static readonly DependencyProperty GreenProperty =
             DependencyProperty.Register(nameof(Green), typeof(int), typeof(ColorPicker),
-                new PropertyMetadata(0, RgbComponentChangedCallback));
+                new PropertyMetadata(0, ComponentChangedCallback));
 
         public static readonly DependencyProperty BlueProperty =
             DependencyProperty.Register(nameof(Blue), typeof(int), typeof(ColorPicker),
-                new PropertyMetadata(0, RgbComponentChangedCallback));
+                new PropertyMetadata(0, ComponentChangedCallback));
 
         public Brush ButtonInnerBackground
         {
@@ -141,7 +144,9 @@ namespace Digimezzo.WPFControls
 
         private void ValueSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            isMouseDown = true;
             UpdateColor();
+            isMouseDown = false;
         }
 
         #endregion
@@ -152,11 +157,6 @@ namespace Digimezzo.WPFControls
         {
             ((ColorPicker)d).OnComponentChanged(e);
         }
-
-        private static void RgbComponentChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((ColorPicker)d).OnRgbComponentChanged(e);
-        }
         
         private void PickerThumb_DragCompleted(object sender, DragCompletedEventArgs e)
         {
@@ -165,6 +165,7 @@ namespace Digimezzo.WPFControls
 
         private void PickerThumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
+            isMouseDown = true;
             double nX = Canvas.GetLeft(pThumb) + e.HorizontalChange, nY = Canvas.GetTop(pThumb) + e.VerticalChange;
             GetColorFromCurrentPositionAndMoveThumb(nX, nY);
         }
@@ -185,7 +186,9 @@ namespace Digimezzo.WPFControls
         {
             if (SelectedColor != DefaultColor)
             {
-                var hsv = ColorToHsv(SelectedColor);
+                isMouseDown = true;
+
+                var hsv = RgbToHsv(SelectedColor);
                 SetThumbPosition(hsv);
                 Red = SelectedColor.R;
                 Green = SelectedColor.G;
@@ -193,21 +196,65 @@ namespace Digimezzo.WPFControls
                 Hue = hsv.hue;
                 Saturation = hsv.sat;
                 Value = hsv.val;
+
+                isMouseDown = false;
             }
         }
 
         private void OnComponentChanged(DependencyPropertyChangedEventArgs e)
         {
+            if (withinComponentChange)
+            {
+                return;
+            }
             if (!isMouseDown&&e.Property != ValueProperty)
             {
+                withinComponentChange = true;
+                withinColorChange = true;
+
+                if (e.Property == RedProperty)
                 {
-                    SetThumbPosition(SelectedColor);
+                    var color = Color.FromArgb(255, Convert.ToByte(e.NewValue), SelectedColor.G, SelectedColor.B);
+                    UpdateHsv(color);
                 }
+                else if (e.Property == GreenProperty)
+                {
+                    var color = Color.FromArgb(255, SelectedColor.R, Convert.ToByte(e.NewValue), SelectedColor.B);
+                    UpdateHsv(color);
+                }
+                else if (e.Property == BlueProperty)
+                {
+                    var color = Color.FromArgb(255, SelectedColor.R, SelectedColor.G, Convert.ToByte(e.NewValue));
+                    UpdateHsv(color);
+                }
+                else
+                {
+                    UpdateRgb(new Hsv(Hue, Saturation, Value));
+                }
+
+                ResetPickerThumbPosition();
+
+                withinComponentChange = false;
+                withinColorChange = false;
             }
         }
 
-        private void OnRgbComponentChanged(DependencyPropertyChangedEventArgs e)
+        private void UpdateHsv(Color rgb)
         {
+            var hsv = RgbToHsv(rgb);
+            Hue = hsv.Hue;
+            Saturation = hsv.Saturation;
+            Value = hsv.Value;
+            SelectedColor = rgb;
+        }
+
+        private void UpdateRgb(Hsv hsv)
+        {
+            var rgb = HsvToColor(hsv);
+            Red = rgb.R;
+            Green = rgb.G;
+            Blue = rgb.B;
+            SelectedColor = rgb;
         }
 
         private void GetColorFromCurrentPositionAndMoveThumb(double nX, double nY)
@@ -245,15 +292,23 @@ namespace Digimezzo.WPFControls
                 }
             }
 
-            UpdateColor();
+            UpdateRgb(new Hsv(Hue, Saturation, Value));
+        }
+
+        private void ResetPickerThumbPosition()
+        {
+            var radian = AngleToRadian(Hue * 360d);
+            double nX = Math.Cos(radian) * Saturation * Radius, nY = Math.Sin(radian) * Saturation * Radius;
+            Canvas.SetLeft(pThumb, 150 - nX);
+            Canvas.SetTop(pThumb, 150 - nY);
         }
 
         private void SetThumbPosition(Color color)
         {
-            if (pThumb == null)
-                return;
+            //if (pThumb == null)
+            //    return;
 
-            var hsv = ColorToHsv(color);
+            var hsv = RgbToHsv(color);
             SetThumbPosition(hsv);
         }
 
@@ -275,8 +330,9 @@ namespace Digimezzo.WPFControls
             return angle / Math.PI * 180d;
         }
 
-        private static Color HsvToColor(double hue, double sat, double val, double alpha = 1.0)
+        private static Color HsvToColor(Hsv hsv, double alpha = 1.0)
         {
+            double hue = hsv.Hue, sat = hsv.Saturation, val = hsv.Value;
             double r = 0;
             double g = 0;
             double b = 0;
@@ -337,7 +393,7 @@ namespace Digimezzo.WPFControls
             return Color.FromArgb((byte) (alpha * 255), (byte) (r * 255), (byte) (g * 255), (byte) (b * 255));
         }
 
-        private static (double hue, double sat, double val) ColorToHsv(Color color)
+        private static Hsv RgbToHsv(Color color)
         {
             byte r = color.R;
             byte g = color.G;
@@ -385,15 +441,30 @@ namespace Digimezzo.WPFControls
                 }
             }
 
-            return (h / 360d, s, v / 255d);
+            
+            return new Hsv(h / 360d, s, v / 255d);
         }
 
         private void UpdateColor()
         {
-            SelectedColor = HsvToColor(Hue, Saturation, Value);
+            SelectedColor = HsvToColor(new Hsv(Hue, Saturation, Value));
             Red = SelectedColor.R;
             Green = SelectedColor.G;
             Blue = SelectedColor.B;
+        }
+    }
+
+    struct Hsv
+    {
+        public double Hue { get; set; }
+        public double Saturation { get; set; }
+        public double Value { get; set; }
+
+        public Hsv(double hue, double saturation, double value)
+        {
+            Hue = hue;
+            Saturation = saturation;
+            Value = value;
         }
     }
 }
