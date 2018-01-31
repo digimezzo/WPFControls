@@ -7,13 +7,25 @@
 
   <converters:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter" />
 
-  <Style x:Key="MetroTextBox" TargetType="{x:Type TextBox}">
-    <Setter Property="Background" Value="#DFDFDF" />
-    <Setter Property="Foreground" Value= "Black" />
-    <Setter Property="SelectionBrush" Value="#44FFFFFF" />
+  <SolidColorBrush x:Key="BorderMaskStrokeBrush" Color="#44DCDCDC"/>
+
+  <DrawingBrush x:Key="CheckersBrush" Viewport="0,0,11,11" ViewportUnits="Absolute" TileMode="Tile">
+    <DrawingBrush.Drawing>
+      <DrawingGroup>
+        <GeometryDrawing Geometry="M0,0 L2,0 2,2, 0,2Z" Brush="White" />
+        <GeometryDrawing Geometry="M0,1 L2,1 2,2 1,2 1,0 0,0Z" Brush="LightGray" />
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+
+  <Style x:Key="ColorPickerMetroTextBox" TargetType="{x:Type TextBox}">
+    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+    <Setter Property="Background" Value="{Binding Path=TextBoxBackground,RelativeSource={RelativeSource AncestorType={x:Type local:ColorPicker}}}" />
+    <Setter Property="Foreground" Value="{Binding Path=TextBoxForeground,RelativeSource={RelativeSource AncestorType={x:Type local:ColorPicker}}}" />
+    <Setter Property="SelectionBrush" Value="{Binding Path=TextBoxSelectionBrush,RelativeSource={RelativeSource AncestorType={x:Type local:ColorPicker}}}" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
-    <Setter Property="SnapsToDevicePixels" Value="True"/>
+    <Setter Property="Margin" Value="0 0 10 0"/>
     <Setter Property="ContextMenu">
       <Setter.Value>
         <ContextMenu>
@@ -74,11 +86,11 @@
                   <Ellipse.Effect>
                     <effects:HsvWheelEffect InnerRadius="0"
                                             InnerSaturation="0"
-                                            Value="{Binding Path=Value,RelativeSource={RelativeSource TemplatedParent}}"/>
+                                            Value="{Binding Path=Value,RelativeSource={RelativeSource AncestorType={x:Type local:ColorPicker}}}"/>
                   </Ellipse.Effect>
                 </Ellipse>
                 <Ellipse Margin="10"
-                           Height="300" Width="300" Fill="Transparent" Stroke="#44DCDCDC" StrokeThickness="4">
+                         Height="300" Width="300" Fill="Transparent" Stroke="{StaticResource BorderMaskStrokeBrush}" StrokeThickness="4">
                 </Ellipse>
                 <Thumb x:Name="PART_Thumb"
                        Canvas.Left="150"
@@ -86,7 +98,6 @@
                        Margin="10">
                   <Thumb.Style>
                     <Style TargetType="{x:Type Thumb}">
-                      <Setter Property="SnapsToDevicePixels" Value="True" />
                       <Setter Property="Stylus.IsPressAndHoldEnabled" Value="True" />
                       <Setter Property="Background" Value="Transparent" />
                       <Setter Property="Template">
@@ -95,7 +106,7 @@
                             <Ellipse Height="16"
                                      Width="16"
                                      Margin="-8 -8 0 0"
-                                     Stroke="#AA222222"
+                                     Stroke="{Binding ButtonBackground, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPicker}}}"
                                      StrokeThickness="1.5"
                                      Fill="Transparent"/>
                           </ControlTemplate>
@@ -105,194 +116,220 @@
                   </Thumb.Style>
                 </Thumb>
               </Canvas>
-              <Border x:Name="PART_PriviewColorBorder"
-                      Height="300"
+              <Canvas Height="300"
                       Width="40"
-                      Margin="10 0 10 0"
-                      Background="{TemplateBinding SelectedColor, Converter={StaticResource ColorToSolidColorBrushConverter}}">
-                <Rectangle Stroke="#44DCDCDC" StrokeThickness="4"/>
-              </Border>
+                      Margin="10 0 10 0">
+                <Border Height="300"
+                        Width="40"
+                        Background="{StaticResource CheckersBrush}" />
+                <Border x:Name="PART_PriviewColorBorder"
+                        Height="300"
+                        Width="40"                        
+                        Background="{TemplateBinding SelectedColor, Converter={StaticResource ColorToSolidColorBrushConverter}}">
+                  <Rectangle Stroke="{StaticResource BorderMaskStrokeBrush}" StrokeThickness="4"/>
+                </Border>
+              </Canvas>
             </StackPanel>
-            <Slider x:Name="PART_ValueSlider"
-                    Maximum="1"
-                    Minimum="0"
-                    SmallChange="0.01"
-                    LargeChange="0.1"
-                    Margin="10 20 10 0"
-                    Value="{Binding Path=Value,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}">
-              <Slider.Style>
-                <Style TargetType="{x:Type Slider}">
-                  <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                  <Setter Property="Template">
-                    <Setter.Value>
-                      <ControlTemplate TargetType="{x:Type Slider}">
-                        <Grid>
-                          <Grid.RowDefinitions>
-                            <RowDefinition Height="8*" />
-                            <RowDefinition Height="16" />
-                            <RowDefinition Height="12*" />
-                          </Grid.RowDefinitions>
-                          <Border Margin="1" 
+            <StackPanel Orientation="Vertical" Margin="10 10 10 0">
+              <Slider x:Name="PART_ValueSlider"
+                      Margin="0 10 0 0"
+                      Maximum="1"
+                      Minimum="0"
+                      SmallChange="0.01"
+                      LargeChange="0.1"
+                      Value="{Binding Path=Value,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}">
+                <Slider.Style>
+                  <Style TargetType="{x:Type Slider}">
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="Template">
+                      <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Slider}">
+                          <Grid>
+                            <Grid.RowDefinitions>
+                              <RowDefinition Height="8*" />
+                              <RowDefinition Height="16" />
+                              <RowDefinition Height="12*" />
+                            </Grid.RowDefinitions>
+                            <Border Margin="1" 
                                   Grid.Row="1" 
                                   Background="{Binding ElementName=PART_PriviewColorBorder,Path=Background}" />
-                          <Border Margin="1" Grid.Row="1">
-                            <Border.Background>
-                              <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                <GradientStop Color="#FF000000" Offset="0" />
-                                <GradientStop Color="#00000000" Offset="1" />
-                              </LinearGradientBrush>
-                            </Border.Background>
-                          </Border>
-                          <Track Grid.Row="1" Margin="-3,0,-3,0" x:Name="PART_Track">
-                            <Track.DecreaseRepeatButton>
-                              <RepeatButton Style="{StaticResource ColorPickerRepeatButtonStyle}"
-                                           Command="{x:Static Slider.DecreaseLarge}" />
-                            </Track.DecreaseRepeatButton>
-                            <Track.IncreaseRepeatButton>
-                              <RepeatButton Style="{StaticResource ColorPickerRepeatButtonStyle}"
-                                           Command="{x:Static Slider.IncreaseLarge}" />
-                            </Track.IncreaseRepeatButton>
-                            <Track.Thumb>
-                              <Thumb x:Name="PART_ValueSliderThumb">
-                                <Thumb.Style>
-                                  <Style TargetType="{x:Type Thumb}">
-                                    <Setter Property="Template">
-                                      <Setter.Value>
-                                        <ControlTemplate>
-                                          <Ellipse Height="16"
-                                                   Width="16"
-                                                   Stroke="Black"
-                                                   StrokeThickness="1.5"
-                                                   Fill="White"/>
-                                        </ControlTemplate>
-                                      </Setter.Value>
-                                    </Setter>
-                                  </Style>
-                                </Thumb.Style>
-                              </Thumb>
-                            </Track.Thumb>
-                          </Track>
-                        </Grid>
-                      </ControlTemplate>
-                    </Setter.Value>
-                  </Setter>
-                </Style>
-              </Slider.Style>
-            </Slider>
-            <Grid>
-              <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-              </Grid.RowDefinitions>
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-              </Grid.ColumnDefinitions>
-              <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
-                <TextBox Style="{StaticResource MetroTextBox}"
+                            <Border Margin="1" Grid.Row="1">
+                              <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                  <GradientStop Color="Black" Offset="0" />
+                                  <GradientStop Color="Transparent" Offset="1" />
+                                </LinearGradientBrush>
+                              </Border.Background>
+                            </Border>
+                            <Track Grid.Row="1" Margin="-3,0,-3,0" x:Name="PART_Track">
+                              <Track.DecreaseRepeatButton>
+                                <RepeatButton Style="{StaticResource ColorPickerRepeatButtonStyle}"
+                                              Command="{x:Static Slider.DecreaseLarge}" />
+                              </Track.DecreaseRepeatButton>
+                              <Track.IncreaseRepeatButton>
+                                <RepeatButton Style="{StaticResource ColorPickerRepeatButtonStyle}"
+                                              Command="{x:Static Slider.IncreaseLarge}" />
+                              </Track.IncreaseRepeatButton>
+                              <Track.Thumb>
+                                <Thumb x:Name="PART_ValueSliderThumb">
+                                  <Thumb.Style>
+                                    <Style TargetType="{x:Type Thumb}">
+                                      <Setter Property="Template">
+                                        <Setter.Value>
+                                          <ControlTemplate>
+                                            <Ellipse Height="16"
+                                                     Width="16"
+                                                     Stroke="{Binding ButtonBackground, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPicker}}}"
+                                                     StrokeThickness="1.5"
+                                                     Fill="{Binding ButtonInnerBackground, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPicker}}}"/>
+                                          </ControlTemplate>
+                                        </Setter.Value>
+                                      </Setter>
+                                    </Style>
+                                  </Thumb.Style>
+                                </Thumb>
+                              </Track.Thumb>
+                            </Track>
+                          </Grid>
+                        </ControlTemplate>
+                      </Setter.Value>
+                    </Setter>
+                  </Style>
+                </Slider.Style>
+              </Slider>
+              <Grid Margin="0 10 0 0">
+                <Grid.RowDefinitions>
+                  <RowDefinition/>
+                  <RowDefinition Height="4"/>
+                  <RowDefinition/>
+                  <RowDefinition Height="4"/>
+                  <RowDefinition/>
+                  <RowDefinition Height="4"/>
+                  <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="1*"/>
+                  <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                  <TextBox Style="{StaticResource ColorPickerMetroTextBox}"
+                           Width="70">
+                    <TextBox.Text>
+                      <Binding Path="Hex"
+                               UpdateSourceTrigger="PropertyChanged"
+                               RelativeSource="{RelativeSource TemplatedParent}">
+                        <Binding.ValidationRules>
+                          <validations:RegexValidation Pattern="^#[0-9a-fA-F]{6}"/>
+                        </Binding.ValidationRules>
+                      </Binding>
+                    </TextBox.Text>
+                  </TextBox>
+                  <TextBlock Text="HEX"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
+                  <TextBox Style="{StaticResource ColorPickerMetroTextBox}"
                          Width="30">
-                  <TextBox.Text>
-                    <Binding Path="Hue"
-                             UpdateSourceTrigger="PropertyChanged"
-                             RelativeSource="{RelativeSource TemplatedParent}"
-                             ConverterParameter="360">
-                      <Binding.Converter>
-                        <converters:ColorPickerNumberConverter/>
-                      </Binding.Converter>
-                      <Binding.ValidationRules>
-                        <validations:IntValidation Maximum="360"/>
-                      </Binding.ValidationRules>
-                    </Binding>
-                  </TextBox.Text>
-                </TextBox>
-                <TextBlock Text="H"/>
-              </StackPanel>
-              <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
-                <TextBox Style="{StaticResource MetroTextBox}"
-                         Width="30">
-                  <TextBox.Text>
-                    <Binding Path="Saturation"
-                             UpdateSourceTrigger="PropertyChanged"
-                             RelativeSource="{RelativeSource TemplatedParent}"
-                             ConverterParameter="100">
-                      <Binding.Converter>
-                        <converters:ColorPickerNumberConverter/>
-                      </Binding.Converter>
-                      <Binding.ValidationRules>
-                        <validations:IntValidation Maximum="100"/>
-                      </Binding.ValidationRules>
-                    </Binding>
-                  </TextBox.Text>
-                </TextBox>
-                <TextBlock Text="S"/>
-              </StackPanel>
-              <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal">
-                <TextBox Style="{StaticResource MetroTextBox}"
-                         Width="30">
-                  <TextBox.Text>
-                    <Binding Path="Value"
-                             UpdateSourceTrigger="PropertyChanged"
-                             RelativeSource="{RelativeSource TemplatedParent}"
-                             ConverterParameter="100">
-                      <Binding.Converter>
-                        <converters:ColorPickerNumberConverter/>
-                      </Binding.Converter>
-                      <Binding.ValidationRules>
-                        <validations:IntValidation Maximum="100"/>
-                      </Binding.ValidationRules>
-                    </Binding>
-                  </TextBox.Text>
-                </TextBox>
-                <TextBlock Text="V"/>
-              </StackPanel>
-              <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-                <TextBox Style="{StaticResource MetroTextBox}"
-                         Width="30">
-                  <TextBox.Text>
-                    <Binding Path="Red"
+                    <TextBox.Text>
+                      <Binding Path="Hue"
+                               UpdateSourceTrigger="PropertyChanged"
+                               RelativeSource="{RelativeSource TemplatedParent}"
+                               ConverterParameter="360">
+                        <Binding.Converter>
+                          <converters:IntRatioConverter/>
+                        </Binding.Converter>
+                        <Binding.ValidationRules>
+                          <validations:IntValidation Maximum="360"/>
+                        </Binding.ValidationRules>
+                      </Binding>
+                    </TextBox.Text>
+                  </TextBox>
+                  <TextBlock Text="H"/>
+                </StackPanel>
+                <StackPanel Grid.Row="4" Grid.Column="0" Orientation="Horizontal">
+                  <TextBox Style="{StaticResource ColorPickerMetroTextBox}"
+                           Width="30">
+                    <TextBox.Text>
+                      <Binding Path="Saturation"
+                               UpdateSourceTrigger="PropertyChanged"
+                               RelativeSource="{RelativeSource TemplatedParent}"
+                               ConverterParameter="100">
+                        <Binding.Converter>
+                          <converters:IntRatioConverter/>
+                        </Binding.Converter>
+                        <Binding.ValidationRules>
+                          <validations:IntValidation Maximum="100"/>
+                        </Binding.ValidationRules>
+                      </Binding>
+                    </TextBox.Text>
+                  </TextBox>
+                  <TextBlock Text="S"/>
+                </StackPanel>
+                <StackPanel Grid.Row="6" Grid.Column="0" Orientation="Horizontal">
+                  <TextBox Style="{StaticResource ColorPickerMetroTextBox}"
+                           Width="30">
+                    <TextBox.Text>
+                      <Binding Path="Value"
+                               UpdateSourceTrigger="PropertyChanged"
+                               RelativeSource="{RelativeSource TemplatedParent}"
+                               ConverterParameter="100">
+                        <Binding.Converter>
+                          <converters:IntRatioConverter/>
+                        </Binding.Converter>
+                        <Binding.ValidationRules>
+                          <validations:IntValidation Maximum="100"/>
+                        </Binding.ValidationRules>
+                      </Binding>
+                    </TextBox.Text>
+                  </TextBox>
+                  <TextBlock Text="V"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                  <TextBox Style="{StaticResource ColorPickerMetroTextBox}"
+                           Width="30">
+                    <TextBox.Text>
+                      <Binding Path="Red"
+                               UpdateSourceTrigger="PropertyChanged"
+                               RelativeSource="{RelativeSource TemplatedParent}">
+                        <Binding.ValidationRules>
+                          <validations:IntValidation Maximum="255"/>
+                        </Binding.ValidationRules>
+                      </Binding>
+                    </TextBox.Text>
+                  </TextBox>
+                  <TextBlock Text="R"/>
+                </StackPanel>
+                <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+                  <TextBox Style="{StaticResource ColorPickerMetroTextBox}"
+                           Width="30">
+                    <TextBox.Text>
+                      <Binding Path="Green"
+                               UpdateSourceTrigger="PropertyChanged"
+                               RelativeSource="{RelativeSource TemplatedParent}">
+                        <Binding.ValidationRules>
+                          <validations:IntValidation Maximum="255"/>
+                        </Binding.ValidationRules>
+                      </Binding>
+                    </TextBox.Text>
+                  </TextBox>
+                  <TextBlock Text="G"/>
+                </StackPanel>
+                <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal">
+                  <TextBox Style="{StaticResource ColorPickerMetroTextBox}"
+                           Width="30">
+                    <TextBox.Text>
+                      <Binding Path="Blue"
                              UpdateSourceTrigger="PropertyChanged"
                              RelativeSource="{RelativeSource TemplatedParent}">
-                      <Binding.ValidationRules>
-                        <validations:IntValidation Maximum="255"/>
-                      </Binding.ValidationRules>
-                    </Binding>
-                  </TextBox.Text>
-                </TextBox>
-                <TextBlock Text="R"/>
-              </StackPanel>
-              <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
-                <TextBox Style="{StaticResource MetroTextBox}"
-                         Width="30">
-                  <TextBox.Text>
-                    <Binding Path="Green"
-                             UpdateSourceTrigger="PropertyChanged"
-                             RelativeSource="{RelativeSource TemplatedParent}">
-                      <Binding.ValidationRules>
-                        <validations:IntValidation Maximum="255"/>
-                      </Binding.ValidationRules>
-                    </Binding>
-                  </TextBox.Text>
-                </TextBox>
-                <TextBlock Text="G"/>
-              </StackPanel>
-              <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
-                <TextBox Style="{StaticResource MetroTextBox}"
-                         Width="30">
-                  <TextBox.Text>
-                    <Binding Path="Blue"
-                             UpdateSourceTrigger="PropertyChanged"
-                             RelativeSource="{RelativeSource TemplatedParent}">
-                      <Binding.ValidationRules>
-                        <validations:IntValidation Maximum="255"/>
-                      </Binding.ValidationRules>
-                    </Binding>
-                  </TextBox.Text>
-                </TextBox>
-                <TextBlock Text="B"/>
-              </StackPanel>
-            </Grid>
+                        <Binding.ValidationRules>
+                          <validations:IntValidation Maximum="255"/>
+                        </Binding.ValidationRules>
+                      </Binding>
+                    </TextBox.Text>
+                  </TextBox>
+                  <TextBlock Text="B"/>
+                </StackPanel>
+              </Grid>
+            </StackPanel>
           </StackPanel>
         </ControlTemplate>
       </Setter.Value>

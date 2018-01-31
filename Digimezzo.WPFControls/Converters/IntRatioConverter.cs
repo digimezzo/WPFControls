@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace Digimezzo.WPFControls.Converters
 {
-    public class ColorPickerNumberConverter : IValueConverter
+    public class IntRatioConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
