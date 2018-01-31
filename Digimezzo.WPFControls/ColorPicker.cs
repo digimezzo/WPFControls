@@ -490,7 +490,7 @@ namespace Digimezzo.WPFControls
 
         private static string RgbToHex(Color rgb)
         {
-            return $"#{rgb.R:X}{rgb.G:X}{rgb.B:X}";
+            return $"#{rgb.R:X02}{rgb.G:X02}{rgb.B:X02}";
         }
     }
 

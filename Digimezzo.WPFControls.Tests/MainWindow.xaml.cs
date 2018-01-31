@@ -23,7 +23,6 @@ namespace Digimezzo.WPFControls.Tests
     {
         public MainWindow()
         {
-            new ColorPickerTest().ShowDialog();
             InitializeComponent();
         }
 
@@ -120,6 +119,12 @@ namespace Digimezzo.WPFControls.Tests
         private void MaterialControlsTestButton_Click(object sender, RoutedEventArgs e)
         {
             var win = new MaterialControlsTest();
+            win.Show();
+        }
+
+        private void ColorPickerTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new ColorPickerTest();
             win.Show();
         }
     }
