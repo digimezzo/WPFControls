@@ -151,13 +151,12 @@
                               <RowDefinition Height="12*" />
                             </Grid.RowDefinitions>
                             <Border Margin="1" 
-                                    Grid.Row="1" 
-                                    Background="{Binding Path=SelectedFullValueColor,RelativeSource={RelativeSource AncestorType={x:Type local:ColorPicker}},Converter={StaticResource ColorToSolidColorBrushConverter}}" />
+                                    Grid.Row="1" />
                             <Border Margin="1" Grid.Row="1">
                               <Border.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                   <GradientStop Color="Black" Offset="0" />
-                                  <GradientStop Color="Transparent" Offset="1" />
+                                  <GradientStop Color="{Binding Path=SelectedFullValueColor,RelativeSource={RelativeSource AncestorType={x:Type local:ColorPicker}}}" Offset="1" />
                                 </LinearGradientBrush>
                               </Border.Background>
                             </Border>
