@@ -32,6 +32,16 @@ namespace Digimezzo.WPFControls
         #endregion
 
         #region Control Properties
+        private static readonly DependencyProperty SelectedFullValueColorProperty =
+            DependencyProperty.Register(nameof(SelectedFullValueColor), typeof(Color), typeof(ColorPicker),
+                new PropertyMetadata(Colors.White));
+
+        private Color SelectedFullValueColor
+        {
+            get => (Color) GetValue(SelectedFullValueColorProperty);
+            set => SetValue(SelectedFullValueColorProperty, value);
+        }
+
         public static readonly DependencyProperty ButtonInnerBackgroundProperty =
             DependencyProperty.Register(nameof(ButtonInnerBackground), typeof(Brush), typeof(ColorPicker),
                 new PropertyMetadata(new SolidColorBrush(Colors.White)));
@@ -269,7 +279,12 @@ namespace Digimezzo.WPFControls
             }
             else
             {
-                UpdateRgb(new Hsv(Hue, Saturation, Value));
+                var hsv = new Hsv(Hue, Saturation, Value);
+                UpdateRgb(hsv);
+                if (e.Property != ValueProperty)
+                {
+                    UpdateValueSlider(hsv);
+                }
             }
 
             ResetPickerThumbPosition();
@@ -287,6 +302,8 @@ namespace Digimezzo.WPFControls
             Green = SelectedColor.G;
             Blue = SelectedColor.B;
             Hex = RgbToHex(SelectedColor);
+
+            UpdateValueSlider(hsv);
         }
 
         private void UpdateHsv(Color rgb)
@@ -297,6 +314,8 @@ namespace Digimezzo.WPFControls
             Value = hsv.Value;
             SelectedColor = rgb;
             Hex = RgbToHex(rgb);
+            
+            UpdateValueSlider(hsv);
         }
 
         private void UpdateRgb(Hsv hsv)
@@ -306,7 +325,14 @@ namespace Digimezzo.WPFControls
             Green = rgb.G;
             Blue = rgb.B;
             SelectedColor = rgb;
-            Hex = RgbToHex(rgb);
+            Hex = RgbToHex(rgb);   
+        }
+
+        private void UpdateValueSlider(Hsv hsv)
+        {
+            hsv.Value = 1.0;
+            var rgb = HsvToRgb(hsv);
+            SelectedFullValueColor = rgb;
         }
 
         private void GetColorFromCurrentPositionAndMoveThumb(double nX, double nY)
@@ -344,7 +370,9 @@ namespace Digimezzo.WPFControls
                 }
             }
 
-            UpdateRgb(new Hsv(Hue, Saturation, Value));
+            var hsv = new Hsv(Hue, Saturation, Value);
+            UpdateRgb(hsv);
+            UpdateValueSlider(hsv);
         }
 
         private void ResetPickerThumbPosition()

@@ -7,7 +7,7 @@
 
   <converters:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter" />
 
-  <SolidColorBrush x:Key="BorderMaskStrokeBrush" Color="#44DCDCDC"/>
+  <SolidColorBrush x:Key="BorderMaskStrokeBrush" Color="#22000000"/>
 
   <DrawingBrush x:Key="CheckersBrush" Viewport="0,0,11,11" ViewportUnits="Absolute" TileMode="Tile">
     <DrawingBrush.Drawing>
@@ -151,8 +151,8 @@
                               <RowDefinition Height="12*" />
                             </Grid.RowDefinitions>
                             <Border Margin="1" 
-                                  Grid.Row="1" 
-                                  Background="{Binding ElementName=PART_PriviewColorBorder,Path=Background}" />
+                                    Grid.Row="1" 
+                                    Background="{Binding Path=SelectedFullValueColor,RelativeSource={RelativeSource AncestorType={x:Type local:ColorPicker}},Converter={StaticResource ColorToSolidColorBrushConverter}}" />
                             <Border Margin="1" Grid.Row="1">
                               <Border.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
