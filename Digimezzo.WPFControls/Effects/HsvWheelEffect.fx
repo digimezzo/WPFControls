@@ -29,12 +29,6 @@ float Value : register(C2);
 /// <defaultValue>90</defaultValue>
 float StartAngle : register(C3);
 
-/// <summary>The central angle of the gradient, positive value for clockwise.</summary>
-/// <minValue>-360</minValue>
-/// <maxValue>360</maxValue>
-/// <defaultValue>360</defaultValue>
-float CentralAngle : register(C4);
-
 float4 lerp_rgba(float4 x, float4 y, float s)
 {
     float a = lerp(x.a, y.a, s);
@@ -102,18 +96,16 @@ float3 HSVtoRGB(in float3 HSV)
 
 float4 main(float2 uv : TEXCOORD) : COLOR
 {
-	float dist = uv.x * uv.x + uv.y * uv.y;
     float2 rv = uv - cp;
     float r = length(rv);
     float ir = InnerRadius / 2;
     if (r >= ir && r <= 0.5)
     {
         float sa = radians(StartAngle);
-        float ca = radians(CentralAngle);
         float h = interpolate(
             0,
-            abs(ca),
-            angle_from_start(uv, cp, sa, ca));
+            PI2,
+            angle_from_start(uv, cp, sa, PI2));
         float s = lerp(InnerSaturation, 1, interpolate(ir, 0.5, r));
         float v = Value;
 		return float4(HSVtoRGB(float3(h, s, v)), 1);

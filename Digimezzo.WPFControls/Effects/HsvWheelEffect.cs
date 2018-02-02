@@ -51,14 +51,6 @@ namespace Digimezzo.WPFControls.Effects
             new UIPropertyMetadata(
                 270d,
                 PixelShaderConstantCallback(3)));
-
-        public static readonly DependencyProperty CentralAngleProperty = DependencyProperty.Register(
-            nameof(CentralAngle),
-            typeof(double),
-            typeof(HsvWheelEffect),
-            new UIPropertyMetadata(
-                360d,
-                PixelShaderConstantCallback(4)));
         #endregion
 
         #region Properties
@@ -94,12 +86,6 @@ namespace Digimezzo.WPFControls.Effects
             get => (double)GetValue(StartAngleProperty);
             set => SetValue(StartAngleProperty, value);
         }
-
-        public double CentralAngle
-        {
-            get => (double)GetValue(CentralAngleProperty);
-            set => SetValue(CentralAngleProperty, value);
-        }
         #endregion
         
         #region Constructor
@@ -111,7 +97,6 @@ namespace Digimezzo.WPFControls.Effects
             UpdateShaderValue(InnerSaturationProperty);
             UpdateShaderValue(ValueProperty);
             UpdateShaderValue(StartAngleProperty);
-            UpdateShaderValue(CentralAngleProperty);
         }
         #endregion
     }
