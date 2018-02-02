@@ -24,5 +24,6 @@
         <Button x:Name="PivotTestButton" Margin="10,5,10,5" Click="PivotTestButton_Click" Content="Pivot Test"/>
         <Button x:Name="RippleTestButton" Margin="10,5,10,5" Click="RippleTestButton_Click" Content="Ripple Test"/>
         <Button x:Name="SplitViewTestButton" Margin="10,5,10,5" Click="SplitViewTestButton_Click" Content="SplitView Test"/>
-    </StackPanel>
+        <Button x:Name="ColorPickerTestButton" Margin="10,5,10,5" Click="ColorPickerTestButton_Click" Content="ColorPicker Test"/>
+  </StackPanel>
 </Window>

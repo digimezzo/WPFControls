@@ -58,17 +58,21 @@
     <Compile Include="Base\PropertyChangedBase.cs" />
     <Compile Include="Base\Constants.cs" />
     <Compile Include="Base\SliderBase.cs" />
+    <Compile Include="ColorPicker.cs" />
     <Compile Include="Converters\AddValueConverter.cs" />
     <Compile Include="Converters\BooleanToCollapsedConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\ColorToSolidColorBrushConverter.cs" />
     <Compile Include="Converters\InvertingBooleanConverter.cs" />
     <Compile Include="Converters\NullToVisibleConverter.cs" />
     <Compile Include="Converters\NullToCollapsedConverter.cs" />
+    <Compile Include="Converters\IntRatioConverter.cs" />
     <Compile Include="Converters\ResizeModeMinMaxButtonVisibilityConverter.cs" />
     <Compile Include="Converters\SolidColorBrushToColorConverter.cs" />
     <Compile Include="Converters\StringToLowerConverter.cs" />
     <Compile Include="Converters\StringToUpperConverter.cs" />
     <Compile Include="Effects\FeatheringEffect.cs" />
+    <Compile Include="Effects\HsvWheelEffect.cs" />
     <Compile Include="Enums\SlideDirection.cs" />
     <Compile Include="Enums\WrapPanelAlignment.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
@@ -93,6 +97,8 @@
     <Compile Include="SharedAssemblyInfo.cs" />
     <Compile Include="SplitView.cs" />
     <Compile Include="Utils\AnimationUtils.cs" />
+    <Compile Include="ValidationRules\RegexValidation.cs" />
+    <Compile Include="ValidationRules\IntValidation.cs" />
     <Compile Include="VirtualizingWrapPanel.cs" />
     <Compile Include="Windows8Slider.cs" />
     <Compile Include="MultiPanePanel.cs" />
@@ -126,6 +132,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <Resource Include="Effects\FeatheringEffect.ps" />
+    <Resource Include="Effects\HsvWheelEffect.ps" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -134,8 +141,14 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Licenses\MahApps.Metro.txt" />
+    <Resource Include="Licenses\Gu.Wpf.Geometry.txt" />
+    <Resource Include="Licenses\PropertyTools.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Themes\ColorPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -227,6 +240,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Effects\FeatheringEffect.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Effects\HsvWheelEffect.fx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

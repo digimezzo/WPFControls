@@ -121,5 +121,11 @@ namespace Digimezzo.WPFControls.Tests
             var win = new MaterialControlsTest();
             win.Show();
         }
+
+        private void ColorPickerTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new ColorPickerTest();
+            win.Show();
+        }
     }
 }
