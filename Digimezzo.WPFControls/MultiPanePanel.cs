@@ -29,7 +29,7 @@ namespace Digimezzo.WPFControls
             set { SetValue(IsRightPaneCollapsedProperty, value); }
         }
 
-        public static readonly DependencyProperty IsRightPaneCollapsedProperty = 
+        public static readonly DependencyProperty IsRightPaneCollapsedProperty =
             DependencyProperty.Register(nameof(IsRightPaneCollapsed), typeof(bool), typeof(MultiPanePanel), new PropertyMetadata(false));
 
         public bool CanResize
@@ -67,7 +67,7 @@ namespace Digimezzo.WPFControls
 
         public static readonly DependencyProperty ContentResizeDelayProperty =
            DependencyProperty.Register(nameof(ContentResizeDelay), typeof(int), typeof(MultiPanePanel), new PropertyMetadata(0));
-        
+
         public double ResizeGripWidth
         {
             get { return Convert.ToDouble(GetValue(ResizeGripWidthProperty)); }
@@ -148,7 +148,7 @@ namespace Digimezzo.WPFControls
 
         public static readonly DependencyProperty RightPaneContentProperty =
            DependencyProperty.Register(nameof(RightPaneContent), typeof(object), typeof(MultiPanePanel), new PropertyMetadata(null));
-      
+
         static MultiPanePanel()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MultiPanePanel), new FrameworkPropertyMetadata(typeof(MultiPanePanel)));
@@ -227,7 +227,8 @@ namespace Digimezzo.WPFControls
                     totalWidth = this.ActualWidth - this.ResizeGripWidth * 2;
                     double newRightPaneWidth = Convert.ToDouble(totalWidth * this.RightPaneWidthPercent / 100);
                     this.rightPane.Width = newRightPaneWidth > this.RightPaneMinimumWidth ? newRightPaneWidth : this.RightPaneMinimumWidth;
-                    this.middlePane.Width = totalWidth - this.leftPane.Width - this.rightPane.Width;
+                    double proposedWidth = totalWidth - this.leftPane.Width - this.rightPane.Width;
+                    this.middlePane.Width = proposedWidth >= 0 ? proposedWidth : 0.0;
                 }
                 else
                 {
@@ -310,7 +311,7 @@ namespace Digimezzo.WPFControls
             this.isSeparatorLeftMouseButtonDown = false;
             this.isSeparatorRightMouseButtonDown = false;
         }
-   
+
         private void PART_SeparatorLeft_MouseEnter(object sender, MouseEventArgs e)
         {
             if (this.CanResize) { this.separatorLeft.Cursor = Cursors.SizeWE; }
@@ -333,7 +334,7 @@ namespace Digimezzo.WPFControls
 
         private void SeparatorRight_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if(!this.IsRightPaneCollapsed) this.isSeparatorRightMouseButtonDown = false;
+            if (!this.IsRightPaneCollapsed) this.isSeparatorRightMouseButtonDown = false;
         }
 
         private void SeparatorRight_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
