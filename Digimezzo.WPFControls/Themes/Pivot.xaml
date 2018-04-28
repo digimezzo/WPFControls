@@ -23,7 +23,7 @@
                             <RowDefinition x:Name="RowDefinition2" Height="*"/>
                         </Grid.RowDefinitions>
                         <StackPanel Visibility="{TemplateBinding HeaderVisibility}">
-                            <StackPanel x:Name="headerPanel" Orientation="Horizontal" Margin="{TemplateBinding HeaderMargin}"
+                            <WrapPanel x:Name="headerPanel" Orientation="Horizontal" Margin="{TemplateBinding HeaderMargin}"
                                         Background="{TemplateBinding HeaderBackground}" Grid.Column="0" Grid.Row="0" IsItemsHost="true" 
                                         KeyboardNavigation.TabIndex="1"/>
                             <Border x:Name="elevation" Height="{TemplateBinding Elevation}" Background="{TemplateBinding ElevationBackground}"/>
